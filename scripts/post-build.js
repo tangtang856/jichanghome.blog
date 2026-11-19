@@ -85,6 +85,12 @@ function copyRecursive(src, dest) {
   }
 }
 
+// 清理 rootDir/_astro 避免哈希变更残留
+const rootAstroDir = path.join(rootDir, '_astro');
+if (fs.existsSync(rootAstroDir)) {
+  fs.rmSync(rootAstroDir, { recursive: true, force: true });
+}
+
 copyRecursive(distDir, rootDir);
 
 // 修复 sitemap.xml 样式与命名
