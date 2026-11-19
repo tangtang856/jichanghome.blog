@@ -1000,7 +1000,328 @@ img {
   font-size: 0.8rem;
 }
 
+/* ==========================================================================
+   评测文章左右双栏布局与“跳转到下一个机场”侧边栏悬浮卡片
+   ========================================================================== */
+.article-layout-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 2.25rem;
+  align-items: start;
+  margin-bottom: 3.5rem;
+}
+
+.article-main-col {
+  min-width: 0;
+}
+
+.article-main-col .quick-answer-box {
+  margin-top: 0;
+}
+
+.article-sidebar-col {
+  min-width: 0;
+}
+
+/* 下一个机场侧边栏悬浮卡片 */
+.next-airport-sticky-widget {
+  position: sticky;
+  top: 5.5rem;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.next-airport-sticky-widget:hover {
+  box-shadow: 0 8px 24px -4px rgba(37, 99, 235, 0.12);
+}
+
+.widget-header {
+  background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+  padding: 0.85rem 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #bfdbfe;
+}
+
+.widget-tag {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1d4ed8;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.widget-rank-pill {
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+}
+
+.widget-body {
+  padding: 1.25rem;
+}
+
+.widget-airport-name {
+  margin: 0 0 0.35rem 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.3;
+}
+
+.widget-airport-name a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.widget-airport-name a:hover {
+  color: var(--primary);
+}
+
+.widget-airport-tagline {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+
+.widget-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  background: var(--bg-subtle);
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.widget-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.widget-meta-item .meta-label {
+  font-size: 0.7rem;
+  color: var(--text-light);
+}
+
+.widget-meta-item .meta-value {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.widget-meta-item .meta-value.price {
+  color: #dc2626;
+}
+
+.widget-meta-item .meta-value.score {
+  color: var(--primary);
+}
+
+.widget-btn-next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-align: center;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 8px -1px rgba(37, 99, 235, 0.3);
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+.widget-btn-next:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px -2px rgba(37, 99, 235, 0.4);
+  color: #ffffff;
+}
+
+.widget-prev-link {
+  text-align: center;
+  margin-top: 0.65rem;
+  font-size: 0.78rem;
+}
+
+.widget-prev-link a {
+  color: var(--text-light);
+  text-decoration: none;
+}
+
+.widget-prev-link a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.widget-airport-list-box {
+  border-top: 1px solid var(--border-color);
+  background: #f8fafc;
+  padding: 0.85rem 1.15rem;
+}
+
+.widget-airport-list-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.widget-airport-list-title .badge-count {
+  font-size: 0.68rem;
+  background: #e2e8f0;
+  padding: 0.1rem 0.35rem;
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+}
+
+.widget-airport-quick-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 0.2rem;
+}
+
+.widget-airport-quick-links::-webkit-scrollbar {
+  width: 4px;
+}
+
+.widget-airport-quick-links::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.quick-link-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  color: var(--text-main);
+  text-decoration: none;
+  background: #ffffff;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.quick-link-item:hover {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: var(--primary);
+}
+
+.quick-link-item.active {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  font-weight: 700;
+  color: #1d4ed8;
+}
+
+.quick-rank {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-light);
+  min-width: 1.4rem;
+}
+
+.quick-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quick-price {
+  font-size: 0.72rem;
+  color: var(--text-light);
+}
+
+.current-dot {
+  font-size: 0.68rem;
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+}
+
+/* 底部 上一个 / 下一个 导航栏 */
+.article-pagination-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.pagination-link {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.25rem;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.pagination-link:hover {
+  border-color: var(--primary);
+  background: #eff6ff;
+  transform: translateY(-1px);
+}
+
+.pagination-link.next {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.pagination-dir {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.pagination-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.pagination-link:hover .pagination-title {
+  color: var(--primary);
+}
+
 /* 响应式调整 */
+@media (max-width: 1024px) {
+  .article-layout-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
 @media (max-width: 900px) {
   .desktop-nav {
     display: none;

@@ -124,8 +124,11 @@
       </div>
     </div>
 
-    <!-- 1. 核心答疑与快速结论卡片 -->
-    <div class="quick-answer-box">
+    <!-- 双栏布局：左侧深度评测，右侧跳转下一个机场悬浮卡片 -->
+    <div class="article-layout-grid">
+      <div class="article-main-col">
+        <!-- 1. 核心答疑与快速结论卡片 -->
+        <div class="quick-answer-box">
       <div class="quick-answer-header">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
         <span>编辑部核心答疑：无忧到底如何？值不值得买？</span>
@@ -384,8 +387,164 @@
           立即直达 无忧 官方网站 ↗
         </a>
       </div>
+
+      <!-- 底部 上一篇 / 下一篇 导航条 -->
+      <div class="article-pagination-bar">
+        <a href="../feimaoyun/index.html" class="pagination-link prev">
+          <span class="pagination-dir">&larr; 上一个机场评测</span>
+          <span class="pagination-title">#3 飞猫云</span>
+        </a>
+        <a href="../lingmao/index.html" class="pagination-link next">
+          <span class="pagination-dir">下一个机场评测 &rarr;</span>
+          <span class="pagination-title">#5 灵猫</span>
+        </a>
+      </div>
     </div>
   </div>
+
+  <!-- 右侧侧边栏：跳转到下一个机场（Sticky 悬浮卡片） -->
+  <aside class="article-sidebar-col">
+    <div class="next-airport-sticky-widget">
+      <div class="widget-header">
+        <span class="widget-tag">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg>
+          下一个机场评测
+        </span>
+        <span class="widget-rank-pill">#5</span>
+      </div>
+
+      <div class="widget-body">
+        <h3 class="widget-airport-name">
+          <a href="../lingmao/index.html">灵猫</a>
+        </h3>
+        <p class="widget-airport-tagline">全内网IPLC专线加速，原生IP流媒体与白领办公首选</p>
+
+        <div class="widget-meta-grid">
+          <div class="widget-meta-item">
+            <span class="meta-label">起步价格</span>
+            <span class="meta-value price">¥25 <small style="font-size:0.7rem; color:var(--text-light);">CNY/月</small></span>
+          </div>
+          <div class="widget-meta-item">
+            <span class="meta-label">每月配额</span>
+            <span class="meta-value">150GB</span>
+          </div>
+          <div class="widget-meta-item">
+            <span class="meta-label">线路架构</span>
+            <span class="meta-value">IPLC专线</span>
+          </div>
+          <div class="widget-meta-item">
+            <span class="meta-label">综合评分</span>
+            <span class="meta-value score">⭐ 9.5</span>
+          </div>
+        </div>
+
+        <a href="../lingmao/index.html" class="widget-btn-next">
+          <span>跳转到下一个机场</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+
+        <div class="widget-prev-link">
+          <a href="../feimaoyun/index.html">&larr; 上一个：#3 飞猫云</a>
+        </div>
+      </div>
+
+      <div class="widget-airport-list-box">
+        <div class="widget-airport-list-title">
+          <span>14大品牌快速切换</span>
+          <span class="badge-count">14 家</span>
+        </div>
+        <div class="widget-airport-quick-links">
+          
+            <a href="../breezenet/index.html" class="quick-link-item ">
+              <span class="quick-rank">#1</span>
+              <span class="quick-name">微风网络 Breezenet</span>
+              <span class="quick-price">¥8</span>
+            </a>
+          
+            <a href="../muguang/index.html" class="quick-link-item ">
+              <span class="quick-rank">#2</span>
+              <span class="quick-name">暮光网络</span>
+              <span class="quick-price">¥20</span>
+            </a>
+          
+            <a href="../feimaoyun/index.html" class="quick-link-item ">
+              <span class="quick-rank">#3</span>
+              <span class="quick-name">飞猫云</span>
+              <span class="quick-price">¥7</span>
+            </a>
+          
+            <a href="../wuyou/index.html" class="quick-link-item active">
+              <span class="quick-rank">#4</span>
+              <span class="quick-name">无忧</span>
+              <span class="current-dot">当前</span>
+            </a>
+          
+            <a href="../lingmao/index.html" class="quick-link-item ">
+              <span class="quick-rank">#5</span>
+              <span class="quick-name">灵猫</span>
+              <span class="quick-price">¥25</span>
+            </a>
+          
+            <a href="../flashleap/index.html" class="quick-link-item ">
+              <span class="quick-rank">#6</span>
+              <span class="quick-name">闪跃 FlashLeap</span>
+              <span class="quick-price">¥24</span>
+            </a>
+          
+            <a href="../firefly/index.html" class="quick-link-item ">
+              <span class="quick-rank">#7</span>
+              <span class="quick-name">萤火虫（Firefly）</span>
+              <span class="quick-price">¥8</span>
+            </a>
+          
+            <a href="../kuajiecloud/index.html" class="quick-link-item ">
+              <span class="quick-rank">#8</span>
+              <span class="quick-name">跨界</span>
+              <span class="quick-price">¥20</span>
+            </a>
+          
+            <a href="../yinxingren/index.html" class="quick-link-item ">
+              <span class="quick-rank">#9</span>
+              <span class="quick-name">隐形人</span>
+              <span class="quick-price">¥24</span>
+            </a>
+          
+            <a href="../feiv/index.html" class="quick-link-item ">
+              <span class="quick-rank">#10</span>
+              <span class="quick-name">飞V</span>
+              <span class="quick-price">¥4.9</span>
+            </a>
+          
+            <a href="../laddercloud/index.html" class="quick-link-item ">
+              <span class="quick-rank">#11</span>
+              <span class="quick-name">梯子云 LadderCloud</span>
+              <span class="quick-price">¥25</span>
+            </a>
+          
+            <a href="../wavenet/index.html" class="quick-link-item ">
+              <span class="quick-rank">#12</span>
+              <span class="quick-name">浪网 WaveNet</span>
+              <span class="quick-price">¥30</span>
+            </a>
+          
+            <a href="../lingdongcloud/index.html" class="quick-link-item ">
+              <span class="quick-rank">#13</span>
+              <span class="quick-name">灵动云</span>
+              <span class="quick-price">¥20</span>
+            </a>
+          
+            <a href="../quanqiuyun/index.html" class="quick-link-item ">
+              <span class="quick-rank">#14</span>
+              <span class="quick-name">全球云</span>
+              <span class="quick-price">¥20</span>
+            </a>
+          
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+</div>
 
   <!-- 全站通用页脚 -->
   <footer class="site-footer">

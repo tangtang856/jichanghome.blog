@@ -177,7 +177,12 @@ ${buildFooter(1)}
   }
 
   // 2. 14家机场独立评测单页 (depth = 2) - 严格遵循用户指定的专业 TDK 与全维度内容
-  AIRPORTS.forEach(airport => {
+  AIRPORTS.forEach((airport, index) => {
+    const prevIndex = (index - 1 + AIRPORTS.length) % AIRPORTS.length;
+    const nextIndex = (index + 1) % AIRPORTS.length;
+    const prevAirport = AIRPORTS[prevIndex];
+    const nextAirport = AIRPORTS[nextIndex];
+
     // 严格按用户格式构建 SEO Title: "[品牌名称]如何？2026[品牌名称]套餐价格、流量配额、节点线路与真实测速全评测 - 机场之家"
     const title = `${airport.name}如何？2026${airport.name}套餐价格、流量配额、节点线路与真实测速全评测 - 机场之家`;
     
@@ -253,8 +258,11 @@ ${buildHeader(2, 'airport')}
       </div>
     </div>
 
-    <!-- 1. 核心答疑与快速结论卡片 -->
-    <div class="quick-answer-box">
+    <!-- 双栏布局：左侧深度评测，右侧跳转下一个机场悬浮卡片 -->
+    <div class="article-layout-grid">
+      <div class="article-main-col">
+        <!-- 1. 核心答疑与快速结论卡片 -->
+        <div class="quick-answer-box">
       <div class="quick-answer-header">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
         <span>编辑部核心答疑：${airport.name}到底如何？值不值得买？</span>
@@ -458,8 +466,86 @@ ${buildHeader(2, 'airport')}
           立即直达 ${airport.name} 官方网站 ↗
         </a>
       </div>
+
+      <!-- 底部 上一篇 / 下一篇 导航条 -->
+      <div class="article-pagination-bar">
+        <a href="../${prevAirport.slug}/index.html" class="pagination-link prev">
+          <span class="pagination-dir">&larr; 上一个机场评测</span>
+          <span class="pagination-title">#${prevAirport.rank} ${prevAirport.name}</span>
+        </a>
+        <a href="../${nextAirport.slug}/index.html" class="pagination-link next">
+          <span class="pagination-dir">下一个机场评测 &rarr;</span>
+          <span class="pagination-title">#${nextAirport.rank} ${nextAirport.name}</span>
+        </a>
+      </div>
     </div>
   </div>
+
+  <!-- 右侧侧边栏：跳转到下一个机场（Sticky 悬浮卡片） -->
+  <aside class="article-sidebar-col">
+    <div class="next-airport-sticky-widget">
+      <div class="widget-header">
+        <span class="widget-tag">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg>
+          下一个机场评测
+        </span>
+        <span class="widget-rank-pill">#${nextAirport.rank}</span>
+      </div>
+
+      <div class="widget-body">
+        <h3 class="widget-airport-name">
+          <a href="../${nextAirport.slug}/index.html">${nextAirport.name}</a>
+        </h3>
+        <p class="widget-airport-tagline">${nextAirport.tagline}</p>
+
+        <div class="widget-meta-grid">
+          <div class="widget-meta-item">
+            <span class="meta-label">起步价格</span>
+            <span class="meta-value price">¥${nextAirport.startingPrice} <small style="font-size:0.7rem; color:var(--text-light);">${nextAirport.currency}</small></span>
+          </div>
+          <div class="widget-meta-item">
+            <span class="meta-label">每月配额</span>
+            <span class="meta-value">${nextAirport.plans[0].traffic}</span>
+          </div>
+          <div class="widget-meta-item">
+            <span class="meta-label">线路架构</span>
+            <span class="meta-value">${nextAirport.lineType.length > 10 ? nextAirport.lineType.slice(0, 10) + '...' : nextAirport.lineType}</span>
+          </div>
+          <div class="widget-meta-item">
+            <span class="meta-label">综合评分</span>
+            <span class="meta-value score">⭐ ${nextAirport.scoreOverall}</span>
+          </div>
+        </div>
+
+        <a href="../${nextAirport.slug}/index.html" class="widget-btn-next">
+          <span>跳转到下一个机场</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+
+        <div class="widget-prev-link">
+          <a href="../${prevAirport.slug}/index.html">&larr; 上一个：#${prevAirport.rank} ${prevAirport.name}</a>
+        </div>
+      </div>
+
+      <div class="widget-airport-list-box">
+        <div class="widget-airport-list-title">
+          <span>14大品牌快速切换</span>
+          <span class="badge-count">${AIRPORTS.length} 家</span>
+        </div>
+        <div class="widget-airport-quick-links">
+          ${AIRPORTS.map(a => `
+            <a href="../${a.slug}/index.html" class="quick-link-item ${a.id === airport.id ? 'active' : ''}">
+              <span class="quick-rank">#${a.rank}</span>
+              <span class="quick-name">${a.name}</span>
+              ${a.id === airport.id ? '<span class="current-dot">当前</span>' : `<span class="quick-price">¥${a.startingPrice}</span>`}
+            </a>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+</div>
 
 ${buildFooter(2)}
 `;
