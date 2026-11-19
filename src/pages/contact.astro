@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const title = "联系与反馈 | 商务合作与勘误反馈 - 机场之家";
-const description = "机场之家编辑部联系方式。欢迎读者提供真实节点测速样本、勘误反馈与合规技术交流。";
+const title = "联系与反馈 | 商务合作与技术咨询 - 机场之家";
+const description = "机场之家官方联络方式。欢迎各大专线机场服务商送测、商务合作、广告投放与读者勘误纠错。Telegram 商务号: @xintangtang，工作邮箱: xintangtang888@gmail.com。";
 ---
 
 <BaseLayout
@@ -12,28 +12,109 @@ const description = "机场之家编辑部联系方式。欢迎读者提供真�
 >
   <section class="bg-white border-b border-slate-200 py-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-3xl font-black text-slate-900 tracking-tight">联系与反馈 (Contact Us)</h1>
-      <p class="text-sm text-slate-500 mt-2">欢迎同行交流、真实测速数据投稿与页面内容勘误</p>
+      <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200 mb-3">
+        官方直连通道
+      </span>
+      <h1 class="text-3xl font-black text-slate-900 tracking-tight">联系我们与商务合作 (Contact Us)</h1>
+      <p class="text-sm text-slate-500 mt-2">欢迎品牌送测、商务合作、同行技术交流、测速数据投稿与页面内容勘误</p>
     </div>
   </section>
 
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-    <article class="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200/80 shadow-sm article-prose">
-      <h2>一、勘误与数据纠错</h2>
-      <p>
-        由于各机场服务商的套餐策略、优惠码有效期与线路拓扑可能随时发生变动，如果您在阅读过程中发现任何数据已失效或存在偏差，请随时与我们联系。我们承诺在核实后的 24 小时内更新页面数据。
-      </p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+      <!-- Telegram Card -->
+      <div class="bg-gradient-to-br from-sky-50 to-blue-50 border-2 border-sky-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-sky-500 text-white flex items-center justify-center shadow-md shadow-sky-500/30">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-base font-black text-slate-900">Telegram 官方商务号</h3>
+              <span class="inline-flex items-center gap-1 text-xs text-emerald-600 font-semibold">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                在线即时沟通
+              </span>
+            </div>
+          </div>
 
-      <h2>二、联系方式渠道</h2>
+          <p class="text-xs text-slate-600 leading-relaxed mb-4">
+            优先推荐使用 Telegram 进行即时商务洽谈、节点评测送测、品牌入驻及紧急技术问题反馈。
+          </p>
+
+          <div class="bg-white rounded-xl p-3 border border-sky-200 flex items-center justify-between mb-4">
+            <span class="font-mono text-sm text-sky-700 font-bold select-all">@xintangtang</span>
+            <span class="text-[11px] text-slate-400">Telegram ID</span>
+          </div>
+        </div>
+
+        <a
+          href="https://t.me/xintangtang"
+          target="_blank"
+          rel="noopener nofollow"
+          class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-wider bg-sky-500 hover:bg-sky-600 text-white shadow-md shadow-sky-500/20 transition-all active:scale-95"
+        >
+          <span>立即打开 Telegram 沟通 ↗</span>
+        </a>
+      </div>
+
+      <!-- Gmail Card -->
+      <div class="bg-gradient-to-br from-rose-50 to-orange-50 border-2 border-rose-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center shadow-md shadow-rose-500/30">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-base font-black text-slate-900">官方工作邮箱 (Gmail)</h3>
+              <span class="text-xs text-slate-500 font-medium">24 小时内极速回复</span>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-600 leading-relaxed mb-4">
+            适用于正式商业合同、广告赞助意向书、媒体合作函件投递以及详尽技术勘误文档发送。
+          </p>
+
+          <div class="bg-white rounded-xl p-3 border border-rose-200 flex items-center justify-between mb-4">
+            <span class="font-mono text-sm text-rose-700 font-bold select-all">xintangtang888@gmail.com</span>
+            <span class="text-[11px] text-slate-400">官方邮箱</span>
+          </div>
+        </div>
+
+        <a
+          href="mailto:xintangtang888@gmail.com"
+          class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-wider bg-rose-500 hover:bg-rose-600 text-white shadow-md shadow-rose-500/20 transition-all active:scale-95"
+        >
+          <span>发送工作邮件 ✉️</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Details article -->
+    <article class="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200/80 shadow-sm article-prose">
+      <h2>一、商务合作与品牌送测声明</h2>
+      <p>
+        机场之家致力于为中文网络用户提供真实客观透明的梯子推荐与节点测速。我们接受优质服务商的送测申请，但所有参与收录的品牌均须满足以下核心硬性标准：
+      </p>
       <ul>
-        <li><strong>官方联系邮箱：</strong> <code>contact@jichanghome.blog</code></li>
-        <li><strong>Telegram 官方频道与联络：</strong> 请认准唯一官方公开通道，切莫轻信任何主动私信推销的骗子。</li>
+        <li><strong>真实专线与中转：</strong>拒绝虚假标榜“纯 IPLC”实则为公网直连的低劣机房，必须具备真实国内 BGP 入口与稳定的跨境物理通道；</li>
+        <li><strong>计费公道透明：</strong>杜绝设置 3x~10x 恶性扣费倍率或中途随意篡改套餐规则的行为；</li>
+        <li><strong>稳定运营与技术实力：</strong>要求具备自主运维团队与 7×24 小时故障响应能力，有充足的备用容灾信道储备。</li>
       </ul>
 
-      <h2>三、商务合作声明</h2>
+      <h2>二、读者勘误与数据纠错</h2>
       <p>
-        我们仅接受经过我们实机测速核验通过、具备真实内网专线能力且信誉良好的品牌进行收录。任何存在跑路劣迹、虚假宣传或扣费套路的平台恕不接待。
+        由于各机场服务商的套餐资费、节点拓扑与专属优惠码存在时效性，如果您在浏览本站时发现任何优惠码失效、测速数据异常或链接失效，请随时通过 Telegram（<a href="https://t.me/xintangtang" target="_blank" rel="noopener nofollow" class="text-blue-600 font-bold hover:underline">@xintangtang</a>）或邮件向我们反馈。核实无误后我们将在 24 小时内完成修订。
       </p>
+
+      <h2>三、防诈骗安全声明</h2>
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-900 leading-relaxed">
+        <strong>⚠️ 安全提醒：</strong>机场之家官方工作人员<strong>绝不会</strong>主动私信任何用户索要银行密码、要求个人转账或索取个人敏感身份隐私。官方联络通道仅认准 Telegram: <strong>@xintangtang</strong> 与 Gmail: <strong>xintangtang888@gmail.com</strong>，请广大读者提高警惕，切勿轻信高仿假冒账号。
+      </div>
     </article>
   </div>
 </BaseLayout>
