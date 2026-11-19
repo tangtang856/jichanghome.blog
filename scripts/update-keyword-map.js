@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { AIRPORTS } = require('./template-base');
 const GUIDES = require('./data-guides');
 const ALL_ARTICLES = require('./data-all-articles');
 
@@ -22,6 +23,13 @@ AI与ChatGPT机场节点,特定用途/防封锁,https://jichanghome.blog/recomme
 机场横向对比工具,工具型/多选一决策,https://jichanghome.blog/compare/index.html,Tool,P0,机场参数横向在线对比工具 | 价格/协议/流量/解锁一键比对 - 机场之家,2026年主流机场多维度横向在线对比工具
 `;
 
+// 加入 14 家品牌评测
+AIRPORTS.forEach(a => {
+  const title = `${a.name}如何？2026${a.name}套餐价格、流量配额、节点线路与真实测速全评测 - 机场之家`;
+  const h1 = `${a.name}如何？2026深度评测：套餐价格、节点线路与真实测速全解析`;
+  csvContent += `"${a.name}如何",商业调研/品牌测评,https://jichanghome.blog/airport/${a.slug}/index.html,Review,P0,"${title}","${h1}"\n`;
+});
+
 // 加入 30 篇教程
 GUIDES.forEach(g => {
   csvContent += `"${g.h1}",教程型/实操,https://jichanghome.blog/guides/${g.slug}/index.html,Guide,P1,"${g.title}","${g.h1}"\n`;
@@ -33,4 +41,4 @@ ALL_ARTICLES.forEach(a => {
 });
 
 fs.writeFileSync(csvPath, csvContent, 'utf8');
-console.log(`[Exported] docs/keyword-map.csv with all guides & articles.`);
+console.log(`[Exported] docs/keyword-map.csv with all reviews, guides & articles.`);

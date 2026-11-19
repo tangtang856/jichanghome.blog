@@ -33,7 +33,7 @@
 | **机场节点** | 47 篇 | `/`, `/ranking/overall/index.html` |
 | **性价比机场** | 174 篇 | `/ranking/value/index.html`, `/recommend/budget/index.html` |
 | **梯子推荐** | 174 篇 | `/`, `/recommend/index.html` |
-| **vpn** | 17 篇 | 全站基础知识、评测与百科广泛覆盖 |
+| **vpn** | 31 篇 | 全站基础知识、评测与百科广泛覆盖 |
 | **vpn机场** | 2 篇 | `/`, `/blog/how-to-choose-reliable-airport/index.html` |
 | **vpn节点** | 0 篇 | `/ranking/index.html`, `/airport/index.html` |
 | **vpn推荐** | 0 篇 | `/`, `/recommend/index.html` |

@@ -12,11 +12,12 @@ function getRelPrefix(depth) {
 }
 
 // 通用页面头部构建器
-function buildHead({ title, description, canonicalPath, depth = 0, schema = null }) {
+function buildHead({ title, description, keywords = null, canonicalPath, depth = 0, schema = null }) {
   const rel = getRelPrefix(depth);
   const canonicalUrl = `${DOMAIN}/${canonicalPath}`.replace(/\/+/g, '/').replace('https:/', 'https://');
   
   const schemaScript = schema ? `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n</script>` : '';
+  const keywordsTag = keywords ? `  <meta name="keywords" content="${keywords}">\n` : '';
 
   return `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -25,7 +26,7 @@ function buildHead({ title, description, canonicalPath, depth = 0, schema = null
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
   <meta name="description" content="${description}">
-  <link rel="canonical" href="${canonicalUrl}">
+${keywordsTag}  <link rel="canonical" href="${canonicalUrl}">
   <meta name="robots" content="index, follow">
   
   <!-- Open Graph / 社交分享 -->
