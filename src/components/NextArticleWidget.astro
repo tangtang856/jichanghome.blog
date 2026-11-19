@@ -1,0 +1,112 @@
+---
+interface ArticleItem {
+  slug: string;
+  h1: string;
+  category: string;
+  readTime?: string;
+  desc?: string;
+  date?: string;
+}
+
+interface Props {
+  nextArticle: ArticleItem;
+  prevArticle: ArticleItem;
+  currentIndex: number;
+  totalCount: number;
+  basePath: 'blog' | 'guides';
+  typeLabel?: string;
+  upcomingList?: ArticleItem[];
+}
+
+const {
+  nextArticle,
+  prevArticle,
+  currentIndex,
+  totalCount,
+  basePath = 'blog',
+  typeLabel = '文章',
+  upcomingList = []
+} = Astro.props;
+
+const prefix = basePath === 'blog' ? '/blog/' : '/guides/';
+---
+
+<div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+  <!-- Header Banner -->
+  <div class="bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-3 border-b border-blue-100 flex items-center justify-between">
+    <span class="inline-flex items-center gap-1.5 text-xs font-black text-blue-700">
+      <svg class="w-4 h-4 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <polygon points="5 4 15 12 5 20 5 4"></polygon>
+        <line x1="19" y1="5" x2="19" y2="19"></line>
+      </svg>
+      下一篇{typeLabel}推荐
+    </span>
+    <span class="px-2.5 py-0.5 rounded-full text-[11px] font-black bg-blue-600 text-white shadow-sm">
+      进度 {currentIndex + 1} / {totalCount}
+    </span>
+  </div>
+
+  <div class="p-4 space-y-3">
+    <!-- Category & Read Time -->
+    <div class="flex items-center justify-between text-[11px] text-slate-400">
+      <span class="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-bold border border-blue-100">
+        {nextArticle.category}
+      </span>
+      {nextArticle.readTime && <span>{nextArticle.readTime}</span>}
+    </div>
+
+    <!-- Title -->
+    <div>
+      <h3 class="text-sm sm:text-base font-black text-slate-900 leading-snug hover:text-blue-600 transition-colors">
+        <a href={`${prefix}${nextArticle.slug}/`}>{nextArticle.h1}</a>
+      </h3>
+      {nextArticle.desc && (
+        <p class="text-xs text-slate-500 line-clamp-2 mt-1.5 leading-relaxed">
+          {nextArticle.desc}
+        </p>
+      )}
+    </div>
+
+    <!-- Big Jump Action Button -->
+    <a
+      href={`${prefix}${nextArticle.slug}/`}
+      class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-black tracking-wide shadow-md shadow-blue-500/20 hover:from-blue-700 hover:to-indigo-700 hover:shadow-lg transition-all group active:scale-98"
+    >
+      <span>跳转到下一篇{typeLabel}</span>
+      <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </a>
+
+    <!-- Previous Link -->
+    <div class="text-center pt-2 border-t border-slate-100">
+      <a href={`${prefix}${prevArticle.slug}/`} class="text-[11px] text-slate-400 hover:text-blue-600 transition-colors inline-flex items-center gap-1">
+        <span>&larr;</span>
+        <span class="truncate max-w-[240px]">上一篇：{prevArticle.h1}</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Upcoming List / Quick Switcher -->
+  {upcomingList && upcomingList.length > 0 && (
+    <div class="bg-slate-50/80 px-4 py-3 border-t border-slate-200">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-600 mb-2">
+        <span>连载顺延阅读</span>
+        <span class="text-[10px] text-slate-400">快速直达</span>
+      </div>
+      <div class="space-y-1.5 max-h-48 overflow-y-auto pr-1 custom-scrollbar">
+        {upcomingList.map((item, idx) => (
+          <a
+            href={`${prefix}${item.slug}/`}
+            class="flex items-start gap-2 p-1.5 rounded-lg text-xs hover:bg-white hover:text-blue-600 text-slate-700 transition-colors group"
+          >
+            <span class="text-[10px] font-mono text-slate-400 group-hover:text-blue-600 mt-0.5 min-w-[1.2rem]">
+              +{idx + 1}
+            </span>
+            <span class="flex-1 truncate font-medium">{item.h1}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+</div>

@@ -2,24 +2,60 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 // @ts-ignore
 import ALL_ARTICLES from '../../data/articles.js';
+// @ts-ignore
+import GUIDES from '../../data/guides.js';
 import { AIRPORTS } from '../../data/airports';
+import NextArticleWidget from '../../components/NextArticleWidget.astro';
+import ArticleBottomNav from '../../components/ArticleBottomNav.astro';
 
 export function getStaticPaths() {
-  return ALL_ARTICLES.map((article: any) => ({
-    params: { slug: article.slug },
-    props: { article }
-  }));
+  const total = ALL_ARTICLES.length;
+  return ALL_ARTICLES.map((article: any, index: number) => {
+    const prevIndex = (index - 1 + total) % total;
+    const nextIndex = (index + 1) % total;
+    const upcoming = [];
+    for (let i = 1; i <= 5; i++) {
+      upcoming.push(ALL_ARTICLES[(index + i) % total]);
+    }
+
+    return {
+      params: { slug: article.slug },
+      props: {
+        article,
+        prevArticle: ALL_ARTICLES[prevIndex],
+        nextArticle: ALL_ARTICLES[nextIndex],
+        currentIndex: index,
+        totalArticles: total,
+        upcomingArticles: upcoming
+      }
+    };
+  });
 }
 
 interface Props {
   article: any;
+  prevArticle: any;
+  nextArticle: any;
+  currentIndex: number;
+  totalArticles: number;
+  upcomingArticles: any[];
 }
 
-const { article } = Astro.props;
+const {
+  article,
+  prevArticle,
+  nextArticle,
+  currentIndex,
+  totalArticles,
+  upcomingArticles
+} = Astro.props;
 
-// Pick 3 top airports for the sidebar recommendation
+// Top 3 airports for sidebar recommendation
 const topAirports = AIRPORTS.slice(0, 3);
-// Pick related articles in the same category
+// Top 4 guides for client cross-linking
+const topGuides = (GUIDES || []).slice(0, 4);
+
+// Related articles in the same category
 const relatedArticles = ALL_ARTICLES
   .filter((a: any) => a.slug !== article.slug && a.category === article.category)
   .slice(0, 4);
@@ -61,13 +97,20 @@ const schema = {
       </nav>
 
       <div class="max-w-4xl space-y-3">
-        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
-          {article.category}
-        </span>
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
+            {article.category}
+          </span>
+          <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-semibold bg-slate-100 text-slate-700">
+            连载第 {currentIndex + 1} / {totalArticles} 篇
+          </span>
+        </div>
+
         <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
           {article.h1}
         </h1>
-        <div class="flex items-center gap-4 text-xs text-slate-500 pt-1">
+
+        <div class="flex flex-wrap items-center gap-4 text-xs text-slate-500 pt-1">
           <span>发布时间：{article.date}</span>
           <span>•</span>
           <span>预计阅读：{article.readTime}</span>
@@ -91,15 +134,15 @@ const schema = {
 
         <div class="article-prose" set:html={article.content} />
 
-        <!-- Article Footer Recommendation -->
+        <!-- Article Footer CTA Recommendation -->
         <div class="mt-12 pt-8 border-t border-slate-200">
-          <div class="p-6 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white text-center">
+          <div class="p-6 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white text-center shadow-lg">
             <h3 class="text-lg font-black mb-2">需要高品质稳定网络节点？</h3>
             <p class="text-xs text-blue-100 mb-4 max-w-md mx-auto">
               查看机场之家 2026 综合排行榜，核验晚高峰不卡顿的优质内网专线服务商。
             </p>
             <div class="flex flex-wrap items-center justify-center gap-3">
-              <a href="/ranking/" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-white text-blue-700 hover:bg-blue-50">
+              <a href="/ranking/" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-white text-blue-700 hover:bg-blue-50 shadow-sm">
                 查看全站排行榜 &rarr;
               </a>
               <a href="/compare/" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-blue-500 text-white hover:bg-blue-400">
@@ -108,56 +151,99 @@ const schema = {
             </div>
           </div>
         </div>
+
+        <!-- Article Bottom Navigation & Interlinking Hub (上一篇 / 下一篇 / 全站内链) -->
+        <ArticleBottomNav
+          nextArticle={nextArticle}
+          prevArticle={prevArticle}
+          currentIndex={currentIndex}
+          totalCount={totalArticles}
+          basePath="blog"
+          typeLabel="文章"
+        />
       </article>
 
       <!-- Sidebar (4 cols) -->
       <aside class="lg:col-span-4 space-y-6">
-        <!-- Recommended Brands Widget -->
-        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
-          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
-            🔥 2026精选专线机场推荐
-          </h3>
-          <div class="space-y-3">
-            {topAirports.map((a) => (
-              <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-blue-300 transition-colors flex items-center justify-between gap-3">
-                <div class="min-w-0">
-                  <div class="flex items-center gap-1.5">
-                    <span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-blue-600 text-white">#{a.rank}</span>
-                    <h4 class="text-xs font-black text-slate-900 truncate hover:text-blue-600">
-                      <a href={`/airport/${a.slug}/`}>{a.name}</a>
-                    </h4>
-                  </div>
-                  <span class="text-[11px] text-slate-400 block mt-0.5">{a.lineType} · ¥{a.startingPrice}/月</span>
-                </div>
-                <a
-                  href={`/airport/${a.slug}/`}
-                  class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white transition-colors flex-shrink-0"
-                >
-                  评测
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
+        <!-- 1. Next Article Feature Sticky Widget -->
+        <div class="sticky top-20 space-y-6">
+          <NextArticleWidget
+            nextArticle={nextArticle}
+            prevArticle={prevArticle}
+            currentIndex={currentIndex}
+            totalCount={totalArticles}
+            basePath="blog"
+            typeLabel="文章"
+            upcomingList={upcomingArticles}
+          />
 
-        <!-- Related Articles -->
-        {relatedArticles.length > 0 && (
+          <!-- 2. Recommended Brands Widget -->
           <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
-            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
-              📚 相关深度文章
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
+              🔥 2026精选专线机场推荐
             </h3>
-            <ul class="space-y-3">
-              {relatedArticles.map((ra: any) => (
-                <li>
-                  <a href={`/blog/${ra.slug}/`} class="text-xs font-bold text-slate-800 hover:text-blue-600 line-clamp-2 leading-snug">
-                    {ra.h1}
+            <div class="space-y-3">
+              {topAirports.map((a) => (
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-blue-300 transition-colors flex items-center justify-between gap-3">
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-blue-600 text-white">#{a.rank}</span>
+                      <h4 class="text-xs font-black text-slate-900 truncate hover:text-blue-600">
+                        <a href={`/airport/${a.slug}/`}>{a.name}</a>
+                      </h4>
+                    </div>
+                    <span class="text-[11px] text-slate-400 block mt-0.5">{a.lineType} · ¥{a.startingPrice}/月</span>
+                  </div>
+                  <a
+                    href={`/airport/${a.slug}/`}
+                    class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white transition-colors flex-shrink-0"
+                  >
+                    评测
                   </a>
-                  <span class="text-[10px] text-slate-400 mt-0.5 block">{ra.date}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- 3. Client Tutorials Internal Links -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                🛠️ 常用客户端实操教程
+              </h3>
+              <a href="/guides/" class="text-[11px] font-bold text-blue-600 hover:underline">全部30篇 &rarr;</a>
+            </div>
+            <ul class="space-y-2.5 text-xs">
+              {topGuides.map((g: any) => (
+                <li>
+                  <a href={`/guides/${g.slug}/`} class="text-slate-700 hover:text-blue-600 font-medium line-clamp-1 flex items-center gap-1.5">
+                    <span class="text-blue-500">•</span>
+                    <span>{g.h1}</span>
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
-        )}
+
+          <!-- 4. Related Articles In Same Category -->
+          {relatedArticles.length > 0 && (
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+                📚 同类专题深度文章
+              </h3>
+              <ul class="space-y-3">
+                {relatedArticles.map((ra: any) => (
+                  <li>
+                    <a href={`/blog/${ra.slug}/`} class="text-xs font-bold text-slate-800 hover:text-blue-600 line-clamp-2 leading-snug">
+                      {ra.h1}
+                    </a>
+                    <span class="text-[10px] text-slate-400 mt-0.5 block">{ra.date}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
       </aside>
 
     </div>

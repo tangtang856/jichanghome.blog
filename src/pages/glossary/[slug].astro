@@ -4,17 +4,39 @@ import { GLOSSARY_ITEMS } from '../../data/glossary';
 import type { GlossaryItem } from '../../data/glossary';
 
 export function getStaticPaths() {
-  return GLOSSARY_ITEMS.map((item) => ({
-    params: { slug: item.slug },
-    props: { item }
-  }));
+  const total = GLOSSARY_ITEMS.length;
+  return GLOSSARY_ITEMS.map((item, index) => {
+    const prevIndex = (index - 1 + total) % total;
+    const nextIndex = (index + 1) % total;
+    return {
+      params: { slug: item.slug },
+      props: {
+        item,
+        prevItem: GLOSSARY_ITEMS[prevIndex],
+        nextItem: GLOSSARY_ITEMS[nextIndex],
+        currentIndex: index,
+        totalItems: total
+      }
+    };
+  });
 }
 
 interface Props {
   item: GlossaryItem;
+  prevItem: GlossaryItem;
+  nextItem: GlossaryItem;
+  currentIndex: number;
+  totalItems: number;
 }
 
-const { item } = Astro.props;
+const {
+  item,
+  prevItem,
+  nextItem,
+  currentIndex,
+  totalItems
+} = Astro.props;
+
 const otherItems = GLOSSARY_ITEMS.filter((g) => g.slug !== item.slug);
 ---
 
@@ -33,9 +55,15 @@ const otherItems = GLOSSARY_ITEMS.filter((g) => g.slug !== item.slug);
         <span class="text-slate-800 font-semibold">{item.slug}</span>
       </nav>
 
-      <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200 mb-3">
-        📖 翻墙网络核心术语百科
-      </span>
+      <div class="flex items-center gap-2 mb-3">
+        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
+          📖 翻墙网络核心术语百科
+        </span>
+        <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-semibold bg-slate-100 text-slate-700">
+          词条 {currentIndex + 1} / {totalItems}
+        </span>
+      </div>
+
       <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
         {item.term}
       </h1>
@@ -43,22 +71,76 @@ const otherItems = GLOSSARY_ITEMS.filter((g) => g.slug !== item.slug);
     </div>
   </section>
 
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
     <article class="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200/80 shadow-sm article-prose" set:html={item.content} />
 
-    <!-- Other Terms -->
-    <div class="mt-12 pt-8 border-t border-slate-200">
-      <h3 class="text-sm font-bold text-slate-900 mb-4">查阅更多网络核心术语百科：</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {otherItems.map((oi) => (
-          <a
-            href={`/glossary/${oi.slug}/`}
-            class="p-4 rounded-xl bg-white border border-slate-200 hover:border-blue-300 hover:shadow-sm transition-all"
-          >
-            <h4 class="text-xs font-black text-slate-900 mb-1">{oi.term}</h4>
-            <p class="text-[11px] text-slate-500 line-clamp-1">{oi.desc}</p>
-          </a>
-        ))}
+    <!-- Next Term Spotlight Jump Card -->
+    <div class="bg-gradient-to-br from-blue-900/40 via-slate-900/60 to-indigo-950/50 rounded-2xl p-6 sm:p-8 border border-blue-500/30 shadow-xl backdrop-blur-md">
+      <div class="flex items-center justify-between gap-2 mb-3">
+        <span class="text-xs font-black px-3 py-1 rounded-full bg-blue-600 text-white">
+          📖 继续查阅下一个术语
+        </span>
+        <span class="text-xs text-slate-400">词条 {((currentIndex + 1) % totalItems) + 1} / {totalItems}</span>
+      </div>
+      <h3 class="text-xl font-black text-white hover:text-blue-400 transition-colors my-2">
+        <a href={`/glossary/${nextItem.slug}/`}>{nextItem.term}</a>
+      </h3>
+      <p class="text-xs sm:text-sm text-slate-300 line-clamp-2 leading-relaxed mb-4">
+        {nextItem.desc}
+      </p>
+      <a
+        href={`/glossary/${nextItem.slug}/`}
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-black shadow-md transition-all active:scale-95 group"
+      >
+        <span>跳转到下一个术语词条</span>
+        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Dual Pagination -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <a
+        href={`/glossary/${prevItem.slug}/`}
+        class="p-4 rounded-xl bg-white border border-slate-200 hover:border-blue-300 hover:shadow-sm transition-all group"
+      >
+        <span class="block text-[11px] text-slate-400 group-hover:text-blue-600">&larr; 上一个术语</span>
+        <span class="block text-xs sm:text-sm font-bold text-slate-900 mt-1">{prevItem.term}</span>
+      </a>
+      <a
+        href={`/glossary/${nextItem.slug}/`}
+        class="p-4 rounded-xl bg-white border border-slate-200 hover:border-blue-300 hover:shadow-sm transition-all text-right group"
+      >
+        <span class="block text-[11px] text-slate-400 group-hover:text-blue-600">下一个术语 &rarr;</span>
+        <span class="block text-xs sm:text-sm font-bold text-slate-900 mt-1">{nextItem.term}</span>
+      </a>
+    </div>
+
+    <!-- Cross-links & Other Terms -->
+    <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm space-y-6">
+      <div>
+        <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider mb-3">更多术语词条快速查阅</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {otherItems.map((oi) => (
+            <a
+              href={`/glossary/${oi.slug}/`}
+              class="p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-blue-300 hover:bg-blue-50/20 transition-all"
+            >
+              <h4 class="text-xs font-bold text-slate-900 mb-0.5">{oi.term}</h4>
+              <p class="text-[11px] text-slate-500 line-clamp-1">{oi.desc}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <span class="text-slate-500 font-medium">了解完底层网络原理，想寻找靠谱服务？</span>
+        <div class="flex items-center gap-3">
+          <a href="/ranking/" class="text-blue-600 font-bold hover:underline">综合节点排行榜 &rarr;</a>
+          <a href="/guides/" class="text-emerald-600 font-bold hover:underline">客户端使用教程 &rarr;</a>
+          <a href="/compare/" class="text-indigo-600 font-bold hover:underline">在线横向比价 &rarr;</a>
+        </div>
       </div>
     </div>
   </div>

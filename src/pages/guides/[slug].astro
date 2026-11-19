@@ -2,22 +2,57 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 // @ts-ignore
 import GUIDES from '../../data/guides.js';
+// @ts-ignore
+import ALL_ARTICLES from '../../data/articles.js';
 import { AIRPORTS } from '../../data/airports';
+import NextArticleWidget from '../../components/NextArticleWidget.astro';
+import ArticleBottomNav from '../../components/ArticleBottomNav.astro';
 
 export function getStaticPaths() {
-  return GUIDES.map((guide: any) => ({
-    params: { slug: guide.slug },
-    props: { guide }
-  }));
+  const total = GUIDES.length;
+  return GUIDES.map((guide: any, index: number) => {
+    const prevIndex = (index - 1 + total) % total;
+    const nextIndex = (index + 1) % total;
+    const upcoming = [];
+    for (let i = 1; i <= 5; i++) {
+      upcoming.push(GUIDES[(index + i) % total]);
+    }
+
+    return {
+      params: { slug: guide.slug },
+      props: {
+        guide,
+        prevGuide: GUIDES[prevIndex],
+        nextGuide: GUIDES[nextIndex],
+        currentIndex: index,
+        totalGuides: total,
+        upcomingGuides: upcoming
+      }
+    };
+  });
 }
 
 interface Props {
   guide: any;
+  prevGuide: any;
+  nextGuide: any;
+  currentIndex: number;
+  totalGuides: number;
+  upcomingGuides: any[];
 }
 
-const { guide } = Astro.props;
+const {
+  guide,
+  prevGuide,
+  nextGuide,
+  currentIndex,
+  totalGuides,
+  upcomingGuides
+} = Astro.props;
+
 const topAirports = AIRPORTS.slice(0, 3);
-const otherGuides = GUIDES.filter((g: any) => g.slug !== guide.slug).slice(0, 5);
+// Cross-link 4 popular blog articles
+const relatedArticles = (ALL_ARTICLES || []).slice(0, 4);
 
 const schema = {
   "@context": "https://schema.org",
@@ -46,13 +81,20 @@ const schema = {
       </nav>
 
       <div class="max-w-4xl space-y-3">
-        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-          🛠️ {guide.category} 完整教程
-        </span>
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+            🛠️ {guide.category} 完整教程
+          </span>
+          <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-semibold bg-slate-100 text-slate-700">
+            教程 {currentIndex + 1} / {totalGuides} 篇
+          </span>
+        </div>
+
         <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
           {guide.h1}
         </h1>
-        <div class="flex items-center gap-4 text-xs text-slate-500 pt-1">
+
+        <div class="flex flex-wrap items-center gap-4 text-xs text-slate-500 pt-1">
           <span>更新时间：{guide.date}</span>
           <span>•</span>
           <span>实操耗时：{guide.readTime}</span>
@@ -73,14 +115,15 @@ const schema = {
 
         <div class="article-prose" set:html={guide.content} />
 
+        <!-- CTA Box -->
         <div class="mt-12 pt-8 border-t border-slate-200">
-          <div class="p-6 rounded-2xl bg-slate-900 text-white text-center">
+          <div class="p-6 rounded-2xl bg-slate-900 text-white text-center shadow-lg">
             <h3 class="text-lg font-black mb-2">配置好客户端，但缺少靠谱的订阅节点？</h3>
             <p class="text-xs text-slate-400 mb-4 max-w-md mx-auto">
               查看机场之家 2026 稳定机场排行榜，支持一键导入订阅，晚高峰不卡顿。
             </p>
             <div class="flex flex-wrap items-center justify-center gap-3">
-              <a href="/ranking/" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-blue-600 text-white hover:bg-blue-700">
+              <a href="/ranking/" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-sm">
                 查看节点综合排行榜 &rarr;
               </a>
               <a href="/airport/" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">
@@ -89,50 +132,81 @@ const schema = {
             </div>
           </div>
         </div>
+
+        <!-- Article Bottom Navigation & Interlinking Hub (上一篇 / 下一篇 / 全站内链) -->
+        <ArticleBottomNav
+          nextArticle={nextGuide}
+          prevArticle={prevGuide}
+          currentIndex={currentIndex}
+          totalCount={totalGuides}
+          basePath="guides"
+          typeLabel="教程"
+        />
       </article>
 
+      <!-- Sidebar -->
       <aside class="lg:col-span-4 space-y-6">
-        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
-          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
-            🚀 适配本教程的高速机场推荐
-          </h3>
-          <div class="space-y-3">
-            {topAirports.map((a) => (
-              <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-blue-300 transition-colors flex items-center justify-between gap-3">
-                <div class="min-w-0">
-                  <div class="flex items-center gap-1.5">
-                    <span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-blue-600 text-white">#{a.rank}</span>
-                    <h4 class="text-xs font-black text-slate-900 truncate hover:text-blue-600">
-                      <a href={`/airport/${a.slug}/`}>{a.name}</a>
-                    </h4>
-                  </div>
-                  <span class="text-[11px] text-slate-400 block mt-0.5">{a.lineType} · ¥{a.startingPrice}/月</span>
-                </div>
-                <a
-                  href={`/airport/${a.slug}/`}
-                  class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white transition-colors flex-shrink-0"
-                >
-                  查看
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
+        <div class="sticky top-20 space-y-6">
+          <!-- 1. Next Guide Feature Sticky Widget -->
+          <NextArticleWidget
+            nextArticle={nextGuide}
+            prevArticle={prevGuide}
+            currentIndex={currentIndex}
+            totalCount={totalGuides}
+            basePath="guides"
+            typeLabel="教程"
+            upcomingList={upcomingGuides}
+          />
 
-        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
-          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
-            📖 更多客户端图文教程
-          </h3>
-          <ul class="space-y-3">
-            {otherGuides.map((og: any) => (
-              <li>
-                <a href={`/guides/${og.slug}/`} class="text-xs font-bold text-slate-800 hover:text-blue-600 line-clamp-2 leading-snug">
-                  {og.h1}
-                </a>
-                <span class="text-[10px] text-slate-400 mt-0.5 block">{og.category}</span>
-              </li>
-            ))}
-          </ul>
+          <!-- 2. Recommended Airports -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
+              🚀 适配本教程的高速机场推荐
+            </h3>
+            <div class="space-y-3">
+              {topAirports.map((a) => (
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-blue-300 transition-colors flex items-center justify-between gap-3">
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-blue-600 text-white">#{a.rank}</span>
+                      <h4 class="text-xs font-black text-slate-900 truncate hover:text-blue-600">
+                        <a href={`/airport/${a.slug}/`}>{a.name}</a>
+                      </h4>
+                    </div>
+                    <span class="text-[11px] text-slate-400 block mt-0.5">{a.lineType} · ¥{a.startingPrice}/月</span>
+                  </div>
+                  <a
+                    href={`/airport/${a.slug}/`}
+                    class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white transition-colors flex-shrink-0"
+                  >
+                    查看
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- 3. Related Deep Articles Interlinking -->
+          {relatedArticles.length > 0 && (
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                  📚 进阶选型与避坑指南
+                </h3>
+                <a href="/blog/" class="text-[11px] font-bold text-blue-600 hover:underline">全部100篇 &rarr;</a>
+              </div>
+              <ul class="space-y-3">
+                {relatedArticles.map((ra: any) => (
+                  <li>
+                    <a href={`/blog/${ra.slug}/`} class="text-xs font-bold text-slate-800 hover:text-blue-600 line-clamp-2 leading-snug">
+                      {ra.h1}
+                    </a>
+                    <span class="text-[10px] text-slate-400 mt-0.5 block">{ra.category}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </aside>
 
