@@ -142,7 +142,6 @@ function buildFooter(depth = 0) {
             <li><a href="${rel}disclaimer/index.html">免责声明</a></li>
             <li><a href="${rel}privacy-policy/index.html">隐私权保护政策</a></li>
             <li><a href="${rel}sitemap.html">网站地图 (Sitemap)</a></li>
-            <li><a href="${rel}sitemap.xml">XML 地图</a></li>
           </ul>
         </div>
       </div>
