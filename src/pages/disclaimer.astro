@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = "法律免责声明 | 技术交流合规与第三方服务免责 - 机场之家";
+const description = "机场之家法律免责声明。本站内容仅用于计算机网络科学研究与学术探讨，第三方服务稳定性请自行评估。";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="disclaimer/"
+>
+  <section class="bg-white border-b border-slate-200 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-black text-slate-900 tracking-tight">法律免责声明 (Disclaimer)</h1>
+      <p class="text-sm text-slate-500 mt-2">技术学术交流 · 自觉遵守法规 · 第三方服务自主决策</p>
+    </div>
+  </section>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <article class="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200/80 shadow-sm article-prose">
+      <h2>一、学术研究与技术交流定位</h2>
+      <p>
+        机场之家（jichanghome.blog）所刊登的所有文章、教程、评测与概念百科，仅用于计算机网络拓扑结构研究、网络安全加密技术探讨与合规涉外企业跨境网络调研。
+      </p>
+
+      <h2>二、遵守属地法律法规</h2>
+      <p>
+        任何访问本网站的个人与组织，应当严格遵守其所在国家与地区的法律法规。严禁利用本站技术文章从事任何危害国家安全、侵犯他人隐私或违反电信运营秩序的违法犯罪活动。因使用者个人行为导致的任何法律后果，本站不承担任何法律责任。
+      </p>
+
+      <h2>三、第三方商业服务风险提示</h2>
+      <p>
+        本站展示的各机场服务商均为独立运营的第三方商业实体。尽管我们进行了严格的实机测速与审查核验，但各品牌的长期服务质量、套餐资费调整及突发运营风险属于市场行为。读者在做出购买决策时应充分考虑自身需求与预算，并<strong>强烈建议按月订阅试用</strong>，自担商业交易风险。
+      </p>
+    </article>
+  </div>
+</BaseLayout>

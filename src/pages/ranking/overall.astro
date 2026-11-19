@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { AIRPORTS } from '../../data/airports';
+
+const title = "2026全网优质机场节点综合实力排行榜 | 延迟与速率评测 - 机场之家";
+const description = "2026年度全网已核验14家机场综合实力总榜。综合考量节点网络拓扑、晚高峰抗断连性能、协议支持度、流媒体与ChatGPT解锁及客服响应。";
+const keywords = "机场综合排行, 优质机场推荐, 梯子排行榜, 机场节点实力榜";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  canonicalPath="ranking/overall/"
+  currentNav="ranking"
+>
+  <section class="bg-white border-b border-slate-200 py-12 lg:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
+      <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200 mb-4">
+        年度核心总榜
+      </span>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
+        2026年全网机场节点综合实力排行榜
+      </h1>
+      <p class="text-sm sm:text-base text-slate-600 mt-4 leading-relaxed">
+        本榜单综合了晚高峰丢包率、单GB成本权重、AI与流媒体解锁能力及服务商持续运营信誉。
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="space-y-6">
+      {AIRPORTS.map((a) => (
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-lg transition-all flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="flex items-start gap-4">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center font-black text-sm shadow-md flex-shrink-0">
+              #{a.rank}
+            </span>
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <h3 class="text-lg font-black text-slate-900 hover:text-blue-600">
+                  <a href={`/airport/${a.slug}/`}>{a.name}</a>
+                </h3>
+                <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700">{a.lineType}</span>
+                {a.coupon && (
+                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-rose-50 text-rose-600 border border-rose-200">
+                    优惠券: {a.coupon}
+                  </span>
+                )}
+              </div>
+              <p class="text-xs text-slate-500 mb-2">{a.tagline}</p>
+              <div class="flex flex-wrap items-center gap-3 text-xs text-slate-400">
+                <span>起步月付：<strong class="text-red-600 text-sm font-black">¥{a.startingPrice}</strong>/月</span>
+                <span>•</span>
+                <span>配额流量：<strong class="text-slate-700">{a.plans[0].traffic}</strong></span>
+                <span>•</span>
+                <span>单GB单价：<strong class="text-emerald-600 font-bold">¥{a.plans[0].unitPricePerGb}/GB</strong></span>
+                <span>•</span>
+                <span>综合评分：<strong class="text-blue-600 font-bold">⭐ {a.scoreOverall}</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <a
+              href={`/airport/${a.slug}/`}
+              class="px-4 py-2.5 rounded-xl text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white transition-colors"
+            >
+              深度评测报告 &rarr;
+            </a>
+            <a
+              href={a.affUrl}
+              target="_blank"
+              rel="noopener nofollow"
+              class="px-5 py-2.5 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/20"
+            >
+              直达官网 ↗
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

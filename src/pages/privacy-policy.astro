@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = "隐私权保护政策 | 访客数据保护与零追踪承诺 - 机场之家";
+const description = "机场之家隐私保护规范。本站严格坚持纯静态HTML架构，不强制收集访客个人信息，不安装第三方侵权追踪插件。";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="privacy-policy/"
+>
+  <section class="bg-white border-b border-slate-200 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-black text-slate-900 tracking-tight">隐私权保护政策 (Privacy Policy)</h1>
+      <p class="text-sm text-slate-500 mt-2">尊重访客隐私 · 纯净静态架构 · 拒绝滥用追踪</p>
+    </div>
+  </section>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <article class="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200/80 shadow-sm article-prose">
+      <h2>一、我们不收集的信息</h2>
+      <p>
+        机场之家（jichanghome.blog）完全构建于纯静态 HTML/SSG 架构上。我们<strong>不设置任何用户注册系统，不收集您的真实姓名、手机号、密码或支付账号</strong>。
+      </p>
+
+      <h2>二、服务器日志与统计</h2>
+      <p>
+        与所有标准网站服务器相同，云服务商（如 Cloudflare Pages）可能会自动记录基础的网络请求日志（如匿名 IP、浏览器 User-Agent、访问时间与请求 URL），用于防御 DDoS 恶意攻击与保障网站正常访问，这些日志绝不会与您的真实身份关联。
+      </p>
+
+      <h2>三、Cookie 的使用</h2>
+      <p>
+        本站仅在必要时使用轻量级的本地存储（LocalStorage / SessionStorage）来记住您在横向对比工具中勾选的对比品牌状态，完全运行在您的本地浏览器端，不上传任何隐私数据。
+      </p>
+    </article>
+  </div>
+</BaseLayout>

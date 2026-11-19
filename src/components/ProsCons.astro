@@ -1,0 +1,42 @@
+---
+interface Props {
+  advantages: string[];
+  disadvantages: string[];
+}
+
+const { advantages, disadvantages } = Astro.props;
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
+  <!-- Pros -->
+  <div class="bg-emerald-50/50 rounded-2xl p-5 border border-emerald-200/80 shadow-sm">
+    <div class="flex items-center gap-2 mb-3 text-emerald-800 font-bold text-sm">
+      <span class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs">✓</span>
+      <span>突出核心优势 (Pros)</span>
+    </div>
+    <ul class="space-y-2 text-xs text-slate-700">
+      {advantages.map((adv) => (
+        <li class="flex items-start gap-2">
+          <span class="text-emerald-500 font-bold mt-0.5">•</span>
+          <span class="leading-relaxed">{adv}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- Cons -->
+  <div class="bg-amber-50/50 rounded-2xl p-5 border border-amber-200/80 shadow-sm">
+    <div class="flex items-center gap-2 mb-3 text-amber-800 font-bold text-sm">
+      <span class="w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center text-xs">!</span>
+      <span>注意事项与不足 (Cons)</span>
+    </div>
+    <ul class="space-y-2 text-xs text-slate-700">
+      {disadvantages.map((dis) => (
+        <li class="flex items-start gap-2">
+          <span class="text-amber-500 font-bold mt-0.5">•</span>
+          <span class="leading-relaxed">{dis}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = "关于我们 | 机场之家客观中立评测使命 - 机场之家";
+const description = "了解机场之家（jichanghome.blog）的建站初衷、编辑部团队背景与基于真实网络测速的评测准则。";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="about/"
+>
+  <section class="bg-white border-b border-slate-200 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-black text-slate-900 tracking-tight">关于机场之家 (About Us)</h1>
+      <p class="text-sm text-slate-500 mt-2">真实测速 · 数据说话 · 拒绝吹捧 · 中立客观</p>
+    </div>
+  </section>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <article class="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200/80 shadow-sm article-prose">
+      <h2>一、我们的使命与愿景</h2>
+      <p>
+        在鱼龙混杂的科学上网与机场推荐圈子里，充斥着大量虚假测速图、伪造千兆跑分和一次性收割跑路的黑心平台。无数刚接触外网的新手、科研学者和跨境商家因此蒙受金钱损失与业务断流。
+      </p>
+      <p>
+        <strong>机场之家（jichanghome.blog）</strong> 由数位长期关注网络技术安全与网络性能测试的极客工程师独立发起。我们的核心使命就是为中文互联网用户提供一份<strong>真实、透明、可验证、拒绝无脑吹捧</strong>的参考指南。
+      </p>
+
+      <h2>二、我们的四大约束原则</h2>
+      <ul>
+        <li><strong>原则一（严禁虚构测速）：</strong> 所有测速数据必须来自真实中国大陆千兆宽带网络（电信、联通、移动双栈环境）在晚高峰（20:00~23:00）的实测抽样。</li>
+        <li><strong>原则二（账单与倍率透明）：</strong> 严格计算真实“每GB成本”，揭露标称大流量却暗藏3x~5x高倍率扣费的商家套路。</li>
+        <li><strong>原则三（坚决倡导月付）：</strong> 无论品牌背景多宏大，始终建议读者优先按月付体验，警惕大额年付优惠陷阱。</li>
+        <li><strong>原则四（合规交流）：</strong> 本站所有内容与网络知识仅供学术研究与正常跨境商务参考，严禁用于任何违法活动。</li>
+      </ul>
+    </article>
+  </div>
+</BaseLayout>

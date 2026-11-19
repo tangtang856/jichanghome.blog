@@ -1,0 +1,105 @@
+---
+interface Props {
+  currentNav?: string;
+}
+
+const { currentNav = '' } = Astro.props;
+
+const navItems = [
+  { label: '首页', href: '/', id: 'home' },
+  { label: '机场推荐', href: '/recommend/', id: 'recommend' },
+  { label: '节点排行', href: '/ranking/', id: 'ranking' },
+  { label: '品牌评测', href: '/airport/', id: 'airport' },
+  { label: '机场对比', href: '/compare/', id: 'compare' },
+  { label: '使用教程', href: '/guides/', id: 'guides' },
+  { label: '选型指南', href: '/blog/', id: 'blog' },
+];
+---
+
+<header class="site-header sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2.5 text-xl font-black text-slate-900 tracking-tight hover:text-blue-600 transition-colors group">
+      <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center font-black text-sm shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">JH</span>
+      <span class="flex flex-col">
+        <span class="leading-none font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">机场之家</span>
+        <span class="text-[10px] text-slate-500 font-semibold tracking-wider uppercase leading-tight mt-0.5">jichanghome.blog</span>
+      </span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center gap-1.5 lg:gap-2" aria-label="主导航">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+            currentNav === item.id
+              ? 'text-blue-600 bg-blue-50 font-bold'
+              : 'text-slate-700 hover:text-blue-600 hover:bg-slate-50'
+          }`}
+        >
+          {item.label}
+        </a>
+      ))}
+      <a
+        href="/compare/"
+        class="ml-2 px-3.5 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider bg-blue-600 text-white shadow-sm shadow-blue-600/30 hover:bg-blue-700 hover:shadow-md transition-all active:scale-95"
+      >
+        快速比价
+      </a>
+    </nav>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button
+      id="mobileMenuBtn"
+      class="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
+      aria-label="展开导航菜单"
+      aria-expanded="false"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div id="mobileDrawer" class="hidden md:hidden border-b border-slate-200 bg-white px-4 pt-2 pb-4 space-y-1 shadow-lg">
+    {navItems.map((item) => (
+      <a
+        href={item.href}
+        class={`block px-3 py-2 rounded-md text-base font-medium ${
+          currentNav === item.id
+            ? 'text-blue-600 bg-blue-50 font-bold'
+            : 'text-slate-700 hover:text-blue-600 hover:bg-slate-50'
+        }`}
+      >
+        {item.label}
+      </a>
+    ))}
+    <div class="pt-2">
+      <a
+        href="/compare/"
+        class="block w-full text-center px-4 py-2.5 rounded-lg text-sm font-bold bg-blue-600 text-white shadow-sm hover:bg-blue-700"
+      >
+        在线横向比价工具 &rarr;
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobileMenuBtn');
+  const drawer = document.getElementById('mobileDrawer');
+  if (btn && drawer) {
+    btn.addEventListener('click', () => {
+      const isHidden = drawer.classList.contains('hidden');
+      if (isHidden) {
+        drawer.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        drawer.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+</script>

@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { AIRPORTS } from '../../data/airports';
+
+const title = "Netflix/Disney+流媒体4K秒开解锁机场节点推荐 - 机场之家";
+const description = "2026年流媒体4K/8K解锁专用机场推荐。实测支持Netflix美区日区非自制剧、Disney+、YouTube Premium及BBC iPlayer原画画质秒开。";
+const keywords = "流媒体机场推荐, 奈飞解锁节点, Disney+梯子, 4K秒开机场, YouTube Premium";
+
+const filtered = AIRPORTS.filter(a => a.streamingSupport.length >= 3);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  canonicalPath="recommend/streaming/"
+  currentNav="recommend"
+>
+  <section class="bg-white border-b border-slate-200 py-12 lg:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
+      <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200 mb-4">
+        影音发烧友 · 4K秒开
+      </span>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
+        2026年流媒体4K解锁专用机场推荐
+      </h1>
+      <p class="text-sm sm:text-base text-slate-600 mt-4 leading-relaxed">
+        实测全球多区片库原生解锁。大带宽冗余，拖拽进度条零缓冲，畅享杜比视界与原画音画质。
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {filtered.map((a) => (
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-lg transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2 py-0.5 rounded text-xs font-bold bg-rose-50 text-rose-700">#{a.rank} {a.name}</span>
+              <span class="text-xs font-bold text-rose-600">4K秒开实测通过</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-4 line-clamp-2 leading-relaxed">{a.tagline}</p>
+            <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-600 mb-4 space-y-1">
+              <div><strong>解锁平台：</strong> {a.streamingSupport.join('、')}</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href={`/airport/${a.slug}/`} class="flex-1 py-2 rounded-xl text-center text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white transition-colors">
+              评测详情 &rarr;
+            </a>
+            <a href={a.affUrl} target="_blank" rel="noopener nofollow" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700">
+              官网 ↗
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

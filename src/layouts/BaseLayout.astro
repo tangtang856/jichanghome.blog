@@ -1,0 +1,62 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string;
+  canonicalPath?: string;
+  currentNav?: string;
+  schema?: any;
+}
+
+const {
+  title,
+  description,
+  keywords,
+  canonicalPath = '',
+  currentNav = '',
+  schema = null
+} = Astro.props;
+
+const canonicalUrl = new URL(canonicalPath, 'https://jichanghome.blog').href;
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {keywords && <meta name="keywords" content={keywords} />}
+  <link rel="canonical" href={canonicalUrl} />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:site_name" content="机场之家 - 中文网络节点与梯子推荐门户" />
+  <meta property="og:locale" content="zh_CN" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+
+  {schema && (
+    <script type="application/ld+json" set:html={JSON.stringify(schema, null, 2)} />
+  )}
+</head>
+<body class="bg-slate-50 text-slate-900 flex flex-col min-h-screen antialiased selection:bg-blue-100 selection:text-blue-900">
+  <Header currentNav={currentNav} />
+  <main class="flex-grow">
+    <slot />
+  </main>
+  <Footer />
+</body>
+</html>

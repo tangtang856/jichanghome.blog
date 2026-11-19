@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = "独立编辑政策 | 评测标准与商业利益隔离规范 - 机场之家";
+const description = "机场之家独立编辑政策规范。阐明测速数据独立性、推荐位排位准则及与品牌方商业推广的明确界限。";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="editorial-policy/"
+>
+  <section class="bg-white border-b border-slate-200 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-black text-slate-900 tracking-tight">独立编辑政策 (Editorial Policy)</h1>
+      <p class="text-sm text-slate-500 mt-2">坚守客观基准 · 真实数据驱动 · 严格利益隔离</p>
+    </div>
+  </section>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <article class="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200/80 shadow-sm article-prose">
+      <h2>一、独立客观原则</h2>
+      <p>
+        机场之家的所有评测报告、综合排行榜与横向对比数据，均由编辑部测试团队基于实际购买的测试账号、真实网络环境下的性能压测与协议抓包得出。任何商业赞助均不得干涉实测数据的客观呈现。
+      </p>
+
+      <h2>二、评分体系构成</h2>
+      <ul>
+        <li><strong>网络稳定性（权重 35%）：</strong> 晚高峰（20:00~23:00）丢包率与延迟抖动；</li>
+        <li><strong>单 GB 真实性价比（权重 25%）：</strong> 统一折算真实单GB单价，排除虚高倍率偷跑套路；</li>
+        <li><strong>生态与解锁表现（权重 20%）：</strong> 原生 IP 对 ChatGPT、Claude 与 Netflix 原生非自制剧的解锁稳定性；</li>
+        <li><strong>运营信誉与客服（权重 20%）：</strong> 存续运营时长、工单处理速度与退款合规性。</li>
+      </ul>
+
+      <h2>三、联盟链接说明</h2>
+      <p>
+        为了维持服务器运营、千兆网络宽带测试专线与多平台付费订阅账号的成本支出，本站部分品牌链接可能包含推广代码（Affiliate Link）。读者通过该链接购买不会产生任何额外费用，甚至可享受专属优惠券减免。我们绝不会因推广收益而为劣质服务商背书。
+      </p>
+    </article>
+  </div>
+</BaseLayout>

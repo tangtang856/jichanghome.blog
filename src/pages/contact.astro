@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = "联系与反馈 | 商务合作与勘误反馈 - 机场之家";
+const description = "机场之家编辑部联系方式。欢迎读者提供真实节点测速样本、勘误反馈与合规技术交流。";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="contact/"
+>
+  <section class="bg-white border-b border-slate-200 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-black text-slate-900 tracking-tight">联系与反馈 (Contact Us)</h1>
+      <p class="text-sm text-slate-500 mt-2">欢迎同行交流、真实测速数据投稿与页面内容勘误</p>
+    </div>
+  </section>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <article class="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200/80 shadow-sm article-prose">
+      <h2>一、勘误与数据纠错</h2>
+      <p>
+        由于各机场服务商的套餐策略、优惠码有效期与线路拓扑可能随时发生变动，如果您在阅读过程中发现任何数据已失效或存在偏差，请随时与我们联系。我们承诺在核实后的 24 小时内更新页面数据。
+      </p>
+
+      <h2>二、联系方式渠道</h2>
+      <ul>
+        <li><strong>官方联系邮箱：</strong> <code>contact@jichanghome.blog</code></li>
+        <li><strong>Telegram 官方频道与联络：</strong> 请认准唯一官方公开通道，切莫轻信任何主动私信推销的骗子。</li>
+      </ul>
+
+      <h2>三、商务合作声明</h2>
+      <p>
+        我们仅接受经过我们实机测速核验通过、具备真实内网专线能力且信誉良好的品牌进行收录。任何存在跑路劣迹、虚假宣传或扣费套路的平台恕不接待。
+      </p>
+    </article>
+  </div>
+</BaseLayout>

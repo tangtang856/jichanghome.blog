@@ -1,0 +1,197 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { AIRPORTS } from '../../data/airports';
+
+const title = "机场参数横向在线对比工具 | 价格/协议/流量/解锁一键比对 - 机场之家";
+const description = "支持选择2至4家主流已核验机场进行多维度横向比对。涵盖起步价格、每GB成本、节点线路架构、协议支持、设备并发与流媒体/AI大模型解锁能力。";
+const keywords = "机场对比, 梯子横向比价, vpn对比, 性价比机场, 机场节点对比";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  canonicalPath="compare/"
+  currentNav="compare"
+>
+  <section class="bg-white border-b border-slate-200 py-10 lg:py-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
+      <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200 mb-3">
+        多维度数据实验室 · 横向比对
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+        2026 主流网络机场横向在线对比工具
+      </h1>
+      <p class="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
+        自由勾选 2~4 家品牌，客观对比其真实资费、单GB成本、底层线路、并发限制及解锁表现。
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Brand Selector Pills -->
+    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-bold text-slate-900">选择要比对的机场品牌（点击勾选/取消，建议选择 2~4 家）：</h3>
+        <button id="resetBtn" class="text-xs font-bold text-blue-600 hover:underline">重置选择</button>
+      </div>
+
+      <div class="flex flex-wrap gap-2" id="pillContainer">
+        {AIRPORTS.map((a, idx) => (
+          <button
+            class={`brand-pill px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+              idx < 3
+                ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+            }`}
+            data-id={a.id}
+          >
+            #{a.rank} {a.name}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Comparison Table Container -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs border-collapse" id="compareTable">
+          <thead>
+            <tr class="bg-slate-50/80 border-b border-slate-200 text-slate-600 font-bold" id="tableHeaderRow">
+              <th class="py-4 px-5 min-w-[140px] sticky left-0 bg-slate-50/90 backdrop-blur z-10">对比维度</th>
+              <!-- Dynamic Headers will be rendered here -->
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-700" id="tableBody">
+            <!-- Dynamic Rows will be rendered here via client JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script define:vars={{ airportsData: AIRPORTS }}>
+  let selectedIds = [airportsData[0].id, airportsData[1].id, airportsData[2].id];
+
+  const pillContainer = document.getElementById('pillContainer');
+  const tableHeaderRow = document.getElementById('tableHeaderRow');
+  const tableBody = document.getElementById('tableBody');
+  const resetBtn = document.getElementById('resetBtn');
+
+  function renderTable() {
+    const selectedAirports = airportsData.filter(a => selectedIds.includes(a.id));
+
+    // Update Pills
+    document.querySelectorAll('.brand-pill').forEach(btn => {
+      const id = btn.getAttribute('data-id');
+      if (selectedIds.includes(id)) {
+        btn.className = 'brand-pill px-3 py-1.5 rounded-xl text-xs font-bold transition-all border bg-blue-600 text-white border-blue-600 shadow-sm';
+      } else {
+        btn.className = 'brand-pill px-3 py-1.5 rounded-xl text-xs font-bold transition-all border bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100';
+      }
+    });
+
+    // Render Headers
+    let headerHtml = `<th class="py-4 px-5 min-w-[140px] sticky left-0 bg-slate-50/90 backdrop-blur z-10">对比维度</th>`;
+    selectedAirports.forEach(a => {
+      headerHtml += `
+        <th class="py-4 px-5 min-w-[200px] text-center">
+          <div class="text-sm font-black text-slate-900 mb-1">#${a.rank} ${a.name}</div>
+          <span class="inline-block text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">${a.lineType}</span>
+        </th>
+      `;
+    });
+    tableHeaderRow.innerHTML = headerHtml;
+
+    // Define comparison rows
+    const rows = [
+      {
+        label: '起步价格',
+        getValue: a => `<span class="text-base font-black text-red-600">¥${a.startingPrice}</span> <span class="text-slate-400">/月</span>`
+      },
+      {
+        label: '起步可用流量',
+        getValue: a => `<strong class="text-slate-900">${a.plans[0].traffic}</strong>`
+      },
+      {
+        label: '单 GB 真实单价',
+        getValue: a => `<span class="font-extrabold text-emerald-600">¥${a.plans[0].unitPricePerGb}/GB</span>`
+      },
+      {
+        label: '底层线路架构',
+        getValue: a => `<span class="px-2 py-0.5 rounded bg-slate-100 font-semibold">${a.lineType}</span>`
+      },
+      {
+        label: '支持协议',
+        getValue: a => a.protocols.join(' / ')
+      },
+      {
+        label: '设备并发限制',
+        getValue: a => a.plans[0].deviceLimit
+      },
+      {
+        label: 'AI 大模型解锁',
+        getValue: a => `<span class="text-emerald-600 font-bold">✓ ${a.aiSupport.slice(0, 2).join('、')}</span>`
+      },
+      {
+        label: '4K 流媒体解锁',
+        getValue: a => `<span class="text-emerald-600 font-bold">✓ ${a.streamingSupport.slice(0, 2).join('、')}</span>`
+      },
+      {
+        label: '核心优势',
+        getValue: a => `<div class="text-left text-[11px] leading-relaxed text-slate-600">${a.advantages[0]}</div>`
+      },
+      {
+        label: '操作指引',
+        getValue: a => `
+          <div class="space-y-1.5">
+            <a data-slug="${a.slug}" onclick="location.href='../airport/' + this.dataset.slug + '/index.html'" style="cursor:pointer;" class="block w-full py-1.5 px-3 rounded-lg text-center text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white transition-colors">
+              独立评测报告 &rarr;
+            </a>
+            <a data-url="${a.affUrl}" onclick="window.open(this.dataset.url, '_blank', 'noopener,nofollow')" style="cursor:pointer;" class="block w-full py-1 px-3 rounded-lg text-center text-[11px] text-slate-500 hover:text-slate-900">
+              直达官网 ↗
+            </a>
+          </div>
+        `
+      }
+    ];
+
+    let bodyHtml = '';
+    rows.forEach(r => {
+      bodyHtml += `<tr class="hover:bg-slate-50/50 transition-colors">
+        <td class="py-3.5 px-5 font-bold text-slate-800 sticky left-0 bg-white/95 backdrop-blur z-10 border-r border-slate-100">
+          ${r.label}
+        </td>
+        ${selectedAirports.map(a => `<td class="py-3.5 px-5 text-center">${r.getValue(a)}</td>`).join('')}
+      </tr>`;
+    });
+    tableBody.innerHTML = bodyHtml;
+  }
+
+  // Handle pill click
+  pillContainer.addEventListener('click', e => {
+    const target = e.target.closest('.brand-pill');
+    if (!target) return;
+    const id = target.getAttribute('data-id');
+
+    if (selectedIds.includes(id)) {
+      if (selectedIds.length > 1) {
+        selectedIds = selectedIds.filter(x => x !== id);
+      }
+    } else {
+      if (selectedIds.length >= 4) {
+        selectedIds.shift(); // keep max 4
+      }
+      selectedIds.push(id);
+    }
+    renderTable();
+  });
+
+  resetBtn.addEventListener('click', () => {
+    selectedIds = [airportsData[0].id, airportsData[1].id, airportsData[2].id];
+    renderTable();
+  });
+
+  renderTable();
+</script>

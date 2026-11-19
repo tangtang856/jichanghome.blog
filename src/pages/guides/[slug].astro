@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+// @ts-ignore
+import GUIDES from '../../data/guides.js';
+import { AIRPORTS } from '../../data/airports';
+
+export function getStaticPaths() {
+  return GUIDES.map((guide: any) => ({
+    params: { slug: guide.slug },
+    props: { guide }
+  }));
+}
+
+interface Props {
+  guide: any;
+}
+
+const { guide } = Astro.props;
+const topAirports = AIRPORTS.slice(0, 3);
+const otherGuides = GUIDES.filter((g: any) => g.slug !== guide.slug).slice(0, 5);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": guide.h1,
+  "description": guide.desc,
+  "datePublished": guide.date
+};
+---
+
+<BaseLayout
+  title={guide.title}
+  description={guide.desc}
+  canonicalPath={`guides/${guide.slug}/`}
+  currentNav="guides"
+  schema={schema}
+>
+  <section class="bg-white border-b border-slate-200 py-8 lg:py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-4" aria-label="面包屑导航">
+        <a href="/" class="hover:text-blue-600 transition-colors">首页</a>
+        <span>/</span>
+        <a href="/guides/" class="hover:text-blue-600 transition-colors">教程中心</a>
+        <span>/</span>
+        <span class="text-slate-800 font-semibold">{guide.category}</span>
+      </nav>
+
+      <div class="max-w-4xl space-y-3">
+        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+          🛠️ {guide.category} 完整教程
+        </span>
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+          {guide.h1}
+        </h1>
+        <div class="flex items-center gap-4 text-xs text-slate-500 pt-1">
+          <span>更新时间：{guide.date}</span>
+          <span>•</span>
+          <span>实操耗时：{guide.readTime}</span>
+          <span>•</span>
+          <span>适用平台：全平台客户端</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <article class="lg:col-span-8 bg-white p-6 sm:p-10 rounded-2xl border border-slate-200/80 shadow-sm min-w-0">
+        <div class="p-4 sm:p-5 rounded-xl bg-emerald-50/50 border border-emerald-100 text-xs sm:text-sm text-slate-700 leading-relaxed mb-8">
+          <strong>教程概述：</strong> {guide.desc}
+        </div>
+
+        <div class="article-prose" set:html={guide.content} />
+
+        <div class="mt-12 pt-8 border-t border-slate-200">
+          <div class="p-6 rounded-2xl bg-slate-900 text-white text-center">
+            <h3 class="text-lg font-black mb-2">配置好客户端，但缺少靠谱的订阅节点？</h3>
+            <p class="text-xs text-slate-400 mb-4 max-w-md mx-auto">
+              查看机场之家 2026 稳定机场排行榜，支持一键导入订阅，晚高峰不卡顿。
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+              <a href="/ranking/" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-blue-600 text-white hover:bg-blue-700">
+                查看节点综合排行榜 &rarr;
+              </a>
+              <a href="/airport/" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">
+                浏览14大品牌评测
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <aside class="lg:col-span-4 space-y-6">
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
+            🚀 适配本教程的高速机场推荐
+          </h3>
+          <div class="space-y-3">
+            {topAirports.map((a) => (
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-blue-300 transition-colors flex items-center justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-blue-600 text-white">#{a.rank}</span>
+                    <h4 class="text-xs font-black text-slate-900 truncate hover:text-blue-600">
+                      <a href={`/airport/${a.slug}/`}>{a.name}</a>
+                    </h4>
+                  </div>
+                  <span class="text-[11px] text-slate-400 block mt-0.5">{a.lineType} · ¥{a.startingPrice}/月</span>
+                </div>
+                <a
+                  href={`/airport/${a.slug}/`}
+                  class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white transition-colors flex-shrink-0"
+                >
+                  查看
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+            📖 更多客户端图文教程
+          </h3>
+          <ul class="space-y-3">
+            {otherGuides.map((og: any) => (
+              <li>
+                <a href={`/guides/${og.slug}/`} class="text-xs font-bold text-slate-800 hover:text-blue-600 line-clamp-2 leading-snug">
+                  {og.h1}
+                </a>
+                <span class="text-[10px] text-slate-400 mt-0.5 block">{og.category}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</BaseLayout>

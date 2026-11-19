@@ -1,0 +1,12 @@
+# robots.txt for https://jichanghome.blog
+User-agent: *
+Allow: /
+Allow: /css/
+Allow: /js/
+Allow: /data/
+
+# 排除 404 与非内容性文件
+Disallow: /404.html
+
+# Sitemap 定位
+Sitemap: https://jichanghome.blog/sitemap.xml

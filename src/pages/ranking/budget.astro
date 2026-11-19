@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { AIRPORTS } from '../../data/airports';
+
+const title = "2026低预算平价机场推荐排行榜 | 学生党备用节点清单 - 机场之家";
+const description = "2026年低预算与轻量平价机场精选。月付20元以内、起步单价低至¥7~¥8的高性价比梯子节点清单，学生党与日常备用首选。";
+const keywords = "低预算机场, 便宜梯子, 平价机场, 学生党机场推荐, 10元以下机场";
+
+// Filter airports with starting price <= 20
+const budgetAirports = AIRPORTS.filter(a => a.startingPrice <= 20).sort((a, b) => a.startingPrice - b.startingPrice);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  canonicalPath="ranking/budget/"
+  currentNav="ranking"
+>
+  <section class="bg-white border-b border-slate-200 py-12 lg:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
+      <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200 mb-4">
+        月付¥20以内 · 学生党与轻量优选
+      </span>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
+        2026年低预算轻量平价机场推荐排行榜
+      </h1>
+      <p class="text-sm sm:text-base text-slate-600 mt-4 leading-relaxed">
+        告别昂贵年付捆绑，严格筛选月付十多元内即可上车的高性价比节点。价格低廉但依然保障基本晚高峰可用性。
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {budgetAirports.map((a) => (
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-lg transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-400">#{a.rank}</span>
+              <span class="text-lg font-black text-red-600">¥{a.startingPrice} <small class="text-xs text-slate-400 font-normal">/月起</small></span>
+            </div>
+            <h3 class="text-base font-black text-slate-900 mb-2 hover:text-blue-600">
+              <a href={`/airport/${a.slug}/`}>{a.name}</a>
+            </h3>
+            <p class="text-xs text-slate-500 mb-4 line-clamp-2 leading-relaxed">{a.tagline}</p>
+            
+            <div class="bg-slate-50 p-3 rounded-xl space-y-1 text-xs text-slate-600 mb-4">
+              <div class="flex justify-between">
+                <span>月流量：</span>
+                <strong class="text-slate-800">{a.plans[0].traffic}</strong>
+              </div>
+              <div class="flex justify-between">
+                <span>每GB折合：</span>
+                <strong class="text-emerald-600 font-bold">¥{a.plans[0].unitPricePerGb}/GB</strong>
+              </div>
+              <div class="flex justify-between">
+                <span>线路：</span>
+                <span class="truncate max-w-[130px]">{a.lineType}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 pt-2">
+            <a href={`/airport/${a.slug}/`} class="flex-1 py-2 rounded-xl text-center text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white transition-colors">
+              评测报告 &rarr;
+            </a>
+            <a href={a.affUrl} target="_blank" rel="noopener nofollow" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700">
+              官网 ↗
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

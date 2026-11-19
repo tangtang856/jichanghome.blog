@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { AIRPORTS } from '../../data/airports';
+
+const title = "2026按需选型机场推荐专题中心 | 六大场景精准匹配 - 机场之家";
+const description = "根据使用场景与预算精准推荐：平价低预算、高端IPLC专线、小白新手入门、晚高峰高稳定、ChatGPT与AI大模型及4K流媒体解锁六大场景选型指南。";
+const keywords = "机场推荐, 梯子推荐, 平价机场, 高端专线, 新手机场, AI节点, 奈飞解锁机场";
+
+const topics = [
+  { slug: 'budget', title: '低预算平价机场', desc: '学生党与备用轻量优选，月付十多元内起步大流量', icon: '💰', color: 'from-amber-500 to-orange-600' },
+  { slug: 'premium', title: '高端IPLC/IEPL专线', desc: '纯内网物理专线，抗晚高峰恶性拥堵与零丢包', icon: '⚡', color: 'from-blue-600 to-indigo-700' },
+  { slug: 'beginner', title: '新手小白入门推荐', desc: '开箱即用，支持一键导入与自动化测速分流', icon: '🌱', color: 'from-emerald-500 to-teal-600' },
+  { slug: 'stable', title: '晚高峰高稳定防断连', desc: '99.9% 在线率保证，涉外商务与外贸办公首选', icon: '🛡️', color: 'from-indigo-600 to-purple-700' },
+  { slug: 'ai', title: 'ChatGPT与AI专用节点', desc: '原生纯净住宅与机房IP，防账号风控与弹验证码', icon: '🤖', color: 'from-violet-600 to-fuchsia-700' },
+  { slug: 'streaming', title: 'Netflix与4K流媒体解锁', desc: '超大带宽吞吐与原生落地，畅享原画杜比音画', icon: '🎬', color: 'from-rose-500 to-pink-600' },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  canonicalPath="recommend/"
+  currentNav="recommend"
+>
+  <section class="bg-white border-b border-slate-200 py-12 lg:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
+      <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200 mb-4">
+        按需分类 · 精准选型
+      </span>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
+        2026年机场选型全场景专题推荐
+      </h1>
+      <p class="text-sm sm:text-base text-slate-600 mt-4 leading-relaxed">
+        每个人对梯子的核心需求各不相同。根据自己的真实使用场景（查资料、刷流媒体、玩外服、用AI、外贸办公），一键直达最适合你的品牌。
+      </p>
+    </div>
+  </section>
+
+  <!-- 6 Topic Cards -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+      {topics.map((t) => (
+        <a
+          href={`/recommend/${t.slug}/`}
+          class="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-lg hover:border-blue-400 transition-all flex flex-col justify-between group"
+        >
+          <div>
+            <span class="text-3xl mb-4 block">{t.icon}</span>
+            <h3 class="text-lg font-black text-slate-900 group-hover:text-blue-600 transition-colors">
+              {t.title}
+            </h3>
+            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+              {t.desc}
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-blue-600">
+            <span>进入专题选型</span>
+            <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- Featured Picks Preview -->
+    <div class="border-t border-slate-200 pt-12">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-xl font-black text-slate-900 !my-0">编辑部本期重点推荐品牌</h2>
+        <a href="/ranking/" class="text-xs font-bold text-blue-600 hover:underline">查看完整排行榜 &rarr;</a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {AIRPORTS.slice(0, 3).map((a) => (
+          <div class="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-md transition-shadow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-2 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700">#{a.rank} {a.name}</span>
+                <span class="text-xs font-black text-red-600">¥{a.startingPrice}/月起</span>
+              </div>
+              <p class="text-xs text-slate-500 line-clamp-2 mb-4">{a.tagline}</p>
+            </div>
+            <a href={`/airport/${a.slug}/`} class="w-full py-2 rounded-xl text-center text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white transition-colors">
+              阅读独立评测 &rarr;
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

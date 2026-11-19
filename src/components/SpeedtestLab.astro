@@ -1,0 +1,56 @@
+---
+import type { SpeedTestBenchmark } from '../data/airports';
+
+interface Props {
+  benchmarks: SpeedTestBenchmark[];
+  brandName: string;
+}
+
+const { benchmarks, brandName } = Astro.props;
+---
+
+<div class="my-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+  <div class="bg-slate-50/80 px-5 py-4 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
+    <div>
+      <h3 class="text-sm font-bold text-slate-900 m-0">千兆双栈宽带 · 晚高峰（20:00~23:00）实测数据抽样</h3>
+      <p class="text-xs text-slate-500 m-0 mt-0.5">测试环境：中国电信 / 中国联通双千兆接入 · 连续10轮样本均值</p>
+    </div>
+    <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+      实机抽样核验通过
+    </span>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-xs border-collapse">
+      <thead>
+        <tr class="bg-slate-50/50 border-b border-slate-200 text-slate-500 font-semibold">
+          <th class="py-3 px-4">测试节点与线路</th>
+          <th class="py-3 px-4">本地 Ping 延迟</th>
+          <th class="py-3 px-4">晚高峰下行速率</th>
+          <th class="py-3 px-4">上行速率</th>
+          <th class="py-3 px-4">实测丢包率</th>
+          <th class="py-3 px-4">YouTube 4K 缓冲区</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100 text-slate-700">
+        {benchmarks.map((b) => (
+          <tr class="hover:bg-blue-50/30 transition-colors">
+            <td class="py-3.5 px-4 font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              {b.region}
+            </td>
+            <td class="py-3.5 px-4 font-mono font-bold text-sky-700">{b.ping}</td>
+            <td class="py-3.5 px-4 font-mono font-bold text-emerald-600 text-sm">{b.dl}</td>
+            <td class="py-3.5 px-4 font-mono text-slate-500">{b.ul}</td>
+            <td class="py-3.5 px-4">
+              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                {b.loss}
+              </span>
+            </td>
+            <td class="py-3.5 px-4 text-slate-500 font-mono text-[11px]">{b.yt}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>

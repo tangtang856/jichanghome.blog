@@ -14,7 +14,7 @@ function getAllHtmlFiles(dir) {
     const fullPath = path.join(dir, file);
     const stat = fs.statSync(fullPath);
     if (stat && stat.isDirectory()) {
-      if (file !== 'node_modules' && file !== '.git' && file !== 'scripts' && file !== 'docs') {
+      if (file !== 'node_modules' && file !== '.git' && file !== 'scripts' && file !== 'docs' && file !== 'dist' && file !== '.astro') {
         results = results.concat(getAllHtmlFiles(fullPath));
       }
     } else if (file.endsWith('.html')) {

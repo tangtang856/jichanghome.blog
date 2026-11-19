@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { AIRPORTS } from '../../data/airports';
+
+const title = "2026优质VPN机场节点多维度排行榜 | 测速与稳定性对比 - 机场之家";
+const description = "基于2026年真实晚高峰网络测速、丢包率、单GB成本与AI大模型解锁稳定性，提供全网机场综合实力榜、高性价比榜、低预算榜与抗断连稳定性榜。";
+const keywords = "机场排行榜, 梯子排行, 性价比机场榜, 稳定机场, vpn节点排行";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  canonicalPath="ranking/"
+  currentNav="ranking"
+>
+  <section class="bg-white border-b border-slate-200 py-12 lg:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
+      <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200 mb-4">
+        2026年度权威数据排名
+      </span>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
+        2026年优质网络节点与机场多维度综合排行榜
+      </h1>
+      <p class="text-sm sm:text-base text-slate-600 mt-4 leading-relaxed">
+        根据真实晚高峰（20:00~23:00）测速、丢包率、单GB成本计算公式及流媒体解锁实测，全透明展示已核验品牌的综合实力排名。
+      </p>
+
+      <!-- Sub-rankings Links -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mt-6">
+        <a href="/ranking/overall/" class="px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm">
+          🏆 综合实力总榜
+        </a>
+        <a href="/ranking/value/" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700">
+          💰 极致性价比榜 (单GB)
+        </a>
+        <a href="/ranking/stable/" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700">
+          🛡️ 晚高峰防断连稳定性榜
+        </a>
+        <a href="/ranking/budget/" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700">
+          🎓 低预算平价榜 (月付十元内)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Complete Rankings Table -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="p-5 border-b border-slate-200 bg-slate-50/50 flex items-center justify-between">
+        <h2 class="text-base font-black text-slate-900 !my-0">全站14大主流机场综合实力排位表</h2>
+        <span class="text-xs text-slate-400">评分标准公开透明</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold">
+              <th class="py-3 px-4">排名</th>
+              <th class="py-3 px-4">品牌名称与亮点</th>
+              <th class="py-3 px-4">线路架构</th>
+              <th class="py-3 px-4">起步价格</th>
+              <th class="py-3 px-4">可用流量</th>
+              <th class="py-3 px-4">单GB成本</th>
+              <th class="py-3 px-4">综合评分</th>
+              <th class="py-3 px-4 text-center">操作指引</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-700">
+            {AIRPORTS.map((a) => (
+              <tr class="hover:bg-blue-50/30 transition-colors">
+                <td class="py-4 px-4 font-black text-sm">
+                  {a.rank <= 3 ? (
+                    <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">
+                      #{a.rank}
+                    </span>
+                  ) : (
+                    <span class="text-slate-400 pl-1">#{a.rank}</span>
+                  )}
+                </td>
+                <td class="py-4 px-4 font-bold text-slate-900">
+                  <a href={`/airport/${a.slug}/`} class="text-sm font-black hover:text-blue-600 transition-colors">
+                    {a.name}
+                  </a>
+                  {a.coupon && (
+                    <span class="ml-2 text-[10px] px-1.5 py-0.2 rounded bg-rose-50 text-rose-600 border border-rose-200">
+                      券: {a.coupon}
+                    </span>
+                  )}
+                  <p class="text-[11px] text-slate-400 font-normal mt-0.5 line-clamp-1">{a.tagline}</p>
+                </td>
+                <td class="py-4 px-4 font-semibold text-slate-700">
+                  <span class="px-2 py-0.5 rounded bg-slate-100 text-[11px]">{a.lineType}</span>
+                </td>
+                <td class="py-4 px-4 font-black text-red-600 text-sm">
+                  ¥{a.startingPrice} <small class="text-slate-400 font-normal">/月</small>
+                </td>
+                <td class="py-4 px-4 font-bold">{a.plans[0].traffic}</td>
+                <td class="py-4 px-4 font-bold text-emerald-600">¥{a.plans[0].unitPricePerGb}/GB</td>
+                <td class="py-4 px-4 font-bold text-blue-600">⭐ {a.scoreOverall}</td>
+                <td class="py-4 px-4 text-center">
+                  <div class="flex items-center justify-center gap-1.5">
+                    <a
+                      href={`/airport/${a.slug}/`}
+                      class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white transition-colors"
+                    >
+                      评测
+                    </a>
+                    <a
+                      href={a.affUrl}
+                      target="_blank"
+                      rel="noopener nofollow"
+                      class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+                    >
+                      直达 ↗
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

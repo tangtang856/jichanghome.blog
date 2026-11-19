@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { GLOSSARY_ITEMS } from '../../data/glossary';
+import type { GlossaryItem } from '../../data/glossary';
+
+export function getStaticPaths() {
+  return GLOSSARY_ITEMS.map((item) => ({
+    params: { slug: item.slug },
+    props: { item }
+  }));
+}
+
+interface Props {
+  item: GlossaryItem;
+}
+
+const { item } = Astro.props;
+const otherItems = GLOSSARY_ITEMS.filter((g) => g.slug !== item.slug);
+---
+
+<BaseLayout
+  title={item.title}
+  description={item.desc}
+  canonicalPath={`glossary/${item.slug}/`}
+>
+  <section class="bg-white border-b border-slate-200 py-10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-4" aria-label="面包屑导航">
+        <a href="/" class="hover:text-blue-600 transition-colors">首页</a>
+        <span>/</span>
+        <a href="/glossary/" class="hover:text-blue-600 transition-colors">术语百科</a>
+        <span>/</span>
+        <span class="text-slate-800 font-semibold">{item.slug}</span>
+      </nav>
+
+      <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200 mb-3">
+        📖 翻墙网络核心术语百科
+      </span>
+      <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+        {item.term}
+      </h1>
+      <p class="text-xs sm:text-sm text-slate-500 mt-2">{item.desc}</p>
+    </div>
+  </section>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <article class="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200/80 shadow-sm article-prose" set:html={item.content} />
+
+    <!-- Other Terms -->
+    <div class="mt-12 pt-8 border-t border-slate-200">
+      <h3 class="text-sm font-bold text-slate-900 mb-4">查阅更多网络核心术语百科：</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {otherItems.map((oi) => (
+          <a
+            href={`/glossary/${oi.slug}/`}
+            class="p-4 rounded-xl bg-white border border-slate-200 hover:border-blue-300 hover:shadow-sm transition-all"
+          >
+            <h4 class="text-xs font-black text-slate-900 mb-1">{oi.term}</h4>
+            <p class="text-[11px] text-slate-500 line-clamp-1">{oi.desc}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

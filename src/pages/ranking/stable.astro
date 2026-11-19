@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { AIRPORTS } from '../../data/airports';
+
+const title = "2026高稳定性机场推荐排行榜 | 晚高峰抗拥堵不掉线节点 - 机场之家";
+const description = "专线与全IPLC架构高稳定性机场排名。精选晚高峰丢包率低于0.1%、延迟抖动极小、抗断连与连通率高达99.9%的优质专线服务商。";
+const keywords = "稳定机场推荐, IPLC专线, 不掉线梯子, 晚高峰不卡顿, 机场稳定性排行";
+
+// Filter airports with IPLC or IEPL
+const stableAirports = AIRPORTS.filter(a => a.lineType.includes('IPLC') || a.lineType.includes('IEPL') || a.lineType.includes('专线'));
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  canonicalPath="ranking/stable/"
+  currentNav="ranking"
+>
+  <section class="bg-white border-b border-slate-200 py-12 lg:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
+      <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 mb-4">
+        防断连 · 物理内网专线矩阵
+      </span>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
+        2026年高稳定性防断连机场推荐排行榜
+      </h1>
+      <p class="text-sm sm:text-base text-slate-600 mt-4 leading-relaxed">
+        筛选全站采用纯内网 IPLC / IEPL 物理专线架构的机场。避开公网晚高峰拥堵，敏感时期依然坚挺。
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {stableAirports.map((a) => (
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-lg transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-black bg-indigo-600 text-white">
+                #{a.rank} {a.name}
+              </span>
+              <span class="text-xs font-bold text-indigo-600">稳定性 99.9% SLA</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-4 leading-relaxed">{a.description}</p>
+            
+            <div class="bg-slate-50 p-3 rounded-xl space-y-1.5 text-xs text-slate-600 mb-4">
+              <div class="flex justify-between">
+                <span>线路属性：</span>
+                <strong class="text-slate-800">{a.lineType}</strong>
+              </div>
+              <div class="flex justify-between">
+                <span>平均丢包率：</span>
+                <strong class="text-emerald-600">{a.benchmarks[0].loss}</strong>
+              </div>
+              <div class="flex justify-between">
+                <span>核心测试延迟：</span>
+                <strong class="text-sky-700">{a.benchmarks[0].ping}</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 pt-2">
+            <a href={`/airport/${a.slug}/`} class="flex-1 py-2 rounded-xl text-center text-xs font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-600 hover:text-white transition-colors">
+              评测详情 &rarr;
+            </a>
+            <a href={a.affUrl} target="_blank" rel="noopener nofollow" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700">
+              官网 ↗
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
