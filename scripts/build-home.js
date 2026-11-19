@@ -2,7 +2,7 @@ const { buildHead, buildHeader, buildFooter, writePage, AIRPORTS } = require('./
 
 function generateHomePage() {
   const title = "2026专业中文机场推荐与梯子节点导航指南 | 靠谱稳定VPN评测 - 机场之家";
-  const description = "机场之家为您提供2026年最新经过测试的优质机场推荐、机场节点排行榜、性价比平价梯子推荐及VPN评测。涵盖IPLC专线、ChatGPT/Claude原生节点、4K流媒体解锁实测与Clash全平台配置教程。";
+  const description = "机场之家为您提供2026年最新经过测试的优质机场推荐、机场节点排行榜、性价比平价梯子推荐及VPN评测。涵盖隐形人、微风网络、闪跃等IPLC/IEPL纯专线、ChatGPT/Claude原生节点、4K流媒体解锁实测与Clash全平台配置教程。";
   
   const schema = {
     "@context": "https://schema.org",
@@ -25,7 +25,7 @@ ${buildHeader(0, 'home')}
     <div class="container">
       <div class="hero-tag">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        <span>2026 全年实测 · 纯净专线与节点严选</span>
+        <span>2026 全年实测 · 14 大主流品牌专线严选</span>
       </div>
       <h1 class="hero-title">2026年稳定优质机场推荐与网络节点选购指南</h1>
       <p class="hero-desc">
@@ -44,7 +44,7 @@ ${buildHeader(0, 'home')}
         </div>
         <div class="trust-badge-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-          <span>拒绝虚构跑分与夸大宣传</span>
+          <span>真实价格与流量核销</span>
         </div>
         <div class="trust-badge-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
@@ -71,11 +71,11 @@ ${buildHeader(0, 'home')}
       <div class="quick-answer-grid">
         <div class="qa-card">
           <h4>1. 线路是底色</h4>
-          <p>内网专线 (IPLC/IEPL) 晚高峰不经过公网 GFW，抗封锁且延迟极低；隧道中继 (BGP Transit) 性价比高；普通公网直连节点容易出现大面积断流。</p>
+          <p>内网专线 (IPLC/IEPL，如隐形人、闪跃) 晚高峰不经过公网 GFW，抗封锁且延迟极低；隧道中继 (BGP Transit) 性价比高；普通公网直连节点容易断流。</p>
         </div>
         <div class="qa-card">
           <h4>2. 单价看每 GB 成本</h4>
-          <p>不要只看月付价格。用“套餐月费 ÷ 实际可用流量”计算真实每 GB 成本，通常 0.08~0.20 元/GB 属于健康可维系的合理商业区间。</p>
+          <p>不要只看月付价格。用“套餐月费 ÷ 实际可用流量”计算真实每 GB 成本，通常 0.04~0.20 元/GB 属于健康可维系的合理商业区间。</p>
         </div>
         <div class="qa-card">
           <h4>3. 原生 IP 决定 AI 与流媒体</h4>
@@ -83,7 +83,7 @@ ${buildHeader(0, 'home')}
         </div>
         <div class="qa-card">
           <h4>4. 坚持“按月付费”与多节点备用</h4>
-          <p>再老牌的机场也切忌一次性冲动年付。建议选择支持月付或购买不限时按量套餐（如魔戒）作为主力机场的容灾备用方案。</p>
+          <p>再老牌的机场也切忌一次性冲动年付。建议选择支持月付或购买不限时按量套餐（如飞V不限时版）作为主力机场的容灾备用方案。</p>
         </div>
       </div>
     </div>
@@ -98,11 +98,14 @@ ${buildHeader(0, 'home')}
       </div>
 
       <div class="grid-3">
-        ${AIRPORTS.slice(0, 3).map(airport => `
+        ${AIRPORTS.slice(0, 6).map(airport => `
           <div class="airport-card">
             <div class="card-top">
               <h3 class="card-brand">${airport.name}</h3>
-              <span class="score-badge">评分 ${airport.scoreOverall}</span>
+              <div style="display: flex; gap: 0.35rem; align-items: center;">
+                ${airport.coupon ? `<span style="font-size: 0.75rem; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; padding: 0.15rem 0.45rem; border-radius: var(--radius-sm); font-weight: 700;">券: ${airport.coupon}</span>` : ''}
+                <span class="score-badge">评分 ${airport.scoreOverall}</span>
+              </div>
             </div>
             <div class="card-tagline">${airport.tagline}</div>
 
@@ -120,8 +123,8 @@ ${buildHeader(0, 'home')}
                 <span class="spec-val">${airport.protocols.slice(0, 2).join(', ')}</span>
               </div>
               <div class="spec-item">
-                <span class="spec-label">核验状态</span>
-                <span class="spec-val" style="color: var(--success); font-weight: 700;">实测通过</span>
+                <span class="spec-label">折合单GB</span>
+                <span class="spec-val" style="color: var(--success); font-weight: 700;">¥${airport.plans[0].unitPricePerGb}/GB</span>
               </div>
             </div>
 
@@ -139,7 +142,7 @@ ${buildHeader(0, 'home')}
               </div>
               <div style="display: flex; gap: 0.4rem;">
                 <a href="airport/${airport.slug}/index.html" class="btn btn-sm btn-secondary">评测详情</a>
-                <a href="compare/index.html" class="btn btn-sm btn-primary">横向对比</a>
+                <a href="${airport.affUrl}" target="_blank" rel="noopener nofollow" class="btn btn-sm btn-primary">直达官网 ↗</a>
               </div>
             </div>
           </div>
@@ -147,7 +150,7 @@ ${buildHeader(0, 'home')}
       </div>
 
       <div style="text-align: center; margin-top: 2rem;">
-        <a href="recommend/index.html" class="btn btn-secondary">浏览全部已录入品牌与专题推荐 &rarr;</a>
+        <a href="recommend/index.html" class="btn btn-secondary">浏览全部 14 家已录入品牌与专题推荐 &rarr;</a>
       </div>
     </div>
   </section>
@@ -157,7 +160,7 @@ ${buildHeader(0, 'home')}
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">2026机场节点综合实力排行榜</h2>
-        <p class="section-subtitle">从线路质量、节点可用率、单价透明度与售后支撑四个维度综合考量</p>
+        <p class="section-subtitle">从线路质量、节点可用率、单价透明度与售后支撑四个维度综合考量（共 14 家核验品牌）</p>
       </div>
 
       <div class="table-responsive">
@@ -165,13 +168,13 @@ ${buildHeader(0, 'home')}
           <thead>
             <tr>
               <th style="width: 70px; text-align: center;">排名</th>
-              <th>品牌名称</th>
+              <th>品牌名称与优惠</th>
               <th>线路属性</th>
               <th>起步月付</th>
               <th>主流套餐与容量</th>
-              <th>AI 与流媒体</th>
+              <th>单GB折算</th>
               <th>适合人群</th>
-              <th style="text-align: center;">详情</th>
+              <th style="text-align: center;">操作</th>
             </tr>
           </thead>
           <tbody>
@@ -182,15 +185,19 @@ ${buildHeader(0, 'home')}
                 </td>
                 <td>
                   <strong>${airport.name}</strong>
+                  ${airport.coupon ? `<span style="font-size: 0.7rem; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; padding: 0.1rem 0.35rem; border-radius: 4px; font-weight: 700; margin-left: 0.35rem;">券: ${airport.coupon}</span>` : ''}
                   <div style="font-size: 0.75rem; color: var(--text-light);">${airport.tagline.slice(0, 18)}...</div>
                 </td>
-                <td><span class="pill pill-official">${airport.lineType.split('+')[0]}</span></td>
+                <td><span class="pill pill-official">${airport.lineType.split('/')[0]}</span></td>
                 <td style="color: var(--primary); font-weight: 700;">¥${airport.startingPrice}</td>
                 <td>${airport.plans[0].traffic} / ¥${airport.plans[0].price}</td>
-                <td>${airport.aiSupport.slice(0, 2).join(' / ')}</td>
+                <td style="font-weight: 600;">¥${airport.plans[0].unitPricePerGb}/GB</td>
                 <td style="font-size: 0.85rem; color: var(--text-muted);">${airport.suitableFor[0]}</td>
                 <td style="text-align: center;">
-                  <a href="airport/${airport.slug}/index.html" class="btn btn-sm btn-secondary" style="font-size: 0.75rem; padding: 0.25rem 0.55rem;">查看</a>
+                  <div style="display: flex; gap: 0.35rem; justify-content: center;">
+                    <a href="airport/${airport.slug}/index.html" class="btn btn-sm btn-secondary" style="font-size: 0.75rem; padding: 0.25rem 0.55rem;">评测</a>
+                    <a href="${airport.affUrl}" target="_blank" rel="noopener nofollow" class="btn btn-sm btn-primary" style="font-size: 0.75rem; padding: 0.25rem 0.55rem;">直达 ↗</a>
+                  </div>
                 </td>
               </tr>
             `).join('')}
@@ -219,25 +226,25 @@ ${buildHeader(0, 'home')}
         <a href="recommend/budget/index.html" class="category-card">
           <div class="cat-icon">💰</div>
           <h3 class="cat-title">低预算平价机场</h3>
-          <p class="cat-desc">月付 15 元以下，大流量高性价比。适合查资料、写论文和轻度上网用户，用最低成本解决日常刚需。</p>
+          <p class="cat-desc">月付 4.9~8 元起，大流量高性价比。飞V、飞猫云、微风网络、萤火虫，最低成本解决日常刚需。</p>
         </a>
 
         <a href="recommend/premium/index.html" class="category-card">
           <div class="cat-icon">⚡</div>
           <h3 class="cat-title">高端 IPLC/IEPL 专线</h3>
-          <p class="cat-desc">端到端不过公网防火墙，物理级零丢包与极低延迟。跨境电商团队、外贸商务与苛求稳定用户的基石。</p>
+          <p class="cat-desc">隐形人、闪跃、灵猫、无忧。端到端不过公网防火墙，物理级零丢包与超低延迟。</p>
         </a>
 
         <a href="recommend/beginner/index.html" class="category-card">
           <div class="cat-icon">🔰</div>
           <h3 class="cat-title">新手小白入门推荐</h3>
-          <p class="cat-desc">提供一键导入客户端、中文完整配套文档与即时售后。免去繁琐配置，手机电脑扫码即用。</p>
+          <p class="cat-desc">微风网络、飞猫云、全球云。提供一键导入客户端、中文完整配套文档与即时售后，免去复杂配置。</p>
         </a>
 
         <a href="recommend/stable/index.html" class="category-card">
           <div class="cat-icon">🛡️</div>
           <h3 class="cat-title">高稳定性抗断连机场</h3>
-          <p class="cat-desc">重点针对晚高峰（20:00~23:00）拥堵与敏感时期抗封锁设计，多入口灾备切换，保证重要时刻不失联。</p>
+          <p class="cat-desc">隐形人、闪跃、浪网、灵猫。重点针对晚高峰（20:00~23:00）拥堵设计，多入口灾备切换。</p>
         </a>
 
         <a href="recommend/ai/index.html" class="category-card">
@@ -261,7 +268,7 @@ ${buildHeader(0, 'home')}
       <div style="background: linear-gradient(135deg, #1e3a8a, #2563eb); border-radius: var(--radius-lg); padding: 3rem 2rem; color: #fff; text-align: center;">
         <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem; color: #fff;">还在纠结选哪家？试试机场在线横向比对工具</h2>
         <p style="font-size: 1.1rem; max-width: 720px; margin: 0 auto 1.75rem; color: #dbeafe; line-height: 1.7;">
-          支持自由勾选 2 到 4 家候选品牌，一键对比起步月费、流量每 GB 成本、线路架构、支持协议、设备限制、流媒体解锁及优缺点差异。
+          支持自由勾选 14 家候选品牌中的 2 到 4 家，一键对比起步月费、流量每 GB 成本、线路架构、支持协议、设备限制、流媒体解锁及优缺点差异。
         </p>
         <a href="compare/index.html" class="btn" style="background-color: #ffffff; color: var(--primary); font-weight: 700; padding: 0.85rem 2rem;">立即启动机场比对工具 &rarr;</a>
       </div>
@@ -281,33 +288,33 @@ ${buildHeader(0, 'home')}
           <div class="post-meta">
             <span>评测报告</span>
             <span>•</span>
-            <span>2026-03-05</span>
+            <span>2026-03</span>
           </div>
-          <h3 class="post-title"><a href="airport/paopaogou/index.html">泡泡狗机场评测：全内网专线稳定性与原生IP流媒体解锁全景解析</a></h3>
-          <p class="post-excerpt">主打全内网IPLC/IEPL纯专线，晚高峰无拥堵不丢包，实测ChatGPT与Claude纯净原生IP访问表现。</p>
-          <a href="airport/paopaogou/index.html" style="font-weight: 600; font-size: 0.85rem;">阅读完整评测报告 &rarr;</a>
+          <h3 class="post-title"><a href="airport/yinxingren/index.html">隐形人机场评测：IEPL纯专线架构与144GB大流量实测</a></h3>
+          <p class="post-excerpt">主打全内网IEPL纯专线，晚高峰无卡顿不丢包，实测ChatGPT与Claude纯净原生IP访问表现。</p>
+          <a href="airport/yinxingren/index.html" style="font-weight: 600; font-size: 0.85rem;">阅读完整评测报告 &rarr;</a>
         </div>
 
         <div class="post-card">
           <div class="post-meta">
             <span>评测报告</span>
             <span>•</span>
-            <span>2026-03-01</span>
+            <span>2026-03</span>
           </div>
-          <h3 class="post-title"><a href="airport/feiniao/index.html">飞鸟云机场评测：老牌BGP隧道中继与低至0.075元/GB高性价比解析</a></h3>
-          <p class="post-excerpt">运营超过4年的老牌服务，大流量平价套餐搭配主流Shadowsocks与VLESS协议，适合影音娱乐。</p>
-          <a href="airport/feiniao/index.html" style="font-weight: 600; font-size: 0.85rem;">阅读完整评测报告 &rarr;</a>
+          <h3 class="post-title"><a href="airport/breezenet/index.html">微风网络Breezenet评测：¥8/月超低起步价与200GB大流量全景解析</a></h3>
+          <p class="post-excerpt">IEPL/IPLC主干网络，单GB折算仅0.04元，搭配VLESS协议与专属优惠券【weifeng90】。</p>
+          <a href="airport/breezenet/index.html" style="font-weight: 600; font-size: 0.85rem;">阅读完整评测报告 &rarr;</a>
         </div>
 
         <div class="post-card">
           <div class="post-meta">
             <span>评测报告</span>
             <span>•</span>
-            <span>2026-03-06</span>
+            <span>2026-03</span>
           </div>
-          <h3 class="post-title"><a href="airport/shandianmao/index.html">闪电猫机场评测：企业级全IEPL专线与双ISP家宽住宅IP实测</a></h3>
-          <p class="post-excerpt">专为跨境外贸与AI开发打造的高端节点，双ISP原生落地防封锁，Cursor与Claude写代码利器。</p>
-          <a href="airport/shandianmao/index.html" style="font-weight: 600; font-size: 0.85rem;">阅读完整评测报告 &rarr;</a>
+          <h3 class="post-title"><a href="airport/flashleap/index.html">闪跃FlashLeap评测：IPLC纯专线外服游戏与4K极速体验</a></h3>
+          <p class="post-excerpt">全链路IPLC内网专线，网络抖动控制在1.5ms以内，外服电竞联机与高码率流媒体利器。</p>
+          <a href="airport/flashleap/index.html" style="font-weight: 600; font-size: 0.85rem;">阅读完整评测报告 &rarr;</a>
         </div>
       </div>
     </div>
@@ -440,21 +447,21 @@ ${buildHeader(0, 'home')}
         <div class="faq-item">
           <h3 class="faq-q">为什么经常看到有人说“不要一次性年付”？</h3>
           <div class="faq-a">
-            由于网络环境与国际出口路由的不可控性，任何服务商都有可能面临机房维护、上游断网甚至经营不善跑路的风险。按月付费或轻度购买不限时按量套餐，能将财务风险控制在最低，随时根据实际使用体验决定是否续费。
+            由于网络环境与国际出口路由的不可控性，任何服务商都有可能面临机房维护、上游断网甚至经营不善跑路的风险。按月付费或购买低门槛套餐（如微风网络¥8/月或飞V），能将财务风险控制在最低，随时根据实际使用体验决定是否续费。
           </div>
         </div>
 
         <div class="faq-item">
           <h3 class="faq-q">专线节点 (IPLC/IEPL) 为什么比普通节点贵？</h3>
           <div class="faq-a">
-            IPLC（国际私有租用线路）和 IEPL 是端到端的跨国内网光纤专线，流量在过境时不通过公网防火墙，不经过国际公网拥堵路由，因而具有物理级的不卡顿、零丢包和极低延迟。其机房物理专线租金昂贵，因此每 GB 成本天然高于普通公网隧道中继。
+            IPLC（国际私有租用线路）和 IEPL 是端到端的跨国内网光纤专线，流量在过境时不通过公网防火墙，不经过国际公网拥堵路由，因而具有物理级的不卡顿、零丢包和极低延迟。隐形人、闪跃、无忧等品牌提供此类内网专线服务。
           </div>
         </div>
 
         <div class="faq-item">
           <h3 class="faq-q">访问 ChatGPT 或 Claude 为什么频繁提示“Access Denied”？</h3>
           <div class="faq-a">
-            OpenAI 与 Anthropic 对数据中心机房 IP 实施了极其严格的风控过滤。廉价机场使用的大段机房 IP 往往被标记黑名单。要顺畅使用 AI 工具，需要选择具有原生双 ISP 住宅 IP 落地或专有 AI 优化通道的节点服务。
+            OpenAI 与 Anthropic 对数据中心机房 IP 实施了极其严格的风控过滤。廉价机场使用的大段机房 IP 往往被标记黑名单。要顺畅使用 AI 工具，建议选择具有原生双 ISP 住宅 IP 落地或专有 AI 优化通道的专线节点（如隐形人、微风网络、闪跃）。
           </div>
         </div>
 

@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
  */
 function initCompareTool(airports) {
   // 默认选中前两家机场
-  let selectedIds = ['feiniao', 'paopaogou'];
+  let selectedIds = ['breezenet', 'yinxingren'];
 
   // 检查 URL 参数是否有指定机场对比
   try {
@@ -247,7 +247,7 @@ function initCompareTool(airports) {
   };
 
   window.resetCompareDefault = function () {
-    selectedIds = ['feiniao', 'paopaogou'];
+    selectedIds = ['breezenet', 'yinxingren'];
     renderSelectors();
     renderTable();
   };

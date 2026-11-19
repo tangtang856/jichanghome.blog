@@ -1,6 +1,6 @@
 # 机场之家 (jichanghome.blog) - 自动化 SEO 与内容验收总报告
 生成时间: 2026-03-06
-检查页面总数: 44
+检查页面总数: 53
 
 ---
 
@@ -29,10 +29,10 @@
 
 | 主攻关键词 | 包含该关键词的页面数 | 核心主落地页 |
 | :--- | :---: | :--- |
-| **机场推荐** | 44 篇 | `/`, `/recommend/index.html` |
+| **机场推荐** | 53 篇 | `/`, `/recommend/index.html` |
 | **机场节点** | 13 篇 | `/`, `/ranking/overall/index.html` |
-| **性价比机场** | 44 篇 | `/ranking/value/index.html`, `/recommend/budget/index.html` |
-| **梯子推荐** | 44 篇 | `/`, `/recommend/index.html` |
+| **性价比机场** | 53 篇 | `/ranking/value/index.html`, `/recommend/budget/index.html` |
+| **梯子推荐** | 53 篇 | `/`, `/recommend/index.html` |
 | **vpn** | 7 篇 | 全站基础知识、评测与百科广泛覆盖 |
 | **vpn机场** | 2 篇 | `/`, `/blog/how-to-choose-reliable-airport/index.html` |
 | **vpn节点** | 0 篇 | `/ranking/index.html`, `/airport/index.html` |

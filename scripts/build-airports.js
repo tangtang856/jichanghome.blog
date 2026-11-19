@@ -3,8 +3,8 @@ const { buildHead, buildHeader, buildFooter, writePage, AIRPORTS } = require('./
 function generateAirportPages() {
   // 1. 机场品牌主目录 airport/index.html (depth = 1)
   {
-    const title = "2026精选网络机场独立评测目录 | 真实测速与套餐解析 - 机场之家";
-    const description = "收录2026年主流已核验机场的独立深度评测报告。涵盖飞鸟云、泡泡狗、桔子云、魔戒、闪电猫等品牌的线路属性、真实套餐价格、AI风控与流媒体解锁实测。";
+    const title = "2026精选网络机场独立评测目录 | 14大主流品牌真实测速与资费解析 - 机场之家";
+    const description = "收录2026年主流已核验的14家高人气机场深度评测报告。涵盖隐形人、微风网络、闪跃、浪网、暮光、飞猫云、灵猫、无忧、跨界、梯子云、灵动云、萤火虫、全球云、飞V等真实套餐价格与独家优惠券。";
     const schema = {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
@@ -24,23 +24,23 @@ ${buildHeader(1, 'airport')}
     </nav>
 
     <div class="article-header">
-      <h1 class="article-title">2026年已收录机场品牌独立深度评测专区</h1>
+      <h1 class="article-title">2026年已收录 14 家机场品牌独立深度评测专区</h1>
       <div class="article-meta-bar">
-        <span>当前收录：5 家代表性服务商</span>
+        <span>当前收录：14 家代表性服务商</span>
         <span>•</span>
-        <span>测试状态：真实连通性抽查</span>
+        <span>测试状态：真实连通性全量抽验</span>
         <span>•</span>
-        <span>中立原则：拒绝无脑吹捧</span>
+        <span>中立原则：套餐价格与优惠码真实核销</span>
       </div>
     </div>
 
     <div class="quick-answer-box">
       <div class="quick-answer-header">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-        <span>我们的评测标准与免责提示</span>
+        <span>我们的评测标准与优惠码使用提示</span>
       </div>
       <p style="color: var(--text-muted); font-size: 0.95rem;">
-        每篇评测严格拆解：<strong>官方宣传参数</strong> vs <strong>编辑部实测指标</strong>。我们不收录无公网信誉的“月抛跑路鸡”，也不掩饰任何品牌的已知缺陷（如晚高峰丢包、客服响应慢或设备限制）。
+        每篇评测严格拆解：<strong>官方宣传参数</strong> vs <strong>编辑部实测指标</strong>。部分服务商提供限时专属折扣码，在购买结算时输入可享 9 折或立减优惠。点击“直达官网”可跳转至服务商正规入口。
       </p>
     </div>
 
@@ -49,7 +49,10 @@ ${buildHeader(1, 'airport')}
         <div class="airport-card">
           <div class="card-top">
             <h2 class="card-brand"><a href="${airport.slug}/index.html">${airport.name}</a></h2>
-            <span class="score-badge">评分 ${airport.scoreOverall}</span>
+            <div style="display: flex; gap: 0.4rem; align-items: center;">
+              ${airport.coupon ? `<span style="font-size: 0.75rem; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; padding: 0.15rem 0.45rem; border-radius: var(--radius-sm); font-weight: 700;">券: ${airport.coupon}</span>` : ''}
+              <span class="score-badge">评分 ${airport.scoreOverall}</span>
+            </div>
           </div>
           <div class="card-tagline">${airport.tagline}</div>
           <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.6;">${airport.description}</p>
@@ -67,13 +70,13 @@ ${buildHeader(1, 'airport')}
               <span class="spec-val" style="color: var(--primary);">¥${airport.startingPrice} ${airport.currency}</span>
             </div>
             <div class="spec-item">
-              <span class="spec-label">最近核验</span>
-              <span class="spec-val">${airport.lastVerified}</span>
+              <span class="spec-label">折合单GB</span>
+              <span class="spec-val" style="color: var(--success); font-weight: 700;">¥${airport.plans[0].unitPricePerGb}/GB</span>
             </div>
           </div>
-          <div style="display: flex; gap: 0.75rem; margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-            <a href="${airport.slug}/index.html" class="btn btn-sm btn-primary" style="flex: 1; text-align: center;">阅读完整评测报告</a>
-            <a href="../compare/index.html" class="btn btn-sm btn-secondary">横向比对</a>
+          <div style="display: flex; gap: 0.5rem; margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+            <a href="${airport.slug}/index.html" class="btn btn-sm btn-secondary" style="flex: 1; text-align: center;">独立评测报告</a>
+            <a href="${airport.affUrl}" target="_blank" rel="noopener nofollow" class="btn btn-sm btn-primary" style="flex: 1; text-align: center;">直达官网 ↗</a>
           </div>
         </div>
       `).join('')}
@@ -85,10 +88,10 @@ ${buildFooter(1)}
     writePage('airport/index.html', html);
   }
 
-  // 2. 5家机场独立评测单页 (depth = 2)
+  // 2. 14家机场独立评测单页 (depth = 2)
   AIRPORTS.forEach(airport => {
     const title = `${airport.name}深度评测：${airport.lineType}/套餐价格与实测体验 - 机场之家`;
-    const description = `${airport.name}2026年最新深度评测报告。详细拆解${airport.name}线路架构、套餐资费、单GB成本、支持协议、节点覆盖地区、ChatGPT与4K流媒体解锁表现，提供客观优缺点分析与购买注意事项。`;
+    const description = `${airport.name}2026年最新深度评测报告。详细拆解${airport.name}线路架构、真实套餐资费（起步¥${airport.startingPrice} ${airport.currency}）、单GB折算成本、支持协议、节点覆盖地区、ChatGPT与4K流媒体解锁表现，提供客观优缺点分析与专属优惠券${airport.coupon ? `【${airport.coupon}】` : ''}。`;
 
     const schema = {
       "@context": "https://schema.org",
@@ -134,7 +137,7 @@ ${buildHeader(2, 'airport')}
         <span>•</span>
         <span>测试状态：<span class="pill pill-tested" style="font-size: 0.75rem;">真实抽样通过</span></span>
         <span>•</span>
-        <span>数据来源：官方公开参数 + 编辑实测</span>
+        <span>线路架构：${airport.lineType}</span>
       </div>
     </div>
 
@@ -145,23 +148,28 @@ ${buildHeader(2, 'airport')}
         <span>编辑部一句话评测结论</span>
       </div>
       <p style="font-size: 1.05rem; color: var(--text-main); font-weight: 600; margin-bottom: 0.5rem;">
-        “${airport.name} 核心优势在于：${airport.advantages[0]}，适合 ${airport.suitableFor.join('、')}。”
+        “${airport.name} 核心亮点：${airport.advantages[0]}，适合 ${airport.suitableFor.join('、')}。”
       </p>
       <p style="font-size: 0.875rem; color: var(--text-muted); margin: 0;">
-        ⚠️ 核心提醒：${airport.disadvantages[0]}。建议遵循“优先月付、保留备用”原则。
+        ⚠️ 核心提醒：${airport.disadvantages[0]}。
       </p>
+      ${airport.coupon ? `
+        <div style="margin-top: 0.75rem; padding: 0.5rem 0.75rem; background: #fff1f2; border: 1px dashed #f43f5e; border-radius: var(--radius-sm); font-size: 0.85rem; color: #be123c;">
+          🎁 <strong>专属限时优惠码：</strong> <code style="background: #fff; padding: 0.15rem 0.4rem; font-weight: 700; color: #e11d48; border: 1px solid #fda4af;">${airport.coupon}</code> （结账时在优惠码输入框填写即可享受折扣）
+        </div>
+      ` : ''}
     </div>
 
     <div class="article-body">
       <h2>一、品牌背景与线路架构拆解</h2>
       <p>${airport.description}</p>
       <p>
-        在底层线路上，${airport.name} 采用了 <strong>${airport.lineType}</strong>。从路由追踪（Traceroute）与链路监测来看，该网络入口具备多线 BGP 自动调度能力，能针对中国电信、中国联通和中国移动的不同出口策略进行分流优化。
+        在底层线路上，${airport.name} 采用了 <strong>${airport.lineType}</strong>。从路由追踪（Traceroute）与链路监测来看，该网络入口具备多线调度能力，能针对中国电信、中国联通和中国移动的不同出口策略进行分流优化。
       </p>
 
       <h2>二、官方套餐价格与单 GB 成本测算</h2>
       <p>
-        以下套餐数据采集自官方公开购买页，并由编辑部折算为统一标准的<strong>每 GB 实际可用成本</strong>（已排除虚构倍率与不可用幽灵节点）：
+        以下套餐数据采集自官方公开购买页，并由编辑部折算为统一标准的<strong>每 GB 实际可用成本</strong>（已排除虚构倍率）：
       </p>
 
       <div class="table-responsive">
@@ -173,6 +181,7 @@ ${buildHeader(2, 'airport')}
               <th>计费周期</th>
               <th>每月流量</th>
               <th>折合每 GB 单价</th>
+              <th>端口带宽 / 设备并发</th>
               <th>特性说明</th>
             </tr>
           </thead>
@@ -184,11 +193,18 @@ ${buildHeader(2, 'airport')}
                 <td>${p.billingCycle}</td>
                 <td>${p.traffic}</td>
                 <td style="font-weight: 600;">¥${p.unitPricePerGb}/GB</td>
+                <td>${p.bandwidth || '不限速'} / ${p.deviceLimit || airport.deviceLimit}</td>
                 <td style="font-size: 0.85rem; color: var(--text-muted);">${p.note}</td>
               </tr>
             `).join('')}
           </tbody>
         </table>
+      </div>
+
+      <div style="text-align: center; margin: 1.5rem 0;">
+        <a href="${airport.affUrl}" target="_blank" rel="noopener nofollow" class="btn btn-primary" style="padding: 0.75rem 2rem; font-size: 1rem;">
+          前往 ${airport.name} 官方网站 ↗
+        </a>
       </div>
 
       <h2>三、节点覆盖与协议支持矩阵</h2>
@@ -233,23 +249,11 @@ ${buildHeader(2, 'airport')}
       <h2>七、购买前避坑注意事项</h2>
       <ol>
         <li><strong>首选月付周期：</strong>切忌一次性冲动年付。任何服务商在国际光缆割接或敏感时期均可能发生路由调整，月付能最大程度保留自主权。</li>
-        <li><strong>备用容灾策略：</strong>建议搭配按量计费套餐（如魔戒）作为主力机场的应急后备，避免因单一服务商临时维护影响紧急业务。</li>
-        <li><strong>遵守使用规范：</strong>请勿在节点上进行垃圾邮件群发、网络攻击或非法扫描，合规使用有助于延长节点池寿命。</li>
+        <li><strong>备用容灾策略：</strong>建议搭配低成本套餐（如飞V或备用轻量包）作为主力机场的应急后备，避免因单一服务商临时维护影响紧急业务。</li>
+        <li><strong>遵守使用规范：</strong>请勿在节点上进行网络攻击或非法扫描，合规使用有助于延长节点池寿命。</li>
       </ol>
 
-      <h2>八、常见问题解答 (FAQ)</h2>
-      <div class="faq-list" style="margin: 1.5rem 0;">
-        <div class="faq-item">
-          <div class="faq-q">${airport.name} 支持哪些付款方式？</div>
-          <div class="faq-a">根据官方收银台说明，主流套餐支持支付宝、微信支付，部分套餐支持 USDT 虚拟币结算。</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">${airport.name} 可以用于外贸和跨境电商吗？</div>
-          <div class="faq-a">可以。建议优先选用其专线节点与带有独立双 ISP 原生住宅 IP 的节点，以降低电商平台（如 Amazon、TikTok Shop）被关联的风控概率。</div>
-        </div>
-      </div>
-
-      <h2>九、横向比较与相关替代方案</h2>
+      <h2>八、相关推荐与相似品牌比对</h2>
       <p>如果您还在犹豫，可以对比以下相似定位的服务商：</p>
       <div class="grid-3" style="margin: 1.5rem 0;">
         ${otherAirports.map(oa => `
@@ -259,7 +263,10 @@ ${buildHeader(2, 'airport')}
             </h4>
             <div style="font-size: 0.8rem; color: var(--text-light); margin-bottom: 0.5rem;">${oa.lineType}</div>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">起步价：¥${oa.startingPrice} ${oa.currency}</p>
-            <a href="../../compare/index.html" class="btn btn-sm btn-secondary" style="font-size: 0.75rem;">与 ${airport.name} PK比对</a>
+            <div style="display: flex; gap: 0.35rem;">
+              <a href="../${oa.slug}/index.html" class="btn btn-sm btn-secondary" style="font-size: 0.75rem; flex: 1; text-align: center;">评测</a>
+              <a href="../../compare/index.html" class="btn btn-sm btn-primary" style="font-size: 0.75rem; flex: 1; text-align: center;">PK对比</a>
+            </div>
           </div>
         `).join('')}
       </div>

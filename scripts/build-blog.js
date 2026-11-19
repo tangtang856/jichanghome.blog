@@ -129,15 +129,15 @@ ${buildFooter(1)}
       <p>根据我们对全网主流机房成本的测算：</p>
       <ul>
         <li><strong>0.05 元/GB 以下：</strong>极度危险，大概率为公网廉价直连严重超卖，断流概率极大。</li>
-        <li><strong>0.08 ~ 0.15 元/GB：</strong>健康中继与高性价比专线的黄金区间（如 <a href="../../airport/feiniao/index.html">飞鸟云</a> 与 <a href="../../airport/mojie/index.html">魔戒</a>）。</li>
-        <li><strong>0.18 ~ 0.30 元/GB：</strong>高端纯内网 IPLC 专线与双 ISP 原生住宅 IP 的合理商业区间（如 <a href="../../airport/paopaogou/index.html">泡泡狗</a> 与 <a href="../../airport/shandianmao/index.html">闪电猫</a>）。</li>
+        <li><strong>0.08 ~ 0.15 元/GB：</strong>健康中继与高性价比专线的黄金区间（如 <a href="../../airport/breezenet/index.html">微风网络</a> 与 <a href="../../airport/feiv/index.html">飞V</a>）。</li>
+        <li><strong>0.18 ~ 0.30 元/GB：</strong>高端纯内网 IPLC 专线与双 ISP 原生住宅 IP 的合理商业区间（如 <a href="../../airport/yinxingren/index.html">隐形人</a> 与 <a href="../../airport/flashleap/index.html">闪跃</a>）。</li>
       </ul>
 
       <h3>3. 建立“主力专线 + 备用按量”的双保险机制</h3>
       <p>任何单一服务商都无法保证 365 天 100% 毫无波折。聪明的用户通常会配置：</p>
       <ul>
         <li><strong>主力方案：</strong>一个支持月付的优质专线或中继机场，满足日常 4K 追剧、查阅文档与高频办公需求。</li>
-        <li><strong>应急备用方案：</strong>购买一个<strong>不限时长按量计费</strong>的套餐（如魔戒，100GB 永久有效仅需十几元）。平时不产生费用，一旦主力机场遭遇割接维护，一秒切换备用，绝不耽误重要事务。</li>
+        <li><strong>应急备用方案：</strong>购买一个<strong>不限时长按量计费</strong>的套餐（如飞V，100GB 永久有效仅需十几元）。平时不产生费用，一旦主力机场遭遇割接维护，一秒切换备用，绝不耽误重要事务。</li>
       </ul>
 
       <h2>四、总结与行动清单</h2>
@@ -162,7 +162,7 @@ ${buildFooter(1)}
       <ul>
         <li><strong>入口机房：</strong>国内部署优质多线 BGP 服务器（电信、联通、移动多线接入）。</li>
         <li><strong>数据传输：</strong>用户先连接国内 BGP 服务器，国内服务器再通过加密隧道将数据转发至海外出口 VPS。</li>
-        <li><strong>优点：</strong>对于用户而言，连接的是国内服务器，延迟低、无公网直连防火墙干扰；性价比极高（如 <a href="../../airport/feiniao/index.html">飞鸟云</a>）。</li>
+        <li><strong>优点：</strong>对于用户而言，连接的是国内服务器，延迟低、无公网直连防火墙干扰；性价比极高（如 <a href="../../airport/breezenet/index.html">微风网络</a>）。</li>
         <li><strong>局限：</strong>过境依然依赖公网海底光缆，在晚高峰全国公网拥堵时，可能产生轻微丢包抖动。</li>
       </ul>
 
@@ -175,7 +175,7 @@ ${buildFooter(1)}
       </ul>
 
       <h3>2. IEPL (International Ethernet Private Line) 国际以太网专线</h3>
-      <p>IEPL 是 IPLC 的二层以太网升级升级版，具备更好的以太网协议兼容性与带宽调度弹性。在实际科学上网体验上，IEPL 与 IPLC 体验几乎毫无二致，均属于顶级的内网专线（如 <a href="../../airport/paopaogou/index.html">泡泡狗</a> 与 <a href="../../airport/shandianmao/index.html">闪电猫</a>）。</p>
+      <p>IEPL 是 IPLC 的二层以太网升级升级版，具备更好的以太网协议兼容性与带宽调度弹性。在实际科学上网体验上，IEPL 与 IPLC 体验几乎毫无二致，均属于顶级的内网专线（如 <a href="../../airport/yinxingren/index.html">隐形人</a> 与 <a href="../../airport/flashleap/index.html">闪跃</a>）。</p>
 
       <h2>五、四大线路综合对比表格</h2>
       <div class="table-responsive">
@@ -244,7 +244,7 @@ ${buildFooter(1)}
 
       <h2>二、各核心协议深度剖析</h2>
       <h3>1. Shadowsocks (SS / SS-2022)</h3>
-      <p>Shadowsocks 历史最悠久，客户端生态最完善。新推出的 <strong>SS-2022</strong> 规范彻底修复了旧版抗重放攻击和主动探测缺陷。由于其加密开销极小、CPU 占用几乎忽略不计，因而是 <strong>IPLC 内网专线机场（如泡泡狗、闪电猫）的首选协议</strong>。在物理内网专线上，不需要复杂的 TLS 伪装，SS 能够释放出最强悍的吞吐性能。</p>
+      <p>Shadowsocks 历史最悠久，客户端生态最完善。新推出的 <strong>SS-2022</strong> 规范彻底修复了旧版抗重放攻击和主动探测缺陷。由于其加密开销极小、CPU 占用几乎忽略不计，因而是 <strong>IPLC 内网专线机场（如隐形人、闪跃）的首选协议</strong>。在物理内网专线上，不需要复杂的 TLS 伪装，SS 能够释放出最强悍的吞吐性能。</p>
 
       <h3>2. VLESS (Xray / Reality)</h3>
       <p>VLESS 是对旧版 VMess 协议的全面重构，去除了繁复的中间件加密开销，将加密任务完全交给下层的 TLS。配合 <strong>Reality</strong> 技术，VLESS 可以直接“借用”大型正规海外企业（如苹果、微软、雅虎）的合法 SSL 证书建立伪装隧道，彻底杜绝自建证书被主动探测识别的风险，是公网中继和 VPS 自建的首选利器。</p>
@@ -284,10 +284,10 @@ ${buildFooter(1)}
 
       <h2>三、机场解锁流媒体的两大主流技术路线</h2>
       <h3>1. 原生住宅 IP 落地 (Residential IP)</h3>
-      <p>落地服务器直接采购海外当地家庭宽带（ISP）分配的原生住宅 IP。在 Netflix 看来，你的流量来自一个普通当地家庭客厅的宽带，信任度最高，全区所有非自制剧均可无障碍解锁（如 <a href="../../airport/paopaogou/index.html">泡泡狗</a> 与 <a href="../../airport/shandianmao/index.html">闪电猫</a> 提供的原生节点）。</p>
+      <p>落地服务器直接采购海外当地家庭宽带（ISP）分配的原生住宅 IP。在 Netflix 看来，你的流量来自一个普通当地家庭客厅的宽带，信任度最高，全区所有非自制剧均可无障碍解锁（如 <a href="../../airport/yinxingren/index.html">隐形人</a> 与 <a href="../../airport/flashleap/index.html">闪跃</a> 提供的原生节点）。</p>
 
       <h3>2. DNS 解锁 / SNI 代理中转</h3>
-      <p>机场的主力大带宽节点依然使用便宜的机房带宽，但通过配置特殊的 DNS 规则，将涉及流媒体认证的域名请求智能重定向到专门的解锁服务器进行反向代理。这种方式成本相对可控，是高性价比机场（如 <a href="../../airport/feiniao/index.html">飞鸟云</a>）普及流媒体解锁的核心手段。</p>
+      <p>机场的主力大带宽节点依然使用便宜的机房带宽，但通过配置特殊的 DNS 规则，将涉及流媒体认证的域名请求智能重定向到专门的解锁服务器进行反向代理。这种方式成本相对可控，是高性价比机场（如 <a href="../../airport/breezenet/index.html">微风网络</a>）普及流媒体解锁的核心手段。</p>
 
       <h2>四、如何自检与配置流媒体顺畅播放？</h2>
       <ul>
@@ -329,7 +329,7 @@ ${buildFooter(1)}
 
       <h2>三、打造安全无虞的 AI 开发使用环境</h2>
       <ol>
-        <li><strong>选择拥有专用 AI 住宅节点的机场：</strong>如 <a href="../../airport/paopaogou/index.html">泡泡狗</a>（纯专线+原生 IP 解锁）或 <a href="../../airport/shandianmao/index.html">闪电猫</a>（企业级全 IEPL+双 ISP 家宽落地），从源头保证出口 IP 纯净。</li>
+        <li><strong>选择拥有专用 AI 住宅节点的机场：</strong>如 <a href="../../airport/yinxingren/index.html">隐形人</a>（纯专线+原生 IP 解锁）或 <a href="../../airport/flashleap/index.html">闪跃</a>（企业级全 IEPL+双 ISP 家宽落地），从源头保证出口 IP 纯净。</li>
         <li><strong>使用客户端的 TUN 虚拟网卡模式：</strong>在 Clash Verge Rev 中开启 <strong>TUN 模式</strong>，强制所有网络流量（包括 UDP/WebRTC 与 DNS 请求）全量走代理，彻底封死泄漏通道。</li>
         <li><strong>隔离独立浏览器 Profile：</strong>为 AI 工具单独建立一个 Chrome / Edge 用户配置文件（Profile），不与日常国内社交网页混用，保持干净的会话环境。</li>
       </ol>

@@ -105,7 +105,7 @@ ${buildFooter(1)}
       <h2>二、准备工作</h2>
       <ul>
         <li>一台运行 Windows 10 或 Windows 11 的电脑。</li>
-        <li>有效可用的机场订阅链接（如 <a href="../../airport/feiniao/index.html">飞鸟云</a> 或 <a href="../../airport/paopaogou/index.html">泡泡狗</a> 提供的 Clash 格式订阅）。</li>
+        <li>有效可用的机场订阅链接（如 <a href="../../airport/breezenet/index.html">微风网络</a> 或 <a href="../../airport/yinxingren/index.html">隐形人</a> 提供的 Clash 格式订阅）。</li>
         <li>从官方 GitHub Releases 或机场后台下载最新版 <code>Clash.Verge_x64-setup.exe</code> 安装包。</li>
       </ul>
 
@@ -203,7 +203,7 @@ ${buildFooter(1)}
 
       <h2>三、小火箭导入订阅图文步骤</h2>
       <h3>第 1 步：一键导入或扫码</h3>
-      <p>登录您的机场后台（如 <a href="../../airport/paopaogou/index.html">泡泡狗</a> 或 <a href="../../airport/feiniao/index.html">飞鸟云</a>）：</p>
+      <p>登录您的机场后台（如 <a href="../../airport/yinxingren/index.html">隐形人</a> 或 <a href="../../airport/breezenet/index.html">微风网络</a>）：</p>
       <ul>
         <li><strong>方法 A（一键导入）：</strong>在 Safari 中打开机场后台，点击“导入到 Shadowrocket”，系统会自动唤醒小火箭并完成解析。</li>
         <li><strong>方法 B（扫码添加）：</strong>在电脑打开机场节点二维码，打开小火箭点击左上角 <strong>扫描图标</strong> 扫码添加。</li>
@@ -291,13 +291,13 @@ ${buildFooter(1)}
       <h2>三、高频故障 3：能正常上网，但 ChatGPT 提示“Access Denied / 1020 报错”</h2>
       <p><strong>排查与解决方法：</strong></p>
       <ul>
-        <li><strong>节点 IP 被风控：</strong>当前节点属于机房被污染 IP，被 Cloudflare 识别为人机攻击。请切换至带有原生住宅 IP 标记的节点（如 <a href="../../airport/paopaogou/index.html">泡泡狗</a> 或 <a href="../../airport/shandianmao/index.html">闪电猫</a> 的专用 AI 节点）。</li>
+        <li><strong>节点 IP 被风控：</strong>当前节点属于机房被污染 IP，被 Cloudflare 识别为人机攻击。请切换至带有原生住宅 IP 标记的节点（如 <a href="../../airport/yinxingren/index.html">隐形人</a> 或 <a href="../../airport/flashleap/index.html">闪跃</a> 的专用 AI 节点）。</li>
         <li><strong>浏览器缓存污染：</strong>按 <code>Ctrl + Shift + Delete</code> 清理浏览器 Cookies，或者开启 Chrome 无痕隐身窗口重新登录。</li>
         <li><strong>WebRTC 泄露真实真实 IP：</strong>在浏览器中安装防 WebRTC 泄露插件，或在 Clash 中开启 TUN 模式接管 UDP 数据包。</li>
       </ul>
 
       <h2>四、终极救急应急建议</h2>
-      <p>当主力机场发生全网不可抗力割接时，请随时准备一个 <strong>备用应急方案</strong>（例如不限时按量计费的 <a href="../../airport/mojie/index.html">魔戒</a>）。有备用在手，遇事不慌。</p>
+      <p>当主力机场发生全网不可抗力割接时，请随时准备一个 <strong>备用应急方案</strong>（例如不限时按量计费的 <a href="../../airport/feiv/index.html">飞V</a>）。有备用在手，遇事不慌。</p>
       `
     }
   ];

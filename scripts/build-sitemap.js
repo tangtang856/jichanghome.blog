@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { DOMAIN, writePage } = require('./template-base');
+const { DOMAIN, writePage, AIRPORTS } = require('./template-base');
 
 const INDEXNOW_KEY = '8b9f71c11e3b48fbb2305a2e99d821ae';
 
@@ -26,13 +26,13 @@ const ALL_PAGES = [
   // 对比工具
   { path: 'compare/index.html', priority: '0.9', changefreq: 'weekly' },
 
-  // 机场评测
+  // 14 家机场独立评测
   { path: 'airport/index.html', priority: '0.9', changefreq: 'weekly' },
-  { path: 'airport/feiniao/index.html', priority: '0.8', changefreq: 'weekly' },
-  { path: 'airport/paopaogou/index.html', priority: '0.8', changefreq: 'weekly' },
-  { path: 'airport/juziyun/index.html', priority: '0.8', changefreq: 'weekly' },
-  { path: 'airport/mojie/index.html', priority: '0.8', changefreq: 'weekly' },
-  { path: 'airport/shandianmao/index.html', priority: '0.8', changefreq: 'weekly' },
+  ...AIRPORTS.map(a => ({
+    path: `airport/${a.slug}/index.html`,
+    priority: '0.8',
+    changefreq: 'weekly'
+  })),
 
   // 教程中心
   { path: 'guides/index.html', priority: '0.8', changefreq: 'monthly' },
