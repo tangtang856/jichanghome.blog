@@ -3,20 +3,20 @@
 @tailwind utilities;
 
 :root {
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-light: #eff6ff;
-  --border-color: #e2e8f0;
-  --bg-body: #f8fafc;
-  --text-main: #0f172a;
-  --text-muted: #475569;
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --primary-light: #1e293b;
+  --border-color: rgba(51, 65, 85, 0.7);
+  --bg-body: #030712;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
   --text-light: #64748b;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-  background-color: var(--bg-body);
-  color: var(--text-main);
+  background-color: #030712;
+  color: #f8fafc;
   line-height: 1.65;
   min-height: 100vh;
   display: flex;
@@ -28,29 +28,176 @@ body {
   width: 4px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #334155;
   border-radius: 4px;
 }
 
-/* Markdown / Article Typography */
+/* Deep Space Dark Theme Overrides for Black Background */
+.bg-white {
+  background-color: rgba(15, 23, 42, 0.78) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+section.bg-white {
+  background-color: rgba(3, 7, 18, 0.75) !important;
+  border-color: rgba(51, 65, 85, 0.6) !important;
+}
+
+.bg-white\/95 {
+  background-color: rgba(3, 7, 18, 0.88) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+
+.bg-white\/90 {
+  background-color: rgba(15, 23, 42, 0.82) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.bg-white\/80, .bg-white\/75, .bg-white\/70 {
+  background-color: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Gradient overrides in Dark Mode */
+.from-white, [class*="from-white"], .from-blue-50, [class*="from-blue-50"] {
+  --tw-gradient-from: rgba(15, 23, 42, 0.85) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(15, 23, 42, 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.to-slate-50, [class*="to-slate-50"], .to-indigo-50, [class*="to-indigo-50"], .to-white, [class*="to-white"] {
+  --tw-gradient-to: rgba(30, 41, 59, 0.85) var(--tw-gradient-to-position) !important;
+}
+
+.bg-slate-50, .bg-slate-50\/50, .bg-slate-50\/80 {
+  background-color: rgba(15, 23, 42, 0.65) !important;
+}
+
+.bg-slate-100 {
+  background-color: rgba(30, 41, 59, 0.75) !important;
+}
+
+.bg-slate-200 {
+  background-color: rgba(51, 65, 85, 0.65) !important;
+  color: #cbd5e1 !important;
+}
+
+.bg-blue-50 {
+  background-color: rgba(30, 58, 138, 0.35) !important;
+}
+
+.bg-blue-100, .bg-blue-100\/70 {
+  background-color: rgba(30, 58, 138, 0.45) !important;
+}
+
+.text-blue-700 {
+  color: #93c5fd !important;
+}
+
+/* Rose / Coupon styling in Dark Mode */
+.bg-rose-50 {
+  background-color: rgba(136, 19, 55, 0.3) !important;
+}
+
+.text-rose-700, .text-rose-800 {
+  color: #fda4af !important;
+}
+
+.text-rose-500 {
+  color: #f43f5e !important;
+}
+
+.border-rose-200, .border-rose-300 {
+  border-color: rgba(244, 63, 94, 0.4) !important;
+}
+
+/* Emerald styling */
+.bg-emerald-50, .bg-emerald-50\/50 {
+  background-color: rgba(6, 78, 59, 0.35) !important;
+}
+
+.text-emerald-700, .text-emerald-800 {
+  color: #6ee7b7 !important;
+}
+
+.border-emerald-200, .border-emerald-200\/80 {
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+/* Amber styling */
+.bg-amber-50, .bg-amber-50\/50 {
+  background-color: rgba(120, 53, 15, 0.35) !important;
+}
+
+.text-amber-800 {
+  color: #fcd34d !important;
+}
+
+.border-amber-200, .border-amber-200\/80 {
+  border-color: rgba(245, 158, 11, 0.35) !important;
+}
+
+.text-sky-700 {
+  color: #7dd3fc !important;
+}
+
+.border-slate-200, .border-slate-200\/80, .border-slate-200\/90 {
+  border-color: rgba(51, 65, 85, 0.65) !important;
+}
+
+.border-slate-100 {
+  border-color: rgba(51, 65, 85, 0.45) !important;
+}
+
+.border-blue-200 {
+  border-color: rgba(59, 130, 246, 0.4) !important;
+}
+
+.border-blue-100 {
+  border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+.text-slate-900 {
+  color: #f8fafc !important;
+}
+
+.text-slate-800 {
+  color: #f1f5f9 !important;
+}
+
+.text-slate-700 {
+  color: #cbd5e1 !important;
+}
+
+.text-slate-600 {
+  color: #94a3b8 !important;
+}
+
+.text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+/* Article Prose in Dark Mode */
 .article-prose {
   font-size: 1.05rem;
   line-height: 1.85;
-  color: #1e293b;
+  color: #cbd5e1;
 }
 .article-prose h2 {
   font-size: 1.55rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #f8fafc;
   margin-top: 2.75rem;
   margin-bottom: 1.15rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.6);
 }
 .article-prose h3 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #0f172a;
+  color: #f8fafc;
   margin-top: 1.85rem;
   margin-bottom: 0.75rem;
 }
@@ -65,25 +212,26 @@ body {
   margin-bottom: 0.5rem;
 }
 .article-prose blockquote {
-  background-color: #f1f5f9;
-  border-left: 4px solid #2563eb;
+  background-color: rgba(30, 41, 59, 0.6);
+  border-left: 4px solid #3b82f6;
   padding: 1rem 1.25rem;
   border-radius: 0 8px 8px 0;
   margin: 1.5rem 0;
-  color: #334155;
+  color: #e2e8f0;
   font-style: italic;
 }
 .article-prose code {
-  background-color: #f1f5f9;
-  color: #be123c;
+  background-color: rgba(30, 41, 59, 0.8);
+  color: #f472b6;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.9em;
 }
 .article-prose pre {
-  background-color: #0f172a;
+  background-color: rgba(2, 6, 23, 0.95);
   color: #f8fafc;
+  border: 1px solid rgba(51, 65, 85, 0.6);
   padding: 1.25rem;
   border-radius: 8px;
   overflow-x: auto;
