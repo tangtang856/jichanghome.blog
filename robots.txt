@@ -7,7 +7,6 @@ Allow: /data/
 
 # 排除 404 与非内容性文件
 Disallow: /404.html
-Disallow: /*.json$
 
-# 官方 Sitemap 位置
+# Sitemap 定位
 Sitemap: https://jichanghome.blog/sitemap.xml

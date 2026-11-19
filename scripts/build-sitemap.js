@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const { DOMAIN, writePage, AIRPORTS } = require('./template-base');
+const GUIDES = require('./data-guides');
+const ALL_ARTICLES = require('./data-all-articles');
 
 const INDEXNOW_KEY = '8b9f71c11e3b48fbb2305a2e99d821ae';
 
@@ -34,21 +36,21 @@ const ALL_PAGES = [
     changefreq: 'weekly'
   })),
 
-  // 教程中心
-  { path: 'guides/index.html', priority: '0.8', changefreq: 'monthly' },
-  { path: 'guides/windows/index.html', priority: '0.8', changefreq: 'monthly' },
-  { path: 'guides/android/index.html', priority: '0.8', changefreq: 'monthly' },
-  { path: 'guides/ios/index.html', priority: '0.8', changefreq: 'monthly' },
-  { path: 'guides/macos/index.html', priority: '0.8', changefreq: 'monthly' },
-  { path: 'guides/troubleshooting/index.html', priority: '0.8', changefreq: 'monthly' },
+  // 30 篇教程中心
+  { path: 'guides/index.html', priority: '0.8', changefreq: 'weekly' },
+  ...GUIDES.map(g => ({
+    path: `guides/${g.slug}/index.html`,
+    priority: '0.8',
+    changefreq: 'monthly'
+  })),
 
-  // 博客文章
+  // 100 篇博客文章
   { path: 'blog/index.html', priority: '0.8', changefreq: 'weekly' },
-  { path: 'blog/how-to-choose-reliable-airport/index.html', priority: '0.8', changefreq: 'monthly' },
-  { path: 'blog/iplc-iepl-bgp-transit-differences/index.html', priority: '0.8', changefreq: 'monthly' },
-  { path: 'blog/shadowsocks-vless-trojan-protocols/index.html', priority: '0.8', changefreq: 'monthly' },
-  { path: 'blog/streaming-unlock-netflix-disney-guide/index.html', priority: '0.8', changefreq: 'monthly' },
-  { path: 'blog/chatgpt-claude-ai-node-requirements/index.html', priority: '0.8', changefreq: 'monthly' },
+  ...ALL_ARTICLES.map(a => ({
+    path: `blog/${a.slug}/index.html`,
+    priority: '0.8',
+    changefreq: 'monthly'
+  })),
 
   // 知识百科
   { path: 'glossary/index.html', priority: '0.7', changefreq: 'monthly' },
@@ -98,14 +100,13 @@ Allow: /data/
 
 # 排除 404 与非内容性文件
 Disallow: /404.html
-Disallow: /*.json$
 
-# 官方 Sitemap 位置
+# Sitemap 定位
 Sitemap: ${DOMAIN}/sitemap.xml
 `;
   writePage('robots.txt', robotsTxt);
 
-  // 3. 生成 IndexNow Key 校验文件
+  // 3. 生成 IndexNow 校验文件 (Bing 快速索引协议)
   writePage(`${INDEXNOW_KEY}.txt`, INDEXNOW_KEY);
 
   console.log(`[Generated] sitemap.xml with ${ALL_PAGES.length} canonical URLs`);
@@ -113,8 +114,4 @@ Sitemap: ${DOMAIN}/sitemap.xml
   console.log(`[Generated] IndexNow verification key file: ${INDEXNOW_KEY}.txt`);
 }
 
-module.exports = {
-  ALL_PAGES,
-  INDEXNOW_KEY,
-  generateSitemapAndRobots
-};
+module.exports = { generateSitemapAndRobots, ALL_PAGES };

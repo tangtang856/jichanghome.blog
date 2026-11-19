@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT与Claude防封节点检测与IP纯净度评分实测方法 - 机场之家</title>
+  <meta name="description" content="如何挑选不被封号的AI专用节点？手把手教你查询Scamalytics欺诈评分、双ISP属性检测与节点IP纯净度验证。">
+  <link rel="canonical" href="https://jichanghome.blog/guides/chatgpt-ip-check/index.html">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / 社交分享 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ChatGPT与Claude防封节点检测与IP纯净度评分实测方法 - 机场之家">
+  <meta property="og:description" content="如何挑选不被封号的AI专用节点？手把手教你查询Scamalytics欺诈评分、双ISP属性检测与节点IP纯净度验证。">
+  <meta property="og:url" content="https://jichanghome.blog/guides/chatgpt-ip-check/index.html">
+  <meta property="og:site_name" content="机场之家 - 中文网络节点与梯子推荐门户">
+  <meta property="og:locale" content="zh_CN">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ChatGPT与Claude防封节点检测与IP纯净度评分实测方法 - 机场之家">
+  <meta name="twitter:description" content="如何挑选不被封号的AI专用节点？手把手教你查询Scamalytics欺诈评分、双ISP属性检测与节点IP纯净度验证。">
+
+  <!-- 纯净原生样式与字体 (绝对相对路径加载，完美兼容本地 file:// 协议与线上) -->
+  <link rel="stylesheet" href="../../css/style.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "ChatGPT与Claude防封节点检测与IP纯净度测试",
+  "description": "如何挑选不被封号的AI专用节点？手把手教你查询Scamalytics欺诈评分、双ISP属性检测与节点IP纯净度验证。",
+  "datePublished": "2026-03-05",
+  "author": {
+    "@type": "Organization",
+    "name": "机场之家技术团队"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "机场之家",
+    "url": "https://jichanghome.blog/"
+  },
+  "url": "https://jichanghome.blog/guides/chatgpt-ip-check/index.html"
+}
+</script>
+</head>
+<body>
+
+  <!-- 全站通用导航栏 -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="../../index.html" class="site-logo">
+        <span class="logo-badge">JH</span>
+        <span>机场之家</span>
+      </a>
+
+      <!-- 桌面端菜单 -->
+      <nav class="desktop-nav" aria-label="主导航">
+        <a href="../../index.html" class="nav-link ">首页</a>
+        <a href="../../recommend/index.html" class="nav-link ">机场推荐</a>
+        <a href="../../ranking/index.html" class="nav-link ">节点排行</a>
+        <a href="../../airport/index.html" class="nav-link ">品牌评测</a>
+        <a href="../../compare/index.html" class="nav-link ">机场对比</a>
+        <a href="../../guides/index.html" class="nav-link active">使用教程</a>
+        <a href="../../blog/index.html" class="nav-link ">选型指南</a>
+        <a href="../../compare/index.html" class="nav-btn-highlight">快速比价</a>
+      </nav>
+
+      <!-- 移动端汉堡按钮 -->
+      <button class="menu-toggle" id="menuToggleBtn" aria-label="展开导航菜单" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- 移动端展开抽屉 -->
+    <div class="mobile-nav-drawer" id="mobileDrawer">
+      <nav class="mobile-nav-links" aria-label="移动端导航">
+        <a href="../../index.html" class="mobile-nav-link">首页</a>
+        <a href="../../recommend/index.html" class="mobile-nav-link">机场推荐专区</a>
+        <a href="../../ranking/index.html" class="mobile-nav-link">节点综合排行</a>
+        <a href="../../airport/index.html" class="mobile-nav-link">品牌独立评测</a>
+        <a href="../../compare/index.html" class="mobile-nav-link">多维度对比工具</a>
+        <a href="../../guides/index.html" class="mobile-nav-link">新手教程中心</a>
+        <a href="../../blog/index.html" class="mobile-nav-link">精选博客文章</a>
+        <a href="../../glossary/index.html" class="mobile-nav-link">术语与知识百科</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <div class="container article-layout">
+    <main class="article-content">
+      <nav class="breadcrumb" aria-label="面包屑导航">
+        <a href="../../index.html">首页</a>
+        <span class="breadcrumb-separator">/</span>
+        <a href="../index.html">新手教程中心</a>
+        <span class="breadcrumb-separator">/</span>
+        <span>场景与设备</span>
+      </nav>
+
+      <h1 class="article-title">ChatGPT与Claude防封节点检测与IP纯净度测试</h1>
+
+      <div class="article-meta-bar">
+        <span>分类：场景与设备</span>
+        <span>•</span>
+        <span>实操难度：新手友好</span>
+        <span>•</span>
+        <span>阅读约 7分钟</span>
+        <span>•</span>
+        <span>核验时间：2026-03-05</span>
+      </div>
+
+      <div class="article-body">
+        
+      <h2>一、AI 平台风控的底层逻辑</h2>
+      <p>OpenAI 与 Anthropic (Claude) 采用顶级第三方风控数据库（如 Cloudflare Turnstile、IPQualityScore、Scamalytics）。当一个节点的 IP 满足以下特征时，账号极易被封：</p>
+      <ul>
+        <li>机房类型属于普通 Hosting（数据中心 VPS）而非 Residential（住宅宽带）。</li>
+        <li>Fraud Score（欺诈评分）高于 25 分。</li>
+        <li>同 IP 下短时间内有数百个账号频繁轮换登录。</li>
+      </ul>
+
+      <h2>二、三步检测你的节点 IP 纯净度</h2>
+      <ol>
+        <li><strong>查询欺诈分：</strong>连接节点后访问 <code>scamalytics.com</code>，输入当前 IP 查看 Fraud Score。绿色的 0~10 分为最佳（如 <a href="../../airport/yinxingren/index.html">隐形人</a> 的纯专线节点）。</li>
+        <li><strong>查询 ISP 属性：</strong>访问 <code>ipinfo.io</code>，查看 <code>type</code> 字段是否为 <code>isp</code>。</li>
+      </ol>
+    
+      </div>
+
+      <div style="margin-top: 3.5rem; padding: 2rem; background: var(--bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">相关教程推荐</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">继续探索其他系统平台的配置技巧与网络优化知识：</p>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <a href="../windows/index.html" class="btn btn-sm btn-secondary">Windows 教程</a>
+          <a href="../android/index.html" class="btn btn-sm btn-secondary">Android 教程</a>
+          <a href="../ios/index.html" class="btn btn-sm btn-secondary">iOS 教程</a>
+          <a href="../macos/index.html" class="btn btn-sm btn-secondary">macOS 教程</a>
+          <a href="../troubleshooting/index.html" class="btn btn-sm btn-secondary">连不上网络排障</a>
+          <a href="../tun-mode-setup/index.html" class="btn btn-sm btn-secondary">TUN模式配置</a>
+        </div>
+      </div>
+    </main>
+
+    <aside class="article-sidebar">
+      <div class="sidebar-box">
+        <div class="sidebar-box-title">推荐可用优质机场</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+          工欲善其事，必先利其器。配合靠谱稳定的节点订阅，客户端才能发挥千兆性能：
+        </p>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem;">
+          <li style="border-bottom: 1px dashed var(--border-color); padding-bottom: 0.6rem;">
+            <div style="font-weight: 700; font-size: 0.95rem;">
+              <a href="../../airport/breezenet/index.html">微风网络 Breezenet</a>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-light);">¥8/月起 · 200GB大流量 · IEPL专线</div>
+            <a href="https://edp01.breezenetaff.com/#/?code=h4GlIXwC" target="_blank" rel="noopener nofollow" class="btn btn-sm btn-primary" style="margin-top: 0.35rem; width: 100%; text-align: center;">直达官网 ↗</a>
+          </li>
+          <li style="border-bottom: 1px dashed var(--border-color); padding-bottom: 0.6rem;">
+            <div style="font-weight: 700; font-size: 0.95rem;">
+              <a href="../../airport/yinxingren/index.html">隐形人</a>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-light);">¥24/月 · 纯专线架构 · 适合AI办公</div>
+            <a href="https://varnexa.invisibleaff.com/#/?code=5BkMj6bD" target="_blank" rel="noopener nofollow" class="btn btn-sm btn-primary" style="margin-top: 0.35rem; width: 100%; text-align: center;">直达官网 ↗</a>
+          </li>
+          <li>
+            <div style="font-weight: 700; font-size: 0.95rem;">
+              <a href="../../airport/feiv/index.html">飞V</a>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-light);">¥4.9/月起 · 超高性价比 · 支持按量</div>
+            <a href="https://varnexa.flyvaff.com/#/?code=Ks7qO8qe" target="_blank" rel="noopener nofollow" class="btn btn-sm btn-primary" style="margin-top: 0.35rem; width: 100%; text-align: center;">直达官网 ↗</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <div class="sidebar-box-title">快速工具箱</div>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem;">
+          <li><a href="../../compare/index.html">&rarr; 机场参数横向比价工具</a></li>
+          <li><a href="../../ranking/index.html">&rarr; 2026年机场节点排行榜</a></li>
+          <li><a href="../../blog/index.html">&rarr; 选购避坑与协议科普文章</a></li>
+          <li><a href="../../glossary/index.html">&rarr; 术语词典 (IPLC/Clash等)</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <!-- 全站通用页脚 -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>机场之家 (jichanghome.blog)</h3>
+          <p>专注于网络中继、专线网络、科学上网与海外学术/跨境网络加速的客观资讯平台。坚持独立测试、真实参数核验与拒绝虚假宣传。</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>推荐与排行</h4>
+          <ul>
+            <li><a href="../../recommend/budget/index.html">平价性价比机场</a></li>
+            <li><a href="../../recommend/premium/index.html">IPLC/IEPL高端专线</a></li>
+            <li><a href="../../recommend/ai/index.html">ChatGPT/AI专用节点</a></li>
+            <li><a href="../../recommend/streaming/index.html">流媒体4K解锁专区</a></li>
+            <li><a href="../../ranking/value/index.html">单位GB单价排行榜</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>教程与指南</h4>
+          <ul>
+            <li><a href="../../guides/windows/index.html">Windows客户端配置</a></li>
+            <li><a href="../../guides/android/index.html">Android安卓手机教程</a></li>
+            <li><a href="../../guides/ios/index.html">iOS小火箭Shadowrocket</a></li>
+            <li><a href="../../guides/macos/index.html">macOS客户端配置</a></li>
+            <li><a href="../../guides/troubleshooting/index.html">节点排障与连通性自检</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>透明度与规范</h4>
+          <ul>
+            <li><a href="../../editorial-policy/index.html">独立编辑政策</a></li>
+            <li><a href="../../about/index.html">关于我们</a></li>
+            <li><a href="../../contact/index.html">联系与反馈</a></li>
+            <li><a href="../../disclaimer/index.html">免责声明</a></li>
+            <li><a href="../../privacy-policy/index.html">隐私权保护政策</a></li>
+            <li><a href="../../sitemap.xml">网站地图 (Sitemap)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 机场之家 (jichanghome.blog). 保留所有权利。内容仅供网络技术学习与跨境学术调研参考。</div>
+        <div>测试数据与官方信息基于公开渠道核验，最后全站校验：2026年3月</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 核心交互脚本 -->
+  <script src="../../data/airports.js"></script>
+  <script src="../../js/main.js"></script>
+</body>
+</html>
+
