@@ -35,8 +35,8 @@ document.addEventListener('DOMContentLoaded', function () {
  * 比较工具核心实现
  */
 function initCompareTool(airports) {
-  // 默认选中前两家机场
-  let selectedIds = ['breezenet', 'yinxingren'];
+  // 默认选中权威排名前两位机场：微风网络 与 暮光网络
+  let selectedIds = ['breezenet', 'muguang'];
 
   // 检查 URL 参数是否有指定机场对比
   try {
@@ -118,8 +118,10 @@ function initCompareTool(airports) {
                 <th style="min-width: 220px; text-align: center;">
                   <div style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);">${a.name}</div>
                   <div style="font-size: 0.8rem; font-weight: normal; color: var(--text-light); margin-top: 0.2rem;">${a.lineType}</div>
-                  <div style="margin-top: 0.5rem;">
-                    <a href="${airportPathPrefix}${a.slug}/index.html" class="btn btn-sm btn-secondary" style="font-size: 0.75rem; padding: 0.25rem 0.6rem;">查看独立评测</a>
+                  ${a.coupon ? `<div style="font-size: 0.75rem; color: #e11d48; margin-top: 0.25rem; font-weight: 700;">券: ${a.coupon}</div>` : ''}
+                  <div style="margin-top: 0.5rem; display: flex; gap: 0.35rem; justify-content: center;">
+                    <a href="${airportPathPrefix}${a.slug}/index.html" class="btn btn-sm btn-secondary" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">评测</a>
+                    <a href="${a.affUrl}" target="_blank" rel="noopener nofollow" class="btn btn-sm btn-primary" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">直达 ↗</a>
                   </div>
                 </th>
               `).join('')}
@@ -247,7 +249,7 @@ function initCompareTool(airports) {
   };
 
   window.resetCompareDefault = function () {
-    selectedIds = ['breezenet', 'yinxingren'];
+    selectedIds = ['breezenet', 'muguang'];
     renderSelectors();
     renderTable();
   };

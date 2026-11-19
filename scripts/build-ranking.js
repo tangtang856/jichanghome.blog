@@ -49,7 +49,7 @@ ${buildHeader(1, 'ranking')}
       <a href="overall/index.html" class="category-card">
         <div class="cat-icon">🏆</div>
         <h2 class="cat-title">综合实力总榜 (Overall Rank)</h2>
-        <p class="cat-desc">平衡线路质量、节点可用率、套餐单价与售后支撑，隐形人、微风网络、闪跃领衔。</p>
+        <p class="cat-desc">平衡线路质量、节点可用率、套餐单价与售后支撑，微风网络、暮光网络、飞猫云领衔。</p>
       </a>
 
       <a href="value/index.html" class="category-card">
@@ -93,7 +93,7 @@ ${buildHeader(1, 'ranking')}
           </tr>
         </thead>
         <tbody>
-          ${AIRPORTS.sort((a, b) => b.scoreOverall - a.scoreOverall).map((airport, idx) => `
+          ${AIRPORTS.map((airport, idx) => `
             <tr>
               <td style="text-align: center; font-weight: 800; font-size: 1.1rem; color: ${idx === 0 ? '#eab308' : idx === 1 ? '#94a3b8' : idx === 2 ? '#b45309' : 'var(--text-light)'};">
                 #${idx + 1}
@@ -138,8 +138,8 @@ ${buildFooter(1)}
       name: '综合实力总榜',
       title: '2026全网优质机场节点综合实力排行榜 | 延迟与速率评测 - 机场之家',
       desc: '2026全网机场节点综合实力排行榜。从线路质量、节点可用率、单价透明度与售后支撑四个维度综合考量，提供真实测评依据。',
-      sortFn: (a, b) => b.scoreOverall - a.scoreOverall,
-      quickConclusion: '在综合表现上，<strong>隐形人</strong>凭借全内网IEPL纯专线与原生住宅IP位列榜首；<strong>微风网络Breezenet</strong>以¥8/月超低起步价与200GB充沛专线流量获得极佳推荐；<strong>闪跃FlashLeap</strong>与<strong>浪网WaveNet</strong>紧随其后。',
+      sortFn: (a, b) => a.rank - b.rank,
+      quickConclusion: '在综合实力排名上，<strong>微风网络 Breezenet</strong> 凭借 IEPL/IPLC 专线与 ¥8/月享 200GB 超高质价比荣登榜首；<strong>暮光网络</strong> 专线节点平稳高效位列第二；<strong>飞猫云</strong>（特惠年均¥7起）、<strong>无忧</strong>与<strong>灵猫</strong>紧随其后。',
       criteria: '综合评分 = 线路物理质量(35%) + 晚高峰可用率(25%) + 每GB单位性价比(25%) + 客户端易用与客服响应(15%)。'
     },
     {
@@ -157,7 +157,7 @@ ${buildFooter(1)}
       title: '2026高稳定性防断连专线机场排行榜 | IPLC/IEPL评测 - 机场之家',
       desc: '2026年稳定性优先的专线网络排行榜。重点针对晚高峰（20:00~23:00）国际出口拥堵实测，端到端内网IPLC/IEPL专线零丢包评测。',
       sortFn: (a, b) => b.scoreStability - a.scoreStability,
-      quickConclusion: '在晚高峰抗拥堵实测中，<strong>隐形人</strong>（IEPL纯专线）、<strong>闪跃FlashLeap</strong>（IPLC纯专线）、<strong>灵猫</strong>与<strong>浪网</strong>由于采用端到端纯内网物理专线，丢包率持续低于0.5%，延迟波动极小，是商务办公与AI大模型重度用户的定海神针。',
+      quickConclusion: '在晚高峰抗拥堵实测中，<strong>微风网络</strong>（IEPL/IPLC）、<strong>隐形人</strong>（IEPL纯专线）、<strong>闪跃FlashLeap</strong>（IPLC纯专线）与<strong>暮光网络</strong>由于采用端到端纯内网物理专线，丢包率持续低于0.5%，延迟波动极小。',
       criteria: '晚高峰稳定性 = 晚20:00至23:00实测TCP握手延迟中位数 + 丢包率表现 + 敏感时期抗封锁灾备能力。'
     },
     {

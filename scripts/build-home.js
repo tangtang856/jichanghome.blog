@@ -2,7 +2,7 @@ const { buildHead, buildHeader, buildFooter, writePage, AIRPORTS } = require('./
 
 function generateHomePage() {
   const title = "2026专业中文机场推荐与梯子节点导航指南 | 靠谱稳定VPN评测 - 机场之家";
-  const description = "机场之家为您提供2026年最新经过测试的优质机场推荐、机场节点排行榜、性价比平价梯子推荐及VPN评测。涵盖隐形人、微风网络、闪跃等IPLC/IEPL纯专线、ChatGPT/Claude原生节点、4K流媒体解锁实测与Clash全平台配置教程。";
+  const description = "机场之家为您提供2026年最新经过测试的优质机场推荐、机场节点排行榜、性价比平价梯子推荐及VPN评测。涵盖微风网络、暮光网络、飞猫云等IPLC/IEPL纯专线、ChatGPT/Claude原生节点、4K流媒体解锁实测与Clash全平台配置教程。";
   
   const schema = {
     "@context": "https://schema.org",
@@ -71,7 +71,7 @@ ${buildHeader(0, 'home')}
       <div class="quick-answer-grid">
         <div class="qa-card">
           <h4>1. 线路是底色</h4>
-          <p>内网专线 (IPLC/IEPL，如隐形人、闪跃) 晚高峰不经过公网 GFW，抗封锁且延迟极低；隧道中继 (BGP Transit) 性价比高；普通公网直连节点容易断流。</p>
+          <p>内网专线 (IPLC/IEPL，如微风网络、暮光网络) 晚高峰不经过公网 GFW，抗封锁且延迟极低；隧道中继 (BGP Transit) 性价比高；普通公网直连节点容易断流。</p>
         </div>
         <div class="qa-card">
           <h4>2. 单价看每 GB 成本</h4>
@@ -83,7 +83,7 @@ ${buildHeader(0, 'home')}
         </div>
         <div class="qa-card">
           <h4>4. 坚持“按月付费”与多节点备用</h4>
-          <p>再老牌的机场也切忌一次性冲动年付。建议选择支持月付或购买不限时按量套餐（如飞V不限时版）作为主力机场的容灾备用方案。</p>
+          <p>再老牌的机场也切忌一次性冲动年付。建议选择支持月付或购买低门槛套餐（如微风网络¥8/月或飞V）作为主力机场的容灾备用方案。</p>
         </div>
       </div>
     </div>
@@ -226,13 +226,13 @@ ${buildHeader(0, 'home')}
         <a href="recommend/budget/index.html" class="category-card">
           <div class="cat-icon">💰</div>
           <h3 class="cat-title">低预算平价机场</h3>
-          <p class="cat-desc">月付 4.9~8 元起，大流量高性价比。飞V、飞猫云、微风网络、萤火虫，最低成本解决日常刚需。</p>
+          <p class="cat-desc">月付 4.9~8 元起，大流量高性价比。微风网络、飞猫云、萤火虫、飞V，最低成本解决日常刚需。</p>
         </a>
 
         <a href="recommend/premium/index.html" class="category-card">
           <div class="cat-icon">⚡</div>
           <h3 class="cat-title">高端 IPLC/IEPL 专线</h3>
-          <p class="cat-desc">隐形人、闪跃、灵猫、无忧。端到端不过公网防火墙，物理级零丢包与超低延迟。</p>
+          <p class="cat-desc">微风网络、暮光网络、无忧、灵猫、闪跃、隐形人。端到端不过公网防火墙，物理级零丢包与超低延迟。</p>
         </a>
 
         <a href="recommend/beginner/index.html" class="category-card">
@@ -244,7 +244,7 @@ ${buildHeader(0, 'home')}
         <a href="recommend/stable/index.html" class="category-card">
           <div class="cat-icon">🛡️</div>
           <h3 class="cat-title">高稳定性抗断连机场</h3>
-          <p class="cat-desc">隐形人、闪跃、浪网、灵猫。重点针对晚高峰（20:00~23:00）拥堵设计，多入口灾备切换。</p>
+          <p class="cat-desc">微风网络、暮光网络、无忧、灵猫、闪跃、隐形人。重点针对晚高峰（20:00~23:00）拥堵设计，多入口灾备切换。</p>
         </a>
 
         <a href="recommend/ai/index.html" class="category-card">
@@ -290,17 +290,6 @@ ${buildHeader(0, 'home')}
             <span>•</span>
             <span>2026-03</span>
           </div>
-          <h3 class="post-title"><a href="airport/yinxingren/index.html">隐形人机场评测：IEPL纯专线架构与144GB大流量实测</a></h3>
-          <p class="post-excerpt">主打全内网IEPL纯专线，晚高峰无卡顿不丢包，实测ChatGPT与Claude纯净原生IP访问表现。</p>
-          <a href="airport/yinxingren/index.html" style="font-weight: 600; font-size: 0.85rem;">阅读完整评测报告 &rarr;</a>
-        </div>
-
-        <div class="post-card">
-          <div class="post-meta">
-            <span>评测报告</span>
-            <span>•</span>
-            <span>2026-03</span>
-          </div>
           <h3 class="post-title"><a href="airport/breezenet/index.html">微风网络Breezenet评测：¥8/月超低起步价与200GB大流量全景解析</a></h3>
           <p class="post-excerpt">IEPL/IPLC主干网络，单GB折算仅0.04元，搭配VLESS协议与专属优惠券【weifeng90】。</p>
           <a href="airport/breezenet/index.html" style="font-weight: 600; font-size: 0.85rem;">阅读完整评测报告 &rarr;</a>
@@ -312,9 +301,20 @@ ${buildHeader(0, 'home')}
             <span>•</span>
             <span>2026-03</span>
           </div>
-          <h3 class="post-title"><a href="airport/flashleap/index.html">闪跃FlashLeap评测：IPLC纯专线外服游戏与4K极速体验</a></h3>
-          <p class="post-excerpt">全链路IPLC内网专线，网络抖动控制在1.5ms以内，外服电竞联机与高码率流媒体利器。</p>
-          <a href="airport/flashleap/index.html" style="font-weight: 600; font-size: 0.85rem;">阅读完整评测报告 &rarr;</a>
+          <h3 class="post-title"><a href="airport/muguang/index.html">暮光网络评测：专线节点/120GB充足配额与VLESS协议实测</a></h3>
+          <p class="post-excerpt">专线节点网络架构，晚高峰平稳流畅无拥堵，主流套餐单GB成本低至¥0.127。</p>
+          <a href="airport/muguang/index.html" style="font-weight: 600; font-size: 0.85rem;">阅读完整评测报告 &rarr;</a>
+        </div>
+
+        <div class="post-card">
+          <div class="post-meta">
+            <span>评测报告</span>
+            <span>•</span>
+            <span>2026-03</span>
+          </div>
+          <h3 class="post-title"><a href="airport/feimaoyun/index.html">飞猫云评测：年付月均¥7起/双线冗余高性价比实测</a></h3>
+          <p class="post-excerpt">IEPL专线与优质骨干中转混合冗余架构，单GB折算低至0.047元，专属折扣码【flycat888】。</p>
+          <a href="airport/feimaoyun/index.html" style="font-weight: 600; font-size: 0.85rem;">阅读完整评测报告 &rarr;</a>
         </div>
       </div>
     </div>
@@ -454,14 +454,14 @@ ${buildHeader(0, 'home')}
         <div class="faq-item">
           <h3 class="faq-q">专线节点 (IPLC/IEPL) 为什么比普通节点贵？</h3>
           <div class="faq-a">
-            IPLC（国际私有租用线路）和 IEPL 是端到端的跨国内网光纤专线，流量在过境时不通过公网防火墙，不经过国际公网拥堵路由，因而具有物理级的不卡顿、零丢包和极低延迟。隐形人、闪跃、无忧等品牌提供此类内网专线服务。
+            IPLC（国际私有租用线路）和 IEPL 是端到端的跨国内网光纤专线，流量在过境时不通过公网防火墙，不经过国际公网拥堵路由，因而具有物理级的不卡顿、零丢包和极低延迟。微风网络、暮光网络、隐形人、闪跃等品牌提供此类内网专线服务。
           </div>
         </div>
 
         <div class="faq-item">
           <h3 class="faq-q">访问 ChatGPT 或 Claude 为什么频繁提示“Access Denied”？</h3>
           <div class="faq-a">
-            OpenAI 与 Anthropic 对数据中心机房 IP 实施了极其严格的风控过滤。廉价机场使用的大段机房 IP 往往被标记黑名单。要顺畅使用 AI 工具，建议选择具有原生双 ISP 住宅 IP 落地或专有 AI 优化通道的专线节点（如隐形人、微风网络、闪跃）。
+            OpenAI 与 Anthropic 对数据中心机房 IP 实施了极其严格的风控过滤。廉价机场使用的大段机房 IP 往往被标记黑名单。要顺畅使用 AI 工具，建议选择具有原生双 ISP 住宅 IP 落地或专有 AI 优化通道的专线节点（如微风网络、暮光网络、闪跃、隐形人）。
           </div>
         </div>
 
