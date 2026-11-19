@@ -10,3 +10,4 @@ Disallow: /404.html
 
 # Sitemap 定位
 Sitemap: https://jichanghome.blog/sitemap.xml
+Sitemap: https://jichanghome.blog/sitemap-index.xml
