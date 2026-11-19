@@ -4,112 +4,131 @@
   "name": "macOS系统Surge 5网关与高级分流实战指南",
   "description": "Mac顶级网络工具Surge 5深度指南。手把手教你配置增强模式（Enhanced Mode）、本地网关与全屋设备局域网代理接管。",
   "datePublished": "2026-03-04"
-}</script><link rel="stylesheet" href="../../_astro/about.BQT-60ND.css"></head> <body class="bg-[#030712] text-slate-100 flex flex-col min-h-screen antialiased selection:bg-blue-500/30 selection:text-blue-200 relative"> <div id="starry-container" class="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#030712]" aria-hidden="true"> <canvas id="starryCanvas" class="w-full h-full block"></canvas> </div> <script>
-  (function initDeepSpaceStarrySky() {
+}</script><link rel="stylesheet" href="../../_astro/about.CVrp3gju.css"></head> <body class="bg-[#030712] text-slate-100 flex flex-col min-h-screen antialiased selection:bg-blue-500/30 selection:text-blue-200 relative"> <div id="starry-container" class="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#030712]" aria-hidden="true"> <canvas id="starryCanvas" class="w-full h-full block"></canvas> </div> <script>
+  (function initPristineStarfield() {
     var canvas = document.getElementById('starryCanvas');
     if (!canvas) return;
 
-    var ctx = canvas.getContext('2d');
+    var ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
 
-    var width = 0;
-    var height = 0;
-    var animationFrameId;
-    var isTabVisible = true;
+    var width = window.innerWidth || 1440;
+    var height = window.innerHeight || 900;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var animating = false;
+    var lastTime = performance.now();
 
-    // 深空高亮璀璨星光配色方案 (在纯黑深空下极具视觉冲击力与高级感)
-    var CELESTIAL_PALETTES = [
-      { core: '#ffffff', glow: 'rgba(56, 189, 248, 0.95)', halo: 'rgba(56, 189, 248, 0.45)', color: '#38bdf8' },  // 冰晶蓝钻
-      { core: '#ffffff', glow: 'rgba(251, 191, 36, 0.95)', halo: 'rgba(251, 191, 36, 0.50)', color: '#fbbf24' },  // 晨曦金耀
-      { core: '#ffffff', glow: 'rgba(192, 132, 252, 0.95)', halo: 'rgba(192, 132, 252, 0.45)', color: '#c084fc' }, // 梦幻紫晶
-      { core: '#ffffff', glow: 'rgba(96, 165, 250, 0.95)', halo: 'rgba(96, 165, 250, 0.45)', color: '#60a5fa' },  // 浩瀚星蓝
-      { core: '#ffffff', glow: 'rgba(244, 114, 182, 0.95)', halo: 'rgba(244, 114, 182, 0.45)', color: '#f472b6' }, // 樱花粉钻
-      { core: '#ffffff', glow: 'rgba(52, 211, 153, 0.95)', halo: 'rgba(52, 211, 153, 0.45)', color: '#34d399' }  // 极光翡翠
+    // 纯净宝石星辉配色（白炽纯白内核 + 通透发光晕）
+    var STAR_PALETTES = [
+      { core: '#ffffff', glow: 'rgba(56, 189, 248, 0.9)', aura: 'rgba(56, 189, 248, 0.25)', hex: '#38bdf8' },  // 冰钻天青
+      { core: '#ffffff', glow: 'rgba(251, 191, 36, 0.95)', aura: 'rgba(251, 191, 36, 0.28)', hex: '#fbbf24' },  // 晨曦香槟金
+      { core: '#ffffff', glow: 'rgba(192, 132, 252, 0.9)', aura: 'rgba(192, 132, 252, 0.25)', hex: '#c084fc' }, // 梦幻紫罗兰
+      { core: '#ffffff', glow: 'rgba(96, 165, 250, 0.9)', aura: 'rgba(96, 165, 250, 0.25)', hex: '#60a5fa' },  // 苍穹星蓝
+      { core: '#ffffff', glow: 'rgba(244, 114, 182, 0.9)', aura: 'rgba(244, 114, 182, 0.25)', hex: '#f472b6' }, // 蔷薇粉钻
+      { core: '#ffffff', glow: 'rgba(52, 211, 153, 0.9)', aura: 'rgba(52, 211, 153, 0.25)', hex: '#34d399' }  // 极光翡翠
     ];
 
     var stars = [];
     var shootingStars = [];
     var mouseSparkles = [];
-    var nebulaTime = 0;
 
-    function resizeCanvas() {
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
       width = window.innerWidth;
       height = window.innerHeight;
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
-      if (ctx) ctx.scale(dpr, dpr);
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function createStar(initial) {
+      var palette = STAR_PALETTES[Math.floor(Math.random() * STAR_PALETTES.length)];
+      var rand = Math.random();
+      var type;
+      var size;
+
+      if (rand < 0.35) {
+        type = 'diamond'; // 35% ✦ 四角细长晶钻闪烁星
+        size = 5 + Math.random() * 6.5;
+      } else if (rand < 0.55) {
+        type = 'octa'; // 20% ✧ 八角超新星芒
+        size = 5.5 + Math.random() * 7;
+      } else if (rand < 0.75) {
+        type = 'star5'; // 20% ★ 可爱立体五角星
+        size = 4 + Math.random() * 5;
+      } else if (rand < 0.88) {
+        type = 'cross'; // 13% ✚ 十字芒星
+        size = 3.5 + Math.random() * 4.5;
+      } else {
+        type = 'pinprick'; // 12% • 纯白微晶远星点
+        size = 1.2 + Math.random() * 2.0;
+      }
+
+      return {
+        x: Math.random() * width,
+        y: initial ? Math.random() * height : height + 15,
+        type: type,
+        size: size,
+        palette: palette,
+        baseAlpha: 0.4 + Math.random() * 0.55,
+        alpha: 0.5,
+        twinkleSpeed: 0.016 + Math.random() * 0.038,
+        twinklePhase: Math.random() * Math.PI * 2,
+        vx: (Math.random() - 0.5) * 0.20,
+        vy: -0.08 - Math.random() * 0.18, // 缓缓升腾
+        rotation: Math.random() * Math.PI * 2,
+        rotationSpeed: (Math.random() - 0.5) * 0.012
+      };
     }
 
     function initStars() {
       stars = [];
-      var starCount = Math.max(65, Math.min(110, Math.floor((width * height) / 12000)));
-
-      for (var i = 0; i < starCount; i++) {
-        var palette = CELESTIAL_PALETTES[Math.floor(Math.random() * CELESTIAL_PALETTES.length)];
-        var isSparkle = Math.random() < 0.35; // 35% 为大型璀璨四角/八角星芒
-        var isStarlet = Math.random() < 0.25; // 25% 为五角几何小星
-
-        var size = isSparkle ? (5 + Math.random() * 8.5) : (isStarlet ? (3.5 + Math.random() * 4.5) : (1.5 + Math.random() * 3));
-
-        stars.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          isSparkle: isSparkle,
-          isStarlet: isStarlet,
-          size: size,
-          palette: palette,
-          baseAlpha: 0.4 + Math.random() * 0.55,
-          alpha: 0.5,
-          twinkleSpeed: 0.015 + Math.random() * 0.04,
-          twinklePhase: Math.random() * Math.PI * 2,
-          vx: (Math.random() - 0.5) * 0.22,
-          vy: -0.08 - Math.random() * 0.18, // 轻盈向上升腾
-          rotation: Math.random() * Math.PI * 2,
-          rotSpeed: (Math.random() - 0.5) * 0.015
-        });
+      var count = Math.max(65, Math.min(100, Math.floor((width * height) / 13000)));
+      for (var i = 0; i < count; i++) {
+        stars.push(createStar(true));
       }
     }
 
     function maybeSpawnShootingStar() {
-      if (Math.random() < 0.018 && shootingStars.length < 2) {
+      if (Math.random() < 0.014 && shootingStars.length < 2) {
+        var palette = STAR_PALETTES[Math.floor(Math.random() * STAR_PALETTES.length)];
         shootingStars.push({
-          x: Math.random() * width * 0.85,
-          y: Math.random() * (height * 0.4),
-          len: 120 + Math.random() * 150,
-          speed: 14 + Math.random() * 9,
-          angle: (Math.PI / 5) + (Math.random() * Math.PI / 15),
+          x: Math.random() * width * 0.8,
+          y: Math.random() * (height * 0.35),
+          len: 110 + Math.random() * 150,
+          speed: 14 + Math.random() * 8,
+          angle: (Math.PI / 5) + (Math.random() * Math.PI / 18),
           alpha: 1.0,
-          width: 2.2 + Math.random() * 1.5,
-          color: Math.random() > 0.5 ? '#38bdf8' : '#fbbf24'
+          width: 1.8 + Math.random() * 1.2,
+          color: palette.hex
         });
       }
     }
 
-    // 绘制黑底深空璀璨钻石星芒 (✦)
-    function drawRadiantSparkle(c, cx, cy, size, palette, alpha, rot) {
+    // 1. 绘制四角晶钻闪耀星 (✦ 纯净 needle 钻石星，渐变衰减无硬边)
+    function drawDiamondStar(c, x, y, size, p, alpha, rot) {
       c.save();
-      c.translate(cx, cy);
+      c.translate(x, y);
       c.rotate(rot);
 
-      // 外层发光星晕
-      var grad = c.createRadialGradient(0, 0, 0, 0, 0, size * 2.5);
-      grad.addColorStop(0, palette.glow);
-      grad.addColorStop(0.35, palette.halo);
-      grad.addColorStop(1, 'rgba(3, 7, 18, 0)');
-      c.fillStyle = grad;
+      // 柔和微晕渐变（完全平滑淡出到透明，绝无硬边圆圈）
+      var auraR = size * 2.2;
+      var g = c.createRadialGradient(0, 0, 0, 0, 0, auraR);
+      g.addColorStop(0, p.glow);
+      g.addColorStop(0.3, p.aura);
+      g.addColorStop(1, 'rgba(3, 7, 18, 0)');
+      c.fillStyle = g;
       c.beginPath();
-      c.arc(0, 0, size * 2.5, 0, Math.PI * 2);
+      c.arc(0, 0, auraR, 0, Math.PI * 2);
       c.fill();
 
-      // 主4芒 (钻石弧线)
-      c.fillStyle = palette.glow;
+      // 四角钻石纤细光芒
+      c.fillStyle = p.glow;
       c.globalAlpha = alpha;
-      c.shadowColor = palette.color;
-      c.shadowBlur = size * 1.2;
-
+      var inner = size * 0.16;
       c.beginPath();
-      var inner = size * 0.2;
       c.moveTo(0, -size);
       c.quadraticCurveTo(0, -inner, inner, 0);
       c.quadraticCurveTo(0, inner, 0, size);
@@ -118,43 +137,90 @@
       c.closePath();
       c.fill();
 
-      // 副4斜角芒
-      c.rotate(Math.PI / 4);
-      c.fillStyle = palette.halo;
-      c.beginPath();
-      var subSize = size * 0.48;
-      var subInner = inner * 0.5;
-      c.moveTo(0, -subSize);
-      c.quadraticCurveTo(0, -subInner, subInner, 0);
-      c.quadraticCurveTo(0, subInner, 0, subSize);
-      c.quadraticCurveTo(0, subInner, -subInner, 0);
-      c.quadraticCurveTo(0, -subInner, 0, -subSize);
-      c.closePath();
-      c.fill();
-
-      // 白炽纯白星核
+      // 纯白高亮极光晶核
       c.fillStyle = '#ffffff';
-      c.shadowColor = '#ffffff';
-      c.shadowBlur = 8;
-      c.globalAlpha = 1.0;
+      c.globalAlpha = Math.min(1.0, alpha * 1.25);
       c.beginPath();
-      c.arc(0, 0, Math.max(1.5, size * 0.18), 0, Math.PI * 2);
+      c.arc(0, 0, Math.max(1.2, size * 0.22), 0, Math.PI * 2);
       c.fill();
 
       c.restore();
     }
 
-    // 绘制五角柔光小星 (★)
-    function drawFivePointStar(c, cx, cy, r, palette, alpha, rot) {
+    // 2. 绘制八角超新星芒 (✧)
+    function drawOctaStar(c, x, y, size, p, alpha, rot) {
       c.save();
-      c.translate(cx, cy);
+      c.translate(x, y);
       c.rotate(rot);
 
-      c.fillStyle = palette.glow;
-      c.globalAlpha = alpha;
-      c.shadowColor = palette.color;
-      c.shadowBlur = r * 2.5;
+      // 平滑星晕
+      var auraR = size * 2.0;
+      var g = c.createRadialGradient(0, 0, 0, 0, 0, auraR);
+      g.addColorStop(0, p.glow);
+      g.addColorStop(0.35, p.aura);
+      g.addColorStop(1, 'rgba(3, 7, 18, 0)');
+      c.fillStyle = g;
+      c.beginPath();
+      c.arc(0, 0, auraR, 0, Math.PI * 2);
+      c.fill();
 
+      // 主4长芒
+      c.fillStyle = p.glow;
+      c.globalAlpha = alpha;
+      var inner = size * 0.14;
+      c.beginPath();
+      c.moveTo(0, -size);
+      c.quadraticCurveTo(0, -inner, inner, 0);
+      c.quadraticCurveTo(0, inner, 0, size);
+      c.quadraticCurveTo(0, inner, -inner, 0);
+      c.quadraticCurveTo(0, -inner, 0, -size);
+      c.closePath();
+      c.fill();
+
+      // 45° 4短芒
+      c.rotate(Math.PI / 4);
+      c.globalAlpha = alpha * 0.6;
+      var sub = size * 0.5;
+      var subIn = inner * 0.6;
+      c.beginPath();
+      c.moveTo(0, -sub);
+      c.quadraticCurveTo(0, -subIn, subIn, 0);
+      c.quadraticCurveTo(0, subIn, 0, sub);
+      c.quadraticCurveTo(0, subIn, -subIn, 0);
+      c.quadraticCurveTo(0, -subIn, 0, -sub);
+      c.closePath();
+      c.fill();
+
+      // 白炽星心
+      c.fillStyle = '#ffffff';
+      c.globalAlpha = 1.0;
+      c.beginPath();
+      c.arc(0, 0, Math.max(1.1, size * 0.2), 0, Math.PI * 2);
+      c.fill();
+
+      c.restore();
+    }
+
+    // 3. 绘制可爱立体五角星 (★)
+    function drawFivePointStar(c, x, y, r, p, alpha, rot) {
+      c.save();
+      c.translate(x, y);
+      c.rotate(rot);
+
+      // 平滑外晕
+      var auraR = r * 1.8;
+      var g = c.createRadialGradient(0, 0, 0, 0, 0, auraR);
+      g.addColorStop(0, p.glow);
+      g.addColorStop(0.4, p.aura);
+      g.addColorStop(1, 'rgba(3, 7, 18, 0)');
+      c.fillStyle = g;
+      c.beginPath();
+      c.arc(0, 0, auraR, 0, Math.PI * 2);
+      c.fill();
+
+      // 五角星形状
+      c.fillStyle = p.glow;
+      c.globalAlpha = alpha;
       c.beginPath();
       var innerR = r * 0.42;
       for (var i = 0; i < 5; i++) {
@@ -171,94 +237,121 @@
       c.closePath();
       c.fill();
 
-      // 星心纯白微核
+      // 星心白色反光
       c.fillStyle = '#ffffff';
-      c.shadowColor = '#ffffff';
-      c.shadowBlur = 6;
+      c.globalAlpha = 1.0;
       c.beginPath();
-      c.arc(0, 0, r * 0.28, 0, Math.PI * 2);
+      c.arc(0, 0, r * 0.25, 0, Math.PI * 2);
       c.fill();
 
       c.restore();
     }
 
-    // 绘制晶莹微粒圆星 (●)
-    function drawCrystalDot(c, cx, cy, r, palette, alpha) {
+    // 4. 绘制精致十字光星 (✚)
+    function drawCrossStar(c, x, y, size, p, alpha, rot) {
       c.save();
-      var grad = c.createRadialGradient(cx, cy, 0, cx, cy, r * 3);
-      grad.addColorStop(0, '#ffffff');
-      grad.addColorStop(0.3, palette.glow);
-      grad.addColorStop(1, 'rgba(3, 7, 18, 0)');
+      c.translate(x, y);
+      c.rotate(rot);
 
-      c.fillStyle = grad;
+      c.strokeStyle = p.glow;
+      c.lineWidth = 1.4;
+      c.lineCap = 'round';
       c.globalAlpha = alpha;
-      c.shadowColor = palette.color;
-      c.shadowBlur = r * 2.5;
+
       c.beginPath();
-      c.arc(cx, cy, r * 3, 0, Math.PI * 2);
+      c.moveTo(-size, 0);
+      c.lineTo(size, 0);
+      c.moveTo(0, -size);
+      c.lineTo(0, size);
+      c.stroke();
+
+      c.fillStyle = '#ffffff';
+      c.globalAlpha = 1.0;
+      c.beginPath();
+      c.arc(0, 0, 1.2, 0, Math.PI * 2);
+      c.fill();
+
+      c.restore();
+    }
+
+    // 5. 绘制晶莹远星微点 (• 绝无硬边，平滑光点)
+    function drawPinprickStar(c, x, y, r, p, alpha) {
+      c.save();
+      var g = c.createRadialGradient(x, y, 0, x, y, r * 2.2);
+      g.addColorStop(0, '#ffffff');
+      g.addColorStop(0.35, p.glow);
+      g.addColorStop(1, 'rgba(3, 7, 18, 0)');
+
+      c.fillStyle = g;
+      c.globalAlpha = alpha;
+      c.beginPath();
+      c.arc(x, y, r * 2.2, 0, Math.PI * 2);
       c.fill();
       c.restore();
     }
 
-    // 绘制深空极光星云 (黑底下的神秘深邃星云)
-    function drawAuroraNebulae(c) {
-      nebulaTime += 0.003;
-      var ox1 = Math.sin(nebulaTime) * 90;
-      var oy1 = Math.cos(nebulaTime * 0.8) * 70;
-      var ox2 = Math.cos(nebulaTime * 0.7) * 80;
-      var oy2 = Math.sin(nebulaTime * 0.9) * 60;
+    // 极光星云微光（极其柔和深邃，完全融入深黑夜空）
+    var nebulaAngle = 0;
+    function drawSubtleNebula(c) {
+      nebulaAngle += 0.0018;
+      var ox = Math.sin(nebulaAngle) * 50;
+      var oy = Math.cos(nebulaAngle * 0.8) * 35;
 
-      // 1. 深空青蓝星云
-      var g1 = c.createRadialGradient(width * 0.25 + ox1, height * 0.2 + oy1, 0, width * 0.25 + ox1, height * 0.2 + oy1, Math.min(width, height) * 0.55);
-      g1.addColorStop(0, 'rgba(14, 165, 233, 0.22)');
-      g1.addColorStop(0.5, 'rgba(14, 165, 233, 0.07)');
+      c.save();
+      // 幽蓝深空星云
+      var g1 = c.createRadialGradient(width * 0.25 + ox, height * 0.25 + oy, 0, width * 0.25 + ox, height * 0.25 + oy, Math.max(width, height) * 0.45);
+      g1.addColorStop(0, 'rgba(14, 165, 233, 0.12)');
+      g1.addColorStop(0.65, 'rgba(14, 165, 233, 0.025)');
       g1.addColorStop(1, 'rgba(3, 7, 18, 0)');
       c.fillStyle = g1;
       c.fillRect(0, 0, width, height);
 
-      // 2. 梦幻紫罗兰星云
-      var g2 = c.createRadialGradient(width * 0.8 + ox2, height * 0.35 + oy2, 0, width * 0.8 + ox2, height * 0.35 + oy2, Math.min(width, height) * 0.5);
-      g2.addColorStop(0, 'rgba(147, 51, 234, 0.20)');
-      g2.addColorStop(0.5, 'rgba(147, 51, 234, 0.06)');
+      // 紫霞星尘
+      var g2 = c.createRadialGradient(width * 0.8 - ox, height * 0.45 - oy, 0, width * 0.8 - ox, height * 0.45 - oy, Math.max(width, height) * 0.4);
+      g2.addColorStop(0, 'rgba(147, 51, 234, 0.10)');
+      g2.addColorStop(0.65, 'rgba(147, 51, 234, 0.02)');
       g2.addColorStop(1, 'rgba(3, 7, 18, 0)');
       c.fillStyle = g2;
       c.fillRect(0, 0, width, height);
-
-      // 3. 晨曦金耀星尘雾
-      var g3 = c.createRadialGradient(width * 0.5 - ox1 * 0.5, height * 0.85 + oy2 * 0.5, 0, width * 0.5 - ox1 * 0.5, height * 0.85 + oy2 * 0.5, Math.min(width, height) * 0.55);
-      g3.addColorStop(0, 'rgba(234, 179, 8, 0.15)');
-      g3.addColorStop(0.6, 'rgba(234, 179, 8, 0.04)');
-      g3.addColorStop(1, 'rgba(3, 7, 18, 0)');
-      c.fillStyle = g3;
-      c.fillRect(0, 0, width, height);
+      c.restore();
     }
 
     // 动画主循环
-    function animate() {
-      if (!isTabVisible) return;
+    function tick(now) {
+      if (!animating) return;
 
-      // 纯黑深空背景底色 (#030712)
+      // 1. 彻底纯净重置画布为深空黑底 (#030712)
+      ctx.save();
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.globalAlpha = 1.0;
       ctx.fillStyle = '#030712';
-      ctx.fillRect(0, 0, width, height);
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.restore();
 
-      // 1. 极光星云
-      drawAuroraNebulae(ctx);
+      // 2. 柔和深空星云微光
+      drawSubtleNebula(ctx);
 
-      // 2. 梦幻星宿星轨连线 (黑底发光光纤感)
-      var maxDist = 100;
+      // 3. 纤细精致星宿星轨连线 (薄如蝉翼，近距自然交织)
+      var maxDist = 75;
+      var maxDistSq = maxDist * maxDist;
+      ctx.save();
       for (var i = 0; i < stars.length; i++) {
         var s1 = stars[i];
+        var connections = 0;
         for (var j = i + 1; j < stars.length; j++) {
+          if (connections >= 2) break;
           var s2 = stars[j];
           var dx = s1.x - s2.x;
           var dy = s1.y - s2.y;
-          var dist = Math.sqrt(dx * dx + dy * dy);
+          var distSq = dx * dx + dy * dy;
 
-          if (dist < maxDist) {
-            var lineAlpha = (1 - dist / maxDist) * 0.25 * Math.min(s1.alpha, s2.alpha);
-            ctx.strokeStyle = s1.palette.color;
+          if (distSq < maxDistSq) {
+            connections++;
+            var dist = Math.sqrt(distSq);
+            var lineAlpha = (1 - dist / maxDist) * 0.20 * Math.min(s1.alpha, s2.alpha);
+            ctx.strokeStyle = s1.palette.hex;
             ctx.globalAlpha = lineAlpha;
-            ctx.lineWidth = 1.0;
+            ctx.lineWidth = 0.85;
             ctx.beginPath();
             ctx.moveTo(s1.x, s1.y);
             ctx.lineTo(s2.x, s2.y);
@@ -266,91 +359,103 @@
           }
         }
       }
+      ctx.restore();
 
-      // 3. 渲染各种星体
+      // 4. 精细渲染各种各样的小星星
       for (var k = 0; k < stars.length; k++) {
-        var star = stars[k];
+        var s = stars[k];
 
-        star.twinklePhase += star.twinkleSpeed;
-        var pulse = (Math.sin(star.twinklePhase) + 1) / 2;
-        star.alpha = star.baseAlpha * 0.4 + pulse * (star.baseAlpha * 0.95);
+        // 呼吸闪烁
+        s.twinklePhase += s.twinkleSpeed;
+        var pulse = (Math.sin(s.twinklePhase) + 1) / 2;
+        s.alpha = s.baseAlpha * 0.35 + pulse * (s.baseAlpha * 0.85);
 
-        star.x += star.vx;
-        star.y += star.vy;
-        star.rotation += star.rotSpeed;
+        // 缓缓向上浮动
+        s.x += s.vx;
+        s.y += s.vy;
+        s.rotation += s.rotationSpeed;
 
-        if (star.y < -30) {
-          star.y = height + 30;
-          star.x = Math.random() * width;
+        // 边界循环
+        if (s.y < -25) {
+          s.y = height + 25;
+          s.x = Math.random() * width;
         }
-        if (star.x < -30) star.x = width + 30;
-        if (star.x > width + 30) star.x = -30;
+        if (s.x < -25) s.x = width + 25;
+        if (s.x > width + 25) s.x = -25;
 
-        if (star.isSparkle) {
-          drawRadiantSparkle(ctx, star.x, star.y, star.size, star.palette, star.alpha, star.rotation);
-        } else if (star.isStarlet) {
-          drawFivePointStar(ctx, star.x, star.y, star.size, star.palette, star.alpha, star.rotation);
-        } else {
-          drawCrystalDot(ctx, star.x, star.y, star.size, star.palette, star.alpha);
+        // 按形态渲染各种璀璨小星星
+        switch (s.type) {
+          case 'diamond':
+            drawDiamondStar(ctx, s.x, s.y, s.size, s.palette, s.alpha, s.rotation);
+            break;
+          case 'octa':
+            drawOctaStar(ctx, s.x, s.y, s.size, s.palette, s.alpha, s.rotation);
+            break;
+          case 'star5':
+            drawFivePointStar(ctx, s.x, s.y, s.size, s.palette, s.alpha, s.rotation);
+            break;
+          case 'cross':
+            drawCrossStar(ctx, s.x, s.y, s.size, s.palette, s.alpha, s.rotation);
+            break;
+          case 'pinprick':
+            drawPinprickStar(ctx, s.x, s.y, s.size, s.palette, s.alpha);
+            break;
         }
       }
 
-      // 4. 纯黑夜空下的耀眼流星
+      // 5. 渲染优雅流星
       maybeSpawnShootingStar();
       for (var m = shootingStars.length - 1; m >= 0; m--) {
-        var s = shootingStars[m];
-        s.x += Math.cos(s.angle) * s.speed;
-        s.y += Math.sin(s.angle) * s.speed;
-        s.alpha -= 0.012;
+        var meteor = shootingStars[m];
+        meteor.x += Math.cos(meteor.angle) * meteor.speed;
+        meteor.y += Math.sin(meteor.angle) * meteor.speed;
+        meteor.alpha -= 0.015;
 
-        if (s.alpha > 0) {
+        if (meteor.alpha > 0) {
           ctx.save();
-          var tailX = s.x - s.len * Math.cos(s.angle);
-          var tailY = s.y - s.len * Math.sin(s.angle);
+          var tailX = meteor.x - meteor.len * Math.cos(meteor.angle);
+          var tailY = meteor.y - meteor.len * Math.sin(meteor.angle);
 
-          var grad = ctx.createLinearGradient(s.x, s.y, tailX, tailY);
+          var grad = ctx.createLinearGradient(meteor.x, meteor.y, tailX, tailY);
           grad.addColorStop(0, '#ffffff');
-          grad.addColorStop(0.2, s.color);
-          grad.addColorStop(0.65, 'rgba(192, 132, 252, 0.5)');
+          grad.addColorStop(0.25, meteor.color);
+          grad.addColorStop(0.65, 'rgba(192, 132, 252, 0.3)');
           grad.addColorStop(1, 'rgba(3, 7, 18, 0)');
 
           ctx.strokeStyle = grad;
-          ctx.lineWidth = s.width;
+          ctx.lineWidth = meteor.width;
           ctx.lineCap = 'round';
-          ctx.globalAlpha = s.alpha;
-          ctx.shadowColor = s.color;
-          ctx.shadowBlur = 12;
+          ctx.globalAlpha = meteor.alpha;
           ctx.beginPath();
-          ctx.moveTo(s.x, s.y);
+          ctx.moveTo(meteor.x, meteor.y);
           ctx.lineTo(tailX, tailY);
           ctx.stroke();
 
-          // 头部炽热核
+          // 流星炽热核
           ctx.fillStyle = '#ffffff';
-          ctx.shadowColor = '#ffffff';
-          ctx.shadowBlur = 15;
+          ctx.globalAlpha = Math.min(1.0, meteor.alpha * 1.5);
           ctx.beginPath();
-          ctx.arc(s.x, s.y, s.width * 1.3, 0, Math.PI * 2);
+          ctx.arc(meteor.x, meteor.y, meteor.width * 1.1, 0, Math.PI * 2);
           ctx.fill();
 
           ctx.restore();
         }
 
-        if (s.alpha <= 0 || s.x > width + s.len || s.y > height + s.len) {
+        if (meteor.alpha <= 0 || meteor.x > width + meteor.len || meteor.y > height + meteor.len) {
           shootingStars.splice(m, 1);
         }
       }
 
-      // 5. 鼠标灵动星尘
+      // 6. 渲染鼠标交互微粒 (晶莹小星尘)
       for (var p = mouseSparkles.length - 1; p >= 0; p--) {
         var ms = mouseSparkles[p];
         ms.x += ms.vx;
         ms.y += ms.vy;
         ms.alpha -= ms.decay;
-        ms.rotation += 0.05;
+        ms.rotation += 0.04;
 
         if (ms.alpha > 0) {
-          drawRadiantSparkle(ctx, ms.x, ms.y, ms.size, ms.palette, ms.alpha, ms.rotation);
+          drawDiamondStar(ctx, ms.x, ms.y, ms.size, ms.palette, ms.alpha, ms.rotation);
         }
 
         if (ms.alpha <= 0) {
@@ -358,49 +463,66 @@
         }
       }
 
-      animationFrameId = requestAnimationFrame(animate);
+      requestAnimationFrame(tick);
     }
 
+    // 鼠标交互监听
     var lastMouseTime = 0;
     window.addEventListener('mousemove', function(e) {
       var now = performance.now();
-      if (now - lastMouseTime > 65 && mouseSparkles.length < 18) {
+      if (now - lastMouseTime > 55 && mouseSparkles.length < 16) {
         lastMouseTime = now;
-        var palette = CELESTIAL_PALETTES[Math.floor(Math.random() * CELESTIAL_PALETTES.length)];
+        var p = STAR_PALETTES[Math.floor(Math.random() * STAR_PALETTES.length)];
         mouseSparkles.push({
           x: e.clientX,
           y: e.clientY,
-          vx: (Math.random() - 0.5) * 1.6,
-          vy: (Math.random() - 0.5) * 1.6 - 0.6,
-          size: 4 + Math.random() * 4.5,
-          palette: palette,
-          alpha: 1.0,
-          decay: 0.024,
+          vx: (Math.random() - 0.5) * 1.4,
+          vy: (Math.random() - 0.5) * 1.4 - 0.4,
+          size: 3.5 + Math.random() * 4,
+          palette: p,
+          alpha: 0.95,
+          decay: 0.025,
           rotation: Math.random() * Math.PI
         });
       }
     }, { passive: true });
 
+    // 窗口可见性与焦点事件（确保切屏回来动画永不中断）
+    function resumeAnimation() {
+      if (!animating) {
+        animating = true;
+        lastTime = performance.now();
+        requestAnimationFrame(tick);
+      }
+    }
+
     document.addEventListener('visibilitychange', function() {
-      isTabVisible = !document.hidden;
-      if (isTabVisible) {
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId = requestAnimationFrame(animate);
+      if (!document.hidden) {
+        resumeAnimation();
+      } else {
+        animating = false;
       }
     });
 
+    window.addEventListener('focus', resumeAnimation);
+    window.addEventListener('pageshow', resumeAnimation);
+
+    // 窗口尺寸自适应
     var resizeTimer;
     window.addEventListener('resize', function() {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(function() {
-        resizeCanvas();
+        resize();
         initStars();
-      }, 150);
+      }, 120);
     });
 
-    resizeCanvas();
+    // 启动动画
+    resize();
     initStars();
-    animationFrameId = requestAnimationFrame(animate);
+    animating = true;
+    lastTime = performance.now();
+    requestAnimationFrame(tick);
   })();
 </script> <header class="site-header sticky top-0 z-50 bg-[#030712]/85 backdrop-blur-md border-b border-slate-800/80 shadow-md shadow-black/40 transition-all"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative"> <!-- Left: Logo --> <a href="../../index.html" class="flex items-center gap-2.5 text-xl font-black text-white tracking-tight hover:text-blue-400 transition-colors group shrink-0 z-10"> <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center font-black text-sm shadow-md shadow-blue-500/30 group-hover:scale-105 transition-transform">JH</span> <span class="flex flex-col"> <span class="leading-none font-extrabold text-white group-hover:text-blue-400 transition-colors">机场之家</span> <span class="text-[10px] text-slate-400 font-semibold tracking-wider uppercase leading-tight mt-0.5">jichanghome.blog</span> </span> </a> <!-- Center: Desktop Navigation (放中间) --> <nav class="hidden md:flex items-center gap-1 lg:gap-2 absolute left-1/2 -translate-x-1/2" aria-label="主导航"> <a href="../../index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/60"> 首页 </a><a href="../../recommend/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/60"> 机场推荐 </a><a href="../../ranking/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/60"> 节点排行 </a><a href="../../airport/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/60"> 品牌评测 </a><a href="../../compare/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/60"> 机场对比 </a><a href="../../guides/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap text-blue-400 bg-blue-950/70 border border-blue-500/40 font-bold"> 使用教程 </a><a href="../../blog/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/60"> 选型指南 </a> </nav> <!-- Right: CTA Button --> <div class="hidden md:flex items-center shrink-0 z-10"> <a href="../../compare/index.html" class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider bg-blue-600 text-white shadow-sm shadow-blue-600/30 hover:bg-blue-500 hover:shadow-md transition-all active:scale-95 whitespace-nowrap">
 快速比价
