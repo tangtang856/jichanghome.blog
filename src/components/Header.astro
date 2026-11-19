@@ -17,37 +17,34 @@ const navItems = [
 ---
 
 <header class="site-header sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-    <!-- Left: Logo & Nav Links -->
-    <div class="flex items-center gap-6 lg:gap-8">
-      <!-- Logo -->
-      <a href="/" class="flex items-center gap-2.5 text-xl font-black text-slate-900 tracking-tight hover:text-blue-600 transition-colors group shrink-0">
-        <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center font-black text-sm shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">JH</span>
-        <span class="flex flex-col">
-          <span class="leading-none font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">机场之家</span>
-          <span class="text-[10px] text-slate-500 font-semibold tracking-wider uppercase leading-tight mt-0.5">jichanghome.blog</span>
-        </span>
-      </a>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative">
+    <!-- Left: Logo -->
+    <a href="/" class="flex items-center gap-2.5 text-xl font-black text-slate-900 tracking-tight hover:text-blue-600 transition-colors group shrink-0 z-10">
+      <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center font-black text-sm shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">JH</span>
+      <span class="flex flex-col">
+        <span class="leading-none font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">机场之家</span>
+        <span class="text-[10px] text-slate-500 font-semibold tracking-wider uppercase leading-tight mt-0.5">jichanghome.blog</span>
+      </span>
+    </a>
 
-      <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center gap-1 lg:gap-1.5" aria-label="主导航">
-        {navItems.map((item) => (
-          <a
-            href={item.href}
-            class={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap ${
-              currentNav === item.id
-                ? 'text-blue-600 bg-blue-50 font-bold'
-                : 'text-slate-700 hover:text-blue-600 hover:bg-slate-50'
-            }`}
-          >
-            {item.label}
-          </a>
-        ))}
-      </nav>
-    </div>
+    <!-- Center: Desktop Navigation (放中间) -->
+    <nav class="hidden md:flex items-center gap-1 lg:gap-2 absolute left-1/2 -translate-x-1/2" aria-label="主导航">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap ${
+            currentNav === item.id
+              ? 'text-blue-600 bg-blue-50 font-bold'
+              : 'text-slate-700 hover:text-blue-600 hover:bg-slate-50'
+          }`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
 
     <!-- Right: CTA Button -->
-    <div class="hidden md:flex items-center">
+    <div class="hidden md:flex items-center shrink-0 z-10">
       <a
         href="/compare/"
         class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider bg-blue-600 text-white shadow-sm shadow-blue-600/30 hover:bg-blue-700 hover:shadow-md transition-all active:scale-95 whitespace-nowrap"
@@ -59,7 +56,7 @@ const navItems = [
     <!-- Mobile Menu Toggle Button -->
     <button
       id="mobileMenuBtn"
-      class="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
+      class="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none z-10"
       aria-label="展开导航菜单"
       aria-expanded="false"
     >
