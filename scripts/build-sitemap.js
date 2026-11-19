@@ -74,9 +74,9 @@ const ALL_PAGES = [
 function generateSitemapAndRobots() {
   const currentDate = '2026-03-06';
 
-  // 1. 生成带 XSLT 样式的标准 sitemap.xml
+  // 1. 生成带 CSS 样式的标准 sitemap.xml（本地 file:// 与线上 https:// 均可完美呈现，彻底规避 XSLT 白屏）
   let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>
+<?xml-stylesheet type="text/css" href="css/sitemap.css"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 `;
 
