@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>节点连接超时与DNS泄露排查指南 | 常见报错一网打尽 - 机场之家</title>
+  <meta name="description" content="科学上网常见故障排查手册。针对节点超时连不上、能上Google但上不了ChatGPT、国内网站打不开等高频痛点提供一站式解决清单。">
+  <link rel="canonical" href="https://jichanghome.blog/guides/troubleshooting/index.html">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / 社交分享 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="节点连接超时与DNS泄露排查指南 | 常见报错一网打尽 - 机场之家">
+  <meta property="og:description" content="科学上网常见故障排查手册。针对节点超时连不上、能上Google但上不了ChatGPT、国内网站打不开等高频痛点提供一站式解决清单。">
+  <meta property="og:url" content="https://jichanghome.blog/guides/troubleshooting/index.html">
+  <meta property="og:site_name" content="机场之家 - 中文网络节点与梯子推荐门户">
+  <meta property="og:locale" content="zh_CN">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="节点连接超时与DNS泄露排查指南 | 常见报错一网打尽 - 机场之家">
+  <meta name="twitter:description" content="科学上网常见故障排查手册。针对节点超时连不上、能上Google但上不了ChatGPT、国内网站打不开等高频痛点提供一站式解决清单。">
+
+  <!-- 纯净原生样式与字体 (绝对相对路径加载，完美兼容本地 file:// 协议与线上) -->
+  <link rel="stylesheet" href="../../css/style.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "机场节点连接超时、无法联网与报错排查实战指南",
+  "description": "科学上网常见故障排查手册。针对节点超时连不上、能上Google但上不了ChatGPT、国内网站打不开等高频痛点提供一站式解决清单。",
+  "url": "https://jichanghome.blog/guides/troubleshooting/index.html",
+  "author": {
+    "@type": "Organization",
+    "name": "机场之家技术组"
+  },
+  "datePublished": "2026-03-01",
+  "dateModified": "2026-03-06"
+}
+</script>
+</head>
+<body>
+
+  <!-- 全站通用导航栏 -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="../../index.html" class="site-logo">
+        <span class="logo-badge">JH</span>
+        <span>机场之家</span>
+      </a>
+
+      <!-- 桌面端菜单 -->
+      <nav class="desktop-nav" aria-label="主导航">
+        <a href="../../index.html" class="nav-link ">首页</a>
+        <a href="../../recommend/index.html" class="nav-link ">机场推荐</a>
+        <a href="../../ranking/index.html" class="nav-link ">节点排行</a>
+        <a href="../../airport/index.html" class="nav-link ">品牌评测</a>
+        <a href="../../compare/index.html" class="nav-link ">机场对比</a>
+        <a href="../../guides/index.html" class="nav-link active">使用教程</a>
+        <a href="../../blog/index.html" class="nav-link ">选型指南</a>
+        <a href="../../compare/index.html" class="nav-btn-highlight">快速比价</a>
+      </nav>
+
+      <!-- 移动端汉堡按钮 -->
+      <button class="menu-toggle" id="menuToggleBtn" aria-label="展开导航菜单" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- 移动端展开抽屉 -->
+    <div class="mobile-nav-drawer" id="mobileDrawer">
+      <nav class="mobile-nav-links" aria-label="移动端导航">
+        <a href="../../index.html" class="mobile-nav-link">首页</a>
+        <a href="../../recommend/index.html" class="mobile-nav-link">机场推荐专区</a>
+        <a href="../../ranking/index.html" class="mobile-nav-link">节点综合排行</a>
+        <a href="../../airport/index.html" class="mobile-nav-link">品牌独立评测</a>
+        <a href="../../compare/index.html" class="mobile-nav-link">多维度对比工具</a>
+        <a href="../../guides/index.html" class="mobile-nav-link">新手教程中心</a>
+        <a href="../../blog/index.html" class="mobile-nav-link">精选博客文章</a>
+        <a href="../../glossary/index.html" class="mobile-nav-link">术语与知识百科</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <div class="container">
+    <nav class="breadcrumb" aria-label="面包屑导航">
+      <a href="../../index.html">首页</a>
+      <span class="breadcrumb-separator">/</span>
+      <a href="../index.html">新手教程中心</a>
+      <span class="breadcrumb-separator">/</span>
+      <span>troubleshooting 教程</span>
+    </nav>
+
+    <div class="article-header">
+      <h1 class="article-title">机场节点连接超时、无法联网与报错排查实战指南</h1>
+      <div class="article-meta-bar">
+        <span>更新日期：2026年3月</span>
+        <span>•</span>
+        <span>阅读时长：约 6 分钟</span>
+        <span>•</span>
+        <span>实操难度：入门简易</span>
+      </div>
+    </div>
+
+    <div class="article-body">
+      
+      <h2>一、高频故障 1：开启代理后所有网页都打不开（连接超时）</h2>
+      <p><strong>排查与解决方法：</strong></p>
+      <ol>
+        <li><strong>检查本地系统时间（最常见原因！）：</strong>TLS/VLESS 加密协议要求本地系统时间与服务端时间误差必须小于 90 秒。如果电脑或手机时间偏离，握手会直接失败。请进入系统设置开启“自动同步网络时间”。</li>
+        <li><strong>测试节点延迟连通性：</strong>在客户端代理列表中点击“闪电图标”测速。如果所有节点延迟均显示 <code>Timeout</code> 或 <code>-1</code>，说明订阅链接已过期，或机场正在进行机房紧急维护。</li>
+        <li><strong>关闭多重代理冲突：</strong>检查是否同时开启了其他 VPN 软件（如校园网客户端、公司内网安全软件或杀毒软件网络监控）。</li>
+      </ol>
+
+      <h2>二、高频故障 2：能打开 Google/YouTube，但打开国内网站极慢或打不开</h2>
+      <p><strong>排查与解决方法：</strong></p>
+      <ul>
+        <li><strong>检查代理模式：</strong>误将模式切换为了 <strong>全局 (Global)</strong>，导致访问百度、知乎、微信所有国内流量全绕道海外节点。请将代理模式改回 <strong>规则 (Rule)</strong>。</li>
+        <li><strong>DNS 解析污染：</strong>在设置中确保 DNS 分流开启，国内域名走系统本地运营商 DNS 解析，国外域名走加密 DoH/DoT 解析。</li>
+      </ul>
+
+      <h2>三、高频故障 3：能正常上网，但 ChatGPT 提示“Access Denied / 1020 报错”</h2>
+      <p><strong>排查与解决方法：</strong></p>
+      <ul>
+        <li><strong>节点 IP 被风控：</strong>当前节点属于机房被污染 IP，被 Cloudflare 识别为人机攻击。请切换至带有原生住宅 IP 标记的节点（如 <a href="../../airport/paopaogou/index.html">泡泡狗</a> 或 <a href="../../airport/shandianmao/index.html">闪电猫</a> 的专用 AI 节点）。</li>
+        <li><strong>浏览器缓存污染：</strong>按 <code>Ctrl + Shift + Delete</code> 清理浏览器 Cookies，或者开启 Chrome 无痕隐身窗口重新登录。</li>
+        <li><strong>WebRTC 泄露真实真实 IP：</strong>在浏览器中安装防 WebRTC 泄露插件，或在 Clash 中开启 TUN 模式接管 UDP 数据包。</li>
+      </ul>
+
+      <h2>四、终极救急应急建议</h2>
+      <p>当主力机场发生全网不可抗力割接时，请随时准备一个 <strong>备用应急方案</strong>（例如不限时按量计费的 <a href="../../airport/mojie/index.html">魔戒</a>）。有备用在手，遇事不慌。</p>
+      
+
+      <!-- 关联推荐 -->
+      <div style="background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; margin-top: 2.5rem;">
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">配套阅读与相关资源</h3>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <a href="../../recommend/beginner/index.html" class="btn btn-sm btn-secondary">新手推荐机场清单</a>
+          <a href="../../compare/index.html" class="btn btn-sm btn-secondary">横向比对合适套餐</a>
+          <a href="../troubleshooting/index.html" class="btn btn-sm btn-secondary">连通性故障自检</a>
+          <a href="../../glossary/clash/index.html" class="btn btn-sm btn-secondary">什么是Clash订阅？</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 全站通用页脚 -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>机场之家 (jichanghome.blog)</h3>
+          <p>专注于网络中继、专线网络、科学上网与海外学术/跨境网络加速的客观资讯平台。坚持独立测试、真实参数核验与拒绝虚假宣传。</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>推荐与排行</h4>
+          <ul>
+            <li><a href="../../recommend/budget/index.html">平价性价比机场</a></li>
+            <li><a href="../../recommend/premium/index.html">IPLC/IEPL高端专线</a></li>
+            <li><a href="../../recommend/ai/index.html">ChatGPT/AI专用节点</a></li>
+            <li><a href="../../recommend/streaming/index.html">流媒体4K解锁专区</a></li>
+            <li><a href="../../ranking/value/index.html">单位GB单价排行榜</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>教程与指南</h4>
+          <ul>
+            <li><a href="../../guides/windows/index.html">Windows客户端配置</a></li>
+            <li><a href="../../guides/android/index.html">Android安卓手机教程</a></li>
+            <li><a href="../../guides/ios/index.html">iOS小火箭Shadowrocket</a></li>
+            <li><a href="../../guides/macos/index.html">macOS客户端配置</a></li>
+            <li><a href="../../guides/troubleshooting/index.html">节点排障与连通性自检</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>透明度与规范</h4>
+          <ul>
+            <li><a href="../../editorial-policy/index.html">独立编辑政策</a></li>
+            <li><a href="../../about/index.html">关于我们</a></li>
+            <li><a href="../../contact/index.html">联系与反馈</a></li>
+            <li><a href="../../disclaimer/index.html">免责声明</a></li>
+            <li><a href="../../privacy-policy/index.html">隐私权保护政策</a></li>
+            <li><a href="../../sitemap.xml">网站地图 (Sitemap)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 机场之家 (jichanghome.blog). 保留所有权利。内容仅供网络技术学习与跨境学术调研参考。</div>
+        <div>测试数据与官方信息基于公开渠道核验，最后全站校验：2026年3月</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 核心交互脚本 -->
+  <script src="../../data/airports.js"></script>
+  <script src="../../js/main.js"></script>
+</body>
+</html>
+

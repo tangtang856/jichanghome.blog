@@ -1,0 +1,17 @@
+{
+  "name": "jichanghome-blog",
+  "version": "1.0.0",
+  "description": "专业中文机场推荐与评测导航资讯门户 - Bing SEO 优化架构",
+  "author": "jichanghome.blog",
+  "license": "MIT",
+  "homepage": "https://jichanghome.blog",
+  "scripts": {
+    "build": "node scripts/validate-content.js && node scripts/check-links.js && node scripts/audit-seo.js",
+    "test": "node scripts/check-links.js && node scripts/audit-seo.js",
+    "audit": "node scripts/audit-seo.js",
+    "validate": "node scripts/validate-content.js",
+    "check-links": "node scripts/check-links.js",
+    "indexnow": "node scripts/indexnow.js"
+  },
+  "devDependencies": {}
+}

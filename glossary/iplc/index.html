@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>什么是IPLC专线？国际私有租用线路工作原理与优缺点 - 机场之家百科</title>
+  <meta name="description" content="通俗解释什么是IPLC专线。国际私有租用线路架构、物理不经过公网GFW的原理、低延迟与抗封锁表现全景解析。">
+  <link rel="canonical" href="https://jichanghome.blog/glossary/iplc/index.html">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / 社交分享 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="什么是IPLC专线？国际私有租用线路工作原理与优缺点 - 机场之家百科">
+  <meta property="og:description" content="通俗解释什么是IPLC专线。国际私有租用线路架构、物理不经过公网GFW的原理、低延迟与抗封锁表现全景解析。">
+  <meta property="og:url" content="https://jichanghome.blog/glossary/iplc/index.html">
+  <meta property="og:site_name" content="机场之家 - 中文网络节点与梯子推荐门户">
+  <meta property="og:locale" content="zh_CN">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="什么是IPLC专线？国际私有租用线路工作原理与优缺点 - 机场之家百科">
+  <meta name="twitter:description" content="通俗解释什么是IPLC专线。国际私有租用线路架构、物理不经过公网GFW的原理、低延迟与抗封锁表现全景解析。">
+
+  <!-- 纯净原生样式与字体 (绝对相对路径加载，完美兼容本地 file:// 协议与线上) -->
+  <link rel="stylesheet" href="../../css/style.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "什么是IPLC专线？国际专用传输线路详解",
+  "description": "通俗解释什么是IPLC专线。国际私有租用线路架构、物理不经过公网GFW的原理、低延迟与抗封锁表现全景解析。",
+  "url": "https://jichanghome.blog/glossary/iplc/index.html",
+  "author": {
+    "@type": "Organization",
+    "name": "机场之家百科编撰组"
+  },
+  "datePublished": "2026-03-01",
+  "dateModified": "2026-03-06"
+}
+</script>
+</head>
+<body>
+
+  <!-- 全站通用导航栏 -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="../../index.html" class="site-logo">
+        <span class="logo-badge">JH</span>
+        <span>机场之家</span>
+      </a>
+
+      <!-- 桌面端菜单 -->
+      <nav class="desktop-nav" aria-label="主导航">
+        <a href="../../index.html" class="nav-link ">首页</a>
+        <a href="../../recommend/index.html" class="nav-link ">机场推荐</a>
+        <a href="../../ranking/index.html" class="nav-link ">节点排行</a>
+        <a href="../../airport/index.html" class="nav-link ">品牌评测</a>
+        <a href="../../compare/index.html" class="nav-link ">机场对比</a>
+        <a href="../../guides/index.html" class="nav-link ">使用教程</a>
+        <a href="../../blog/index.html" class="nav-link ">选型指南</a>
+        <a href="../../compare/index.html" class="nav-btn-highlight">快速比价</a>
+      </nav>
+
+      <!-- 移动端汉堡按钮 -->
+      <button class="menu-toggle" id="menuToggleBtn" aria-label="展开导航菜单" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- 移动端展开抽屉 -->
+    <div class="mobile-nav-drawer" id="mobileDrawer">
+      <nav class="mobile-nav-links" aria-label="移动端导航">
+        <a href="../../index.html" class="mobile-nav-link">首页</a>
+        <a href="../../recommend/index.html" class="mobile-nav-link">机场推荐专区</a>
+        <a href="../../ranking/index.html" class="mobile-nav-link">节点综合排行</a>
+        <a href="../../airport/index.html" class="mobile-nav-link">品牌独立评测</a>
+        <a href="../../compare/index.html" class="mobile-nav-link">多维度对比工具</a>
+        <a href="../../guides/index.html" class="mobile-nav-link">新手教程中心</a>
+        <a href="../../blog/index.html" class="mobile-nav-link">精选博客文章</a>
+        <a href="../../glossary/index.html" class="mobile-nav-link">术语与知识百科</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <div class="container">
+    <nav class="breadcrumb" aria-label="面包屑导航">
+      <a href="../../index.html">首页</a>
+      <span class="breadcrumb-separator">/</span>
+      <a href="../index.html">术语与技术百科</a>
+      <span class="breadcrumb-separator">/</span>
+      <span>什么是IPLC专线？国际专用传输线路详解</span>
+    </nav>
+
+    <div class="article-header">
+      <h1 class="article-title">什么是IPLC专线？国际专用传输线路详解</h1>
+      <div class="article-meta-bar">
+        <span>词条分类：网络技术名词</span>
+        <span>•</span>
+        <span>核验状态：技术组审核通过</span>
+        <span>•</span>
+        <span>更新日期：2026年3月</span>
+      </div>
+    </div>
+
+    <div class="article-body">
+      
+      <h2>一、IPLC 的标准定义</h2>
+      <p><strong>IPLC</strong> 是英文 <em>International Private Leased Circuit</em> 的缩写，直译为<strong>“国际私有租用线路”</strong>。在传统电信行业中，它是跨国大型跨国金融机构、跨国企业或跨国机构向中国电信、中国联通、PCCW 等主流电信运营商租用的<strong>点对点封闭式内网光纤链路</strong>。</p>
+
+      <h2>二、IPLC 的工作原理：为什么天生“不过墙”？</h2>
+      <p>普通公网直连翻墙的流量，必须经过中国公网国际出口路由器和 GFW 防火墙审查；而 IPLC 是两点之间物理隔离的专用通道：</p>
+      <ul>
+        <li><strong>封闭式传输：</strong>你的数据从国内专线入口机房（如深圳机房）进入后，直接通过电信运营商已经铺设好的海底光缆或跨境陆缆，以二层或三层内网协议打通至海外机房（如香港机房）。</li>
+        <li><strong>不经过公网防火墙：</strong>由于通信链路完全在运营商内网闭环中运行，根本不经过公网出境出口，因此物理上不存在被 GFW 检测或拦截的可能。</li>
+        <li><strong>延迟恒定稳定：</strong>深港 IPLC 专线两端机房的物理传输延迟通常只有 3~5 毫秒，且不会受到晚高峰数以亿计网民抢占公网带宽导致的拥堵影响。</li>
+      </ul>
+
+      <h2>三、IPLC 专线的优缺点对比</h2>
+      <p><strong>核心优点：</strong>极致稳定、延迟极低、晚高峰零丢包、在敏感时期具备最强的抗断连能力。</p>
+      <p><strong>主要缺点：</strong>价格昂贵。物理专线的带宽租金是按每兆（Mbps）每月数百乃至上千元向电信运营商按月支付的，因此纯正的 IPLC 专线机场（如 <a href="../../airport/paopaogou/index.html">泡泡狗</a> 与 <a href="../../airport/shandianmao/index.html">闪电猫</a>）单价普遍高于普通中继机场。</p>
+      
+
+      <!-- 推荐关联内链 -->
+      <div style="background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; margin-top: 3rem;">
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">探索更多技术百科与指南</h3>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <a href="../index.html" class="btn btn-sm btn-secondary">浏览全部百科词条</a>
+          <a href="../../guides/windows/index.html" class="btn btn-sm btn-secondary">Windows客户端实操</a>
+          <a href="../../blog/iplc-iepl-bgp-transit-differences/index.html" class="btn btn-sm btn-secondary">专线与中继深度对比</a>
+          <a href="../../recommend/index.html" class="btn btn-sm btn-primary">查看精选机场推荐</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 全站通用页脚 -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>机场之家 (jichanghome.blog)</h3>
+          <p>专注于网络中继、专线网络、科学上网与海外学术/跨境网络加速的客观资讯平台。坚持独立测试、真实参数核验与拒绝虚假宣传。</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>推荐与排行</h4>
+          <ul>
+            <li><a href="../../recommend/budget/index.html">平价性价比机场</a></li>
+            <li><a href="../../recommend/premium/index.html">IPLC/IEPL高端专线</a></li>
+            <li><a href="../../recommend/ai/index.html">ChatGPT/AI专用节点</a></li>
+            <li><a href="../../recommend/streaming/index.html">流媒体4K解锁专区</a></li>
+            <li><a href="../../ranking/value/index.html">单位GB单价排行榜</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>教程与指南</h4>
+          <ul>
+            <li><a href="../../guides/windows/index.html">Windows客户端配置</a></li>
+            <li><a href="../../guides/android/index.html">Android安卓手机教程</a></li>
+            <li><a href="../../guides/ios/index.html">iOS小火箭Shadowrocket</a></li>
+            <li><a href="../../guides/macos/index.html">macOS客户端配置</a></li>
+            <li><a href="../../guides/troubleshooting/index.html">节点排障与连通性自检</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>透明度与规范</h4>
+          <ul>
+            <li><a href="../../editorial-policy/index.html">独立编辑政策</a></li>
+            <li><a href="../../about/index.html">关于我们</a></li>
+            <li><a href="../../contact/index.html">联系与反馈</a></li>
+            <li><a href="../../disclaimer/index.html">免责声明</a></li>
+            <li><a href="../../privacy-policy/index.html">隐私权保护政策</a></li>
+            <li><a href="../../sitemap.xml">网站地图 (Sitemap)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 机场之家 (jichanghome.blog). 保留所有权利。内容仅供网络技术学习与跨境学术调研参考。</div>
+        <div>测试数据与官方信息基于公开渠道核验，最后全站校验：2026年3月</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 核心交互脚本 -->
+  <script src="../../data/airports.js"></script>
+  <script src="../../js/main.js"></script>
+</body>
+</html>
+
