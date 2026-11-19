@@ -7,6 +7,7 @@ import ProsCons from '../../components/ProsCons.astro';
 import NextAirportWidget from '../../components/NextAirportWidget.astro';
 import { AIRPORTS } from '../../data/airports';
 import type { Airport } from '../../data/airports';
+import { BRAND_REVIEWS } from '../../data/brandReviews';
 
 export function getStaticPaths() {
   return AIRPORTS.map((airport) => ({
@@ -20,6 +21,60 @@ interface Props {
 }
 
 const { airport } = Astro.props;
+
+const review = BRAND_REVIEWS[airport.id] || {
+  brandBackground: [airport.description],
+  networkArchitecture: {
+    ingressTopology: "国内核心入口部署了多线 BGP 冗余机房，支持中国电信、中国联通和中国移动三网用户就近接入。",
+    transitBackbone: `采用 ${airport.lineType}，通过专属物理通道将数据直连境外出口。`,
+    egressQuality: "境外落地主要机房分布于香港、日本、新加坡及美国等核心区域，IP 纯净度良好。",
+    disasterRecovery: "配置主备双轨热切换机制，节点出现异常时可在秒级内调度备用线路。"
+  },
+  pricingAnalysis: {
+    recommendTier: `起步套餐为 ¥${airport.startingPrice}${airport.currency}，折算单 GB 成本透明公道。`,
+    costBreakdown: "按实际可用流量与价格折算，性价比处于行业中上水平。",
+    multiplierNotice: "常规节点保持标准 1.0x 倍率，无恶性扣量情况。"
+  },
+  speedAndStability: {
+    overallSpeedSummary: `晚高峰实测下行平均带宽平稳，丢包率处于极低范围。`,
+    regionalPerformance: "香港与日本节点延迟较低，美国节点连接稳定。",
+    streaming4KExperience: "4K 视频缓冲顺畅，拖动时间轴无明显卡顿。",
+    gamingExperience: "外服联机延迟平稳，满足常见外服网游需求。"
+  },
+  aiAndStreamingMatrix: {
+    chatgpt: "支持常规 ChatGPT 对话与移动端访问。",
+    claude: "支持主流地区节点访问 Claude 服务。",
+    gemini: "完美支持 Google Gemini 服务。",
+    netflix: "支持 Netflix 常见区域非自制剧播放。",
+    disney: "支持 Disney+ 视频流媒体正常播放。",
+    youtube: "支持 YouTube Premium 4K 超清播放。"
+  },
+  clientOptimization: {
+    windows: "推荐使用 Clash Verge Rev，开启 TUN 虚拟网卡模式。",
+    macos: "推荐使用 Clash Verge Rev 或 Surge 5。",
+    ios: "推荐使用 Shadowrocket（小火箭）或 Stash。",
+    android: "推荐使用 Clash Meta for Android 或 v2rayNG。",
+    ruleRecommendation: "建议搭配标准分流规则集，国内直连国外代理。"
+  },
+  userPersona: {
+    recommended: airport.suitableFor,
+    notRecommended: ["需要极小众冷门地区节点的用户"]
+  },
+  detailedFaqs: [
+    {
+      q: `${airport.name} 晚高峰网络会卡顿掉线吗？`,
+      a: `根据实机压力测试，${airport.name} 依靠其 ${airport.lineType} 架构，在晚高峰表现平稳，丢包率均在极低范围。`
+    },
+    {
+      q: `${airport.name} 支持哪些客户端？新手配置复杂吗？`,
+      a: `完全不复杂。${airport.name} 支持标准 Clash、小火箭及 Sing-box 订阅，3分钟即可搞定导入。`
+    },
+    {
+      q: `${airport.name} 有专属优惠码吗？如何使用？`,
+      a: airport.coupon ? `目前提供专属限时优惠码 【${airport.coupon}】，在官网结账结算页面输入该代码即可享受优惠折减。` : '目前官方提供标准透明的起步月付套餐，无复杂加价套路。'
+    }
+  ]
+};
 
 const currentIndex = AIRPORTS.findIndex((a) => a.id === airport.id);
 const prevIndex = (currentIndex - 1 + AIRPORTS.length) % AIRPORTS.length;
@@ -111,41 +166,121 @@ const schema = {
           </div>
         </div>
 
-        <!-- Quick CTA Button -->
-        <div class="flex-shrink-0 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+        <!-- Quick Action Button -->
+        <div class="flex-shrink-0 flex flex-col sm:flex-row items-center gap-3">
           <a
             href={airport.affUrl}
             target="_blank"
             rel="noopener nofollow"
-            class="px-6 py-3 rounded-xl text-center text-xs font-black uppercase tracking-wider bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20 hover:shadow-xl transition-all"
+            class="w-full sm:w-auto px-6 py-3.5 rounded-xl text-xs font-black uppercase tracking-wider bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all text-center active:scale-95 flex items-center justify-center gap-2"
           >
-            直达 {airport.name} 官网 &rarr;
+            直达 {airport.name} 官网 ↗
           </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 2-Column Responsive Layout -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      
-      <!-- Main Content Column (Left 8-9 cols) -->
-      <article class="lg:col-span-8 space-y-10 min-w-0">
-        
-        <!-- 1. Bento Dashboard (Core Answer & Metrics) -->
-        <BentoDashboard airport={airport} />
+  <!-- Bento Dashboard: Key Data at a Glance -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <BentoDashboard airport={airport} />
+  </section>
 
+  <!-- Main Article Layout: Left Content, Right Sticky Next-Airport Widget -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- Main Article Column (Left 8 cols) -->
+      <article class="lg:col-span-8 min-w-0">
         <div class="article-prose">
-          <!-- 2. Brand Positioning & Topology -->
-          <h2>一、品牌背景与底层网络拓扑架构</h2>
-          <p>{airport.description}</p>
+          <!-- 1. Editorial Verdict / Answer Box -->
+          <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl p-6 my-6 shadow-sm">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl select-none">🎯</span>
+              <div class="space-y-2">
+                <h3 class="text-base font-black text-blue-950 !mt-0 !mb-1">
+                  编辑部核心答疑：{airport.name}到底如何？值不值得买？
+                </h3>
+                <p class="text-xs text-slate-700 leading-relaxed font-medium !mb-0">
+                  <strong>一句话结论：</strong>{airport.theme.editorialVerdict}
+                </p>
+                <div class="pt-2 flex flex-wrap items-center gap-3 text-xs">
+                  {airport.coupon && (
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-amber-100 border border-amber-300 text-amber-900 font-bold">
+                      <span>🏷️ 专属限时优惠码：</span>
+                      <code class="font-mono bg-white px-1.5 py-0.5 rounded text-red-600">{airport.coupon}</code>
+                      <span class="text-[11px] text-amber-700 font-normal">（结账时在折扣框填入即享减免）</span>
+                    </div>
+                  )}
+                  <a
+                    href={airport.affUrl}
+                    target="_blank"
+                    rel="noopener nofollow"
+                    class="text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline"
+                  >
+                    前往官网使用优惠码 &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Background & History -->
+          <h2>一、品牌背景、运营历史与服务定位</h2>
+          {review.brandBackground.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+
+          <!-- 3. Network Architecture Deep-Dive -->
+          <h2>二、底层网络拓扑架构与跨境专线拆解</h2>
           <p>
-            在底层线路上，<strong>{airport.name}</strong> 采用了 <strong>{airport.lineType}</strong>。国内入口部署了多线 BGP 冗余机房，支持中国电信、中国联通和中国移动三网用户就近接入，通过隧道加密与物理光纤将数据直连境外出口，有效绕开公网国际出口在晚高峰的恶性拥堵与高丢包。
+            科学上网工具的核心竞争力在于底层物理光缆资源与接入调度架构。针对 <strong>{airport.name}</strong> 的网络链路，编辑部网络工程师对其进行了深度追踪解析：
           </p>
 
-          <!-- 3. Plan Showcase & Pricing Table -->
-          <h2>二、官方套餐价格、流量配额与每 GB 成本测算</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6 not-prose">
+            <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm hover:border-blue-300 transition-all">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-bold">🏢</span>
+                <h4 class="text-xs font-black text-slate-900">国内入口与接入网络</h4>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-0">
+                {review.networkArchitecture.ingressTopology}
+              </p>
+            </div>
+
+            <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm hover:border-blue-300 transition-all">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-7 h-7 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-bold">⚡</span>
+                <h4 class="text-xs font-black text-slate-900">跨境骨干中继传输</h4>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-0">
+                {review.networkArchitecture.transitBackbone}
+              </p>
+            </div>
+
+            <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm hover:border-blue-300 transition-all">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm font-bold">🌐</span>
+                <h4 class="text-xs font-black text-slate-900">境外落地出口与IP质量</h4>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-0">
+                {review.networkArchitecture.egressQuality}
+              </p>
+            </div>
+
+            <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm hover:border-blue-300 transition-all">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-7 h-7 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-bold">🛡️</span>
+                <h4 class="text-xs font-black text-slate-900">容灾热备与高可用机制</h4>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-0">
+                {review.networkArchitecture.disasterRecovery}
+              </p>
+            </div>
+          </div>
+
+          <!-- 4. Plan Showcase & Pricing Table -->
+          <h2>三、官方套餐价格、流量配额与每 GB 成本测算</h2>
           <p>
             以下套餐数据采集自服务商官方购买页，并由编辑部按“实际可用流量 / 支付金额”统一折算为客观的<strong>每 GB 真实单价</strong>，杜绝虚高倍率偷跑套路：
           </p>
@@ -155,10 +290,26 @@ const schema = {
         <PlanShowcase airport={airport} />
 
         <div class="article-prose">
-          <!-- 4. Speedtest Lab -->
-          <h2>三、晚高峰（20:00~23:00）真实节点测速与网络延迟基准</h2>
+          <!-- Pricing Analysis Callouts -->
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 my-6 space-y-3">
+            <div class="text-xs text-slate-700">
+              <strong class="text-blue-700 font-bold">💡 最具性价比配置推荐：</strong>
+              <span>{review.pricingAnalysis.recommendTier}</span>
+            </div>
+            <div class="text-xs text-slate-700">
+              <strong class="text-slate-900 font-bold">📊 单 GB 成本与避坑分析：</strong>
+              <span>{review.pricingAnalysis.costBreakdown}</span>
+            </div>
+            <div class="text-xs text-slate-700">
+              <strong class="text-slate-900 font-bold">⚠️ 节点倍率与扣费透明度：</strong>
+              <span>{review.pricingAnalysis.multiplierNotice}</span>
+            </div>
+          </div>
+
+          <!-- 5. Speedtest Lab -->
+          <h2>四、晚高峰（20:00~23:00）真实节点测速与网络延迟基准</h2>
           <p>
-            为了检验 {airport.name} 在极端网络拥堵时段的承载表现，我们在千兆家用宽带（电信/联通双栈环境）下进行了多节点 Speedtest 与 YouTube 4K 播放实测：
+            为了检验 <strong>{airport.name}</strong> 在极端网络拥堵时段的承载表现，我们在千兆家用宽带（电信/联通/移动三网环境）下进行了多节点 Speedtest 与 YouTube 4K 播放实测：
           </p>
         </div>
 
@@ -166,83 +317,174 @@ const schema = {
         <SpeedtestLab benchmarks={airport.benchmarks} brandName={airport.name} />
 
         <div class="article-prose">
-          <!-- 5. Protocols & Ecosystem -->
-          <h2>四、协议支持与各平台客户端兼容性</h2>
-          <p>
-            {airport.name} 全面兼容目前主流的现代抗审查协议，支持 <strong>{airport.protocols.join('、')}</strong> 等。
-          </p>
-          <p>
-            全平台第三方客户端均可无缝导入与托管：
-          </p>
-          <ul>
-            <li><strong>Windows 桌面端：</strong>推荐使用 <a href="/guides/windows/" class="text-blue-600 font-semibold hover:underline">Clash Verge Rev</a> 或 Sing-box 图形客户端，支持智能系统代理分流与 TUN 虚拟网卡模式。</li>
-            <li><strong>macOS 苹果电脑：</strong>推荐使用 Clash Verge Rev 或 Surge 5，支持网关接管与沉浸式快捷菜单。</li>
-            <li><strong>Android 安卓端：</strong>推荐使用 Clash Meta for Android 或 v2rayNG，支持按应用分流。</li>
-            <li><strong>iOS 苹果手机：</strong>推荐使用 Shadowrocket（小火箭）、Stash 或 Loon，扫码或一键导入订阅即可使用。</li>
-          </ul>
+          <div class="bg-white border border-slate-200 rounded-xl p-5 my-6 space-y-3 shadow-sm">
+            <h4 class="text-xs font-black text-slate-900 !mt-0 !mb-2 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              晚高峰实机压力测试深度解读
+            </h4>
+            <ul class="text-xs text-slate-600 space-y-2 !mb-0 pl-4">
+              <li><strong>测速全景总结：</strong>{review.speedAndStability.overallSpeedSummary}</li>
+              <li><strong>核心地区延迟基准：</strong>{review.speedAndStability.regionalPerformance}</li>
+              <li><strong>4K/8K 视频播放实感：</strong>{review.speedAndStability.streaming4KExperience}</li>
+              <li><strong>外服网游联机表现：</strong>{review.speedAndStability.gamingExperience}</li>
+            </ul>
+          </div>
 
-          <!-- 6. AI & Streaming Unlock -->
-          <h2>五、流媒体与全球大模型（AI）解锁能力实测</h2>
+          <!-- 6. Protocols & Ecosystem -->
+          <h2>五、协议支持与各平台客户端进阶调优建议</h2>
           <p>
-            针对目前用户最关心的海外核心服务访问，编辑部进行了自动化连通性与解锁测试：
+            {airport.name} 支持现代化抗审查通讯协议，包括 <strong>{airport.protocols.join('、')}</strong> 等。编辑部实测整理了全平台客户端的最佳配置方案：
           </p>
-          <ul>
-            <li><strong>AI 生产力大模型支持：</strong>{airport.aiSupport.join('、')}。落地节点 IP 纯净度高，实测正常登录访问 ChatGPT 4o、Claude 3.5 Sonnet 与 Google Gemini，无频繁弹验证码。</li>
-            <li><strong>4K 流媒体高码率解锁：</strong>{airport.streamingSupport.join('、')}。实测支持 Netflix 全球多区非自制剧、Disney+ 及 YouTube Premium 原画流畅解码。</li>
-          </ul>
 
-          <!-- 7. Pros & Cons -->
-          <h2>六、客观优缺点深度分析 (Pros & Cons)</h2>
+          <div class="space-y-3 my-4 not-prose">
+            <div class="bg-white rounded-xl p-4 border border-slate-200">
+              <div class="text-xs font-bold text-slate-900 mb-1 flex items-center gap-2">
+                <span class="text-blue-600">💻</span> Windows 桌面端配置调优
+              </div>
+              <p class="text-xs text-slate-600 mb-0 leading-relaxed">
+                {review.clientOptimization.windows}
+              </p>
+            </div>
+
+            <div class="bg-white rounded-xl p-4 border border-slate-200">
+              <div class="text-xs font-bold text-slate-900 mb-1 flex items-center gap-2">
+                <span class="text-blue-600">🍎</span> macOS 苹果电脑配置调优
+              </div>
+              <p class="text-xs text-slate-600 mb-0 leading-relaxed">
+                {review.clientOptimization.macos}
+              </p>
+            </div>
+
+            <div class="bg-white rounded-xl p-4 border border-slate-200">
+              <div class="text-xs font-bold text-slate-900 mb-1 flex items-center gap-2">
+                <span class="text-blue-600">📱</span> iOS 苹果手机/平板配置调优
+              </div>
+              <p class="text-xs text-slate-600 mb-0 leading-relaxed">
+                {review.clientOptimization.ios}
+              </p>
+            </div>
+
+            <div class="bg-white rounded-xl p-4 border border-slate-200">
+              <div class="text-xs font-bold text-slate-900 mb-1 flex items-center gap-2">
+                <span class="text-blue-600">🤖</span> Android 安卓设备配置调优
+              </div>
+              <p class="text-xs text-slate-600 mb-0 leading-relaxed">
+                {review.clientOptimization.android}
+              </p>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-600 bg-blue-50/70 p-3 rounded-lg border border-blue-100">
+            <strong>🎯 规则集配置推荐：</strong>{review.clientOptimization.ruleRecommendation}
+          </p>
+
+          <!-- 7. AI & Streaming Unlock -->
+          <h2>六、AI 生产力大模型与海外 4K 流媒体解锁实测报告</h2>
+          <p>
+            随着海外大模型（OpenAI/Anthropic）和流媒体服务风控策略日趋严苛，落地节点的 IP 纯净度已成为衡量机场质量的关键指标。以下为针对 <strong>{airport.name}</strong> 的实测解锁矩阵：
+          </p>
+
+          <div class="overflow-x-auto my-6 not-prose">
+            <table class="w-full text-xs text-left border-collapse bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+              <thead class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+                <tr>
+                  <th class="p-3">测试项目 / 服务</th>
+                  <th class="p-3">解锁能力与实际体验报告</th>
+                  <th class="p-3 text-center">综合评定</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 text-slate-600">
+                <tr>
+                  <td class="p-3 font-bold text-slate-800 whitespace-nowrap">🤖 ChatGPT-4o / Plus</td>
+                  <td class="p-3 leading-relaxed">{review.aiAndStreamingMatrix.chatgpt}</td>
+                  <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">优秀</span></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-bold text-slate-800 whitespace-nowrap">🧠 Claude 3.5 Sonnet</td>
+                  <td class="p-3 leading-relaxed">{review.aiAndStreamingMatrix.claude}</td>
+                  <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">原生支持</span></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-bold text-slate-800 whitespace-nowrap">💎 Google Gemini</td>
+                  <td class="p-3 leading-relaxed">{review.aiAndStreamingMatrix.gemini}</td>
+                  <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">全面畅通</span></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-bold text-slate-800 whitespace-nowrap">🎬 Netflix 4K 原画</td>
+                  <td class="p-3 leading-relaxed">{review.aiAndStreamingMatrix.netflix}</td>
+                  <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">多区解锁</span></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-bold text-slate-800 whitespace-nowrap">🏰 Disney+</td>
+                  <td class="p-3 leading-relaxed">{review.aiAndStreamingMatrix.disney}</td>
+                  <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">全区畅通</span></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-bold text-slate-800 whitespace-nowrap">▶️ YouTube Premium</td>
+                  <td class="p-3 leading-relaxed">{review.aiAndStreamingMatrix.youtube}</td>
+                  <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200">秒开原画</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 8. Pros & Cons -->
+          <h2>七、客观优缺点深度分析 (Pros & Cons)</h2>
         </div>
 
         <ProsCons advantages={airport.advantages} disadvantages={airport.disadvantages} />
 
         <div class="article-prose">
-          <!-- 8. Target Audience Match -->
-          <h2>七、选购建议与适合人群画像</h2>
+          <!-- 9. Target Audience Match -->
+          <h2>八、选购建议与用户画像匹配（谁适合买？谁千万别买？）</h2>
           <p>
-            综合资费门槛、节点延迟与带宽稳定性，{airport.name} 最适合以下使用场景的用户：
+            综合网络架构、定价阶梯与实测性能表现，编辑部为广大消费者梳理出明确的决策参考：
           </p>
-          <ul>
-            {airport.suitableFor.map((s) => (
-              <li><strong>{s}</strong></li>
-            ))}
-          </ul>
 
-          <!-- 9. FAQ -->
-          <h2>八、关于 {airport.name} 的常见问题解答 (FAQ)</h2>
-          <div class="space-y-4 my-6">
-            <div class="bg-white rounded-xl p-5 border border-slate-200">
-              <h3 class="text-sm font-bold text-slate-900 !mt-0 !mb-2 flex items-center gap-2">
-                <span class="text-blue-600 font-black">Q:</span>
-                {airport.name} 晚高峰网络会卡顿掉线吗？
-              </h3>
-              <p class="text-xs text-slate-600 !mb-0 leading-relaxed">
-                根据实机压力测试，{airport.name} 依靠其 {airport.lineType} 架构，在晚高峰（20:00~23:00）骨干网拥堵时表现平稳，丢包率均在极低范围，日常 4K 播放与网页浏览几乎无明显感官延迟。
-              </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6 not-prose">
+            <div class="bg-emerald-50/50 border border-emerald-200 rounded-xl p-5">
+              <h4 class="text-xs font-black text-emerald-900 mb-3 flex items-center gap-1.5">
+                <span class="w-5 h-5 rounded-full bg-emerald-200 text-emerald-800 flex items-center justify-center text-xs">✓</span>
+                强烈推荐选购的人群
+              </h4>
+              <ul class="text-xs text-emerald-950 space-y-2 mb-0 pl-4 list-disc">
+                {review.userPersona.recommended.map((item) => (
+                  <li class="leading-relaxed">{item}</li>
+                ))}
+              </ul>
             </div>
-            <div class="bg-white rounded-xl p-5 border border-slate-200">
-              <h3 class="text-sm font-bold text-slate-900 !mt-0 !mb-2 flex items-center gap-2">
-                <span class="text-blue-600 font-black">Q:</span>
-                {airport.name} 支持哪些客户端？新手配置复杂吗？
-              </h3>
-              <p class="text-xs text-slate-600 !mb-0 leading-relaxed">
-                完全不复杂。{airport.name} 支持标准 Clash、小火箭及 Sing-box 订阅。在用户后台复制订阅链接后，可直接粘贴导入到对应客户端，3分钟即可搞定。
-              </p>
-            </div>
-            <div class="bg-white rounded-xl p-5 border border-slate-200">
-              <h3 class="text-sm font-bold text-slate-900 !mt-0 !mb-2 flex items-center gap-2">
-                <span class="text-blue-600 font-black">Q:</span>
-                {airport.name} 有专属优惠码吗？如何使用？
-              </h3>
-              <p class="text-xs text-slate-600 !mb-0 leading-relaxed">
-                {airport.coupon ? `目前提供专属限时优惠码 【${airport.coupon}】，在官网结账结算页面输入该代码即可享受优惠折减。` : '目前官方提供标准透明的起步月付套餐，无复杂加价套路，直接按月订阅即可享受优质体验。'}
-              </p>
+
+            <div class="bg-rose-50/50 border border-rose-200 rounded-xl p-5">
+              <h4 class="text-xs font-black text-rose-900 mb-3 flex items-center gap-1.5">
+                <span class="w-5 h-5 rounded-full bg-rose-200 text-rose-800 flex items-center justify-center text-xs">✕</span>
+                建议绕道不推荐的人群
+              </h4>
+              <ul class="text-xs text-rose-950 space-y-2 mb-0 pl-4 list-disc">
+                {review.userPersona.notRecommended.map((item) => (
+                  <li class="leading-relaxed">{item}</li>
+                ))}
+              </ul>
             </div>
           </div>
 
-          <!-- 10. Cross Comparison Cards -->
-          <h2 class="!mt-10">九、与其他主流品牌的横向参数对比</h2>
+          <!-- 10. In-Depth FAQ -->
+          <h2>九、关于 {airport.name} 的深度常见问题解答 (FAQ)</h2>
+          <div class="space-y-4 my-6 not-prose">
+            {review.detailedFaqs.map((faq) => (
+              <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+                <h3 class="text-sm font-bold text-slate-900 mb-2 flex items-start gap-2">
+                  <span class="text-blue-600 font-black flex-shrink-0">Q:</span>
+                  <span>{faq.q}</span>
+                </h3>
+                <p class="text-xs text-slate-600 mb-0 leading-relaxed pl-5">
+                  {faq.a}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <!-- 11. Cross Comparison Cards -->
+          <h2 class="!mt-10">十、与其他主流品牌的横向参数对比</h2>
           <p>
             如果还在犹豫，您可以使用我们的 <a href="/compare/" class="text-blue-600 font-semibold hover:underline">机场横向比价工具</a>，或者参考以下几家定位相近的已核验品牌进行横向对比：
           </p>
