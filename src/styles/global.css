@@ -97,11 +97,11 @@ section.bg-white {
 }
 
 /* Rose / Coupon styling in Dark Mode */
-.bg-rose-50 {
+.bg-rose-50, .bg-rose-50\/50 {
   background-color: rgba(136, 19, 55, 0.3) !important;
 }
 
-.text-rose-700, .text-rose-800 {
+.text-rose-700, .text-rose-800, .text-rose-900, .text-rose-950 {
   color: #fda4af !important;
 }
 
@@ -118,7 +118,7 @@ section.bg-white {
   background-color: rgba(6, 78, 59, 0.35) !important;
 }
 
-.text-emerald-700, .text-emerald-800 {
+.text-emerald-700, .text-emerald-800, .text-emerald-900, .text-emerald-950 {
   color: #6ee7b7 !important;
 }
 
@@ -131,12 +131,16 @@ section.bg-white {
   background-color: rgba(120, 53, 15, 0.35) !important;
 }
 
-.text-amber-800 {
+.text-amber-700, .text-amber-800, .text-amber-900, .text-amber-950 {
   color: #fcd34d !important;
 }
 
 .border-amber-200, .border-amber-200\/80 {
   border-color: rgba(245, 158, 11, 0.35) !important;
+}
+
+.text-blue-700, .text-blue-800, .text-blue-900, .text-blue-950 {
+  color: #93c5fd !important;
 }
 
 .text-sky-700 {
